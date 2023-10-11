@@ -1,0 +1,9 @@
+[build]
+  command = "npm run build"  # o el comando que uses para construir tu proyecto
+  publish = "build"  # o la carpeta de salida de tu construcción
+  copy = "_redirects"  # copiar el archivo _redirects durante la construcción
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
