@@ -26,6 +26,7 @@ import Buscar from "@/components/inicio/Buscar";
 import useServicios from "@/hooks/useServicios";
 import Cargando from "@/components/deTodos/Cargando";
 import { useEffect } from "react";
+import { QRCode } from "qrcode";
 
 export function DashboardNavbar() {
   const [controller, dispatch] = useMaterialTailwindController();
@@ -113,24 +114,7 @@ export function DashboardNavbar() {
       <div className="flex flex-wrap items-center justify-between">
         <div className="flex items-center">
           {auth.rol === "proveedor" && ""}
-          <div className="capitalize">
-            {/* <Breadcrumbs
-              className={`bg-transparent p-0 transition-all ${
-                fixedNavbar ? "mt-1" : ""
-              }`}
-            >
-              <Typography
-                variant="small"
-                color="blue-gray"
-                className="font-normal"
-              >
-                {page}
-              </Typography>
-            </Breadcrumbs> */}
-            {/* <Typography variant="h6" color="blue-gray">
-              {page}
-            </Typography> */}
-          </div>
+          <div className="capitalize"></div>
         </div>
         <div className="ml-auto flex items-center gap-6">
           {auth.rol === "admin" && <Buscar />}

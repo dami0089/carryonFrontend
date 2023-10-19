@@ -19,6 +19,7 @@ import { formateoFechaCorto } from "@/data/helpers/formateoFechaCorto";
 import { Button, Typography } from "@material-tailwind/react";
 import Swal from "sweetalert2";
 import moment from "moment";
+import "moment/locale/es";
 
 moment.locale("es");
 
@@ -532,6 +533,19 @@ const ModalResumenNuevo = () => {
     });
   };
 
+  const traducirDia = (diaEnIngles) => {
+    const traducciones = {
+      MONDAY: "LUNES",
+      TUESDAY: "MARTES",
+      WEDNESDAY: "MIÉRCOLES",
+      THURSDAY: "JUEVES",
+      FRIDAY: "VIERNES",
+      SATURDAY: "SÁBADO",
+      SUNDAY: "DOMINGO",
+    };
+    return traducciones[diaEnIngles.toUpperCase()] || diaEnIngles;
+  };
+
   return (
     <Transition.Root show={modalResumen} as={Fragment}>
       <Dialog
@@ -539,7 +553,7 @@ const ModalResumenNuevo = () => {
         className="fixed inset-0 z-50 overflow-y-auto"
         onClose={handleModalResumen}
       >
-        <div className="flex  min-h-screen items-end justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+        <div className="flex  min-h-screen items-end justify-center px-4 pb-20 pt-4 text-center sm:block sm:p-0">
           <ToastContainer pauseOnFocusLoss={false} />
 
           <Transition.Child
@@ -570,9 +584,9 @@ const ModalResumenNuevo = () => {
             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
-            <div className="inline-block transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-3xl sm:p-6 sm:align-middle">
+            <div className="inline-block transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-3xl sm:p-6 sm:align-middle">
               <div className="sm:flex sm:items-start ">
-                <div className="mt-3 w-full text-center sm:mt-0 sm:ml-0 sm:text-left">
+                <div className="mt-3 w-full text-center sm:ml-0 sm:mt-0 sm:text-left">
                   {/* Título */}
                   <div className="w-full rounded-t-md bg-blue-500 p-4 text-center text-white">
                     <h3 className="text-xl font-bold">Resumen Coordinación</h3>
@@ -584,15 +598,12 @@ const ModalResumenNuevo = () => {
 
                     <Typography className="my-2 mr-2 text-xl font-semibold">
                       Fecha y Hora:{" "}
-                      {moment(fechaDeCarga)
-                        .local("es")
-                        .format("dddd")
-                        .toUpperCase()}{" "}
+                      {traducirDia(moment(fechaDeCarga).format("dddd"))}{" "}
                       {fechaDeCarga} - {horaDeCarga} hs
                     </Typography>
                   </div>
 
-                  <form className="my-2 mx-2" onSubmit={handleSubmit}>
+                  <form className="mx-2 my-2" onSubmit={handleSubmit}>
                     <>
                       <div className="mt-6 flex items-center justify-center">
                         {/* Columnas */}

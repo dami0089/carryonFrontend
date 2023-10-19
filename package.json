@@ -9,7 +9,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@afipsdk/afip.js": "^0.7.7",
     "@headlessui/react": "^1.7.13",
     "@heroicons/react": "2.0.12",
     "@material-tailwind/react": "^1.2.4",

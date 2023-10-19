@@ -31,16 +31,12 @@ import {
   UserPlusIcon,
   UsersIcon,
 } from "@heroicons/react/24/solid";
-import ListadoOperacionesSinCerrarDiasAnteriores from "@/components/inicio/ListadoOperacionesSinCerrarDiasAnteriores";
+
 import useServicios from "@/hooks/useServicios";
-import ListadoOperacionesCoordinadasParaHoy from "@/components/inicio/ListadoOperacionesCoordinadasParaHoy";
-import ListadoOperacionesCoordinadasParaProximosDias from "@/components/inicio/ListadoOperacionesCoordinadasParaProximosDias";
-import ProfileServicio from "@/components/clientes/servicios/ProfileServicio";
 import { BellAlertIcon } from "@heroicons/react/24/outline";
 import ModalNuevoServicio from "@/components/clientes/servicios/ModalNuevoServicio";
 import ModalNuevoServicio2 from "@/components/clientes/servicios/ModalNuevoServicio2";
 import ModalNuevoServicio3 from "@/components/clientes/servicios/ModalNuevoServicio3";
-import ModalResumenServicio from "@/components/clientes/servicios/ModalResumenServicio";
 import ModalNuevoServicio4 from "@/components/clientes/servicios/ModalNuevoServicio4";
 import ModalAsignarProveedor from "@/components/proveedores/ModalAsignarProveedor";
 import ModalCargarNumeroContenedores from "@/components/clientes/servicios/ModalCargarNumeroContenedores";
@@ -56,18 +52,15 @@ import ModalAsignarEquipoEditarViaje from "@/components/clientes/servicios/Modal
 import ResultadoBusqueda from "@/components/inicio/ResultadoBusqueda";
 import ModalNuevoDomicilio from "@/components/clientes/profileCliente/ModalNuevoDomicilio";
 import ModalEditarViaje from "@/components/clientes/servicios/ModalEditarViaje";
-import Profile from "@/components/clientes/Profile";
 import ModalTerminarViaje from "@/components/clientes/servicios/ModalTerminarViaje";
 import ModalDevolucion from "@/components/clientes/servicios/ModalDevolucion";
 import ModalEditarDomicilio from "@/components/clientes/profileCliente/ModalEditarDomicilio";
-import ModalEditarDevolucionVacio from "@/components/clientes/servicios/ModalEditarDevolucionVacio";
 import ModalDevolucionMasDeUnContendor from "@/components/clientes/servicios/ModalDevolucionMasDeUnContendor";
 import ModalModificarEstadoServicio from "@/components/clientes/servicios/ModalModificarEstadoServicio";
 import ModalEditarContenedorListado from "@/components/clientes/servicios/ModalEditarContenedorDesdeListados";
 import ProfileProveedor from "@/components/proveedores/ProfileProveedor";
 import ModalResumenNuevo from "@/components/clientes/servicios/ModalResumenNuevo";
 import Qr from "@/components/pruebas/Qr";
-import ListadoOperacionesCoordinadasManana from "@/components/inicio/ListadoOperacionesCoordinadasManana";
 
 export function Home() {
   const navigate = useNavigate();
@@ -224,7 +217,7 @@ export function Home() {
           <div className="mt-12">
             <ToastContainer pauseOnFocusLoss={false} />
 
-            <div className="mb-8 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
+            <div className="mb-8 grid gap-x-6 gap-y-10 md:grid-cols-2 xl:grid-cols-4">
               <Card
                 className="cursor-pointer"
                 onClick={(e) => handleSeleccion(e)}
@@ -294,7 +287,7 @@ export function Home() {
                 />
               </Card>
             </div>
-            <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-2">
+            <div className="mb-12 grid gap-x-6 gap-y-10 md:grid-cols-2 xl:grid-cols-2">
               <Card
                 onClick={(e) => handleNuevoServicio()}
                 className="cursor-pointer"
@@ -336,7 +329,7 @@ export function Home() {
                 </CardBody>
               </Card>
             </div>
-            <div className="mb-3 grid grid-cols-1 gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-3">
+            <div className="mb-3 grid grid-cols-1 gap-x-6 gap-y-10 md:grid-cols-2 xl:grid-cols-3">
               {statisticsChartsData.map((props) => (
                 <StatisticsChart key={props.title} {...props} />
               ))}

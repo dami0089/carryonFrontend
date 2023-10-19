@@ -3,10 +3,11 @@ import useProveedores from "@/hooks/useProveedores";
 import useServicios from "@/hooks/useServicios";
 import { Input } from "@material-tailwind/react";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Buscar = () => {
   const [buscar, setBuscar] = useState("");
-
+  const navigate = useNavigate();
   const {
     busqueda,
     handleCargando,
@@ -20,38 +21,11 @@ const Buscar = () => {
   const { seleccionProveedor, setSeleccionProveedor } = useProveedores();
 
   const handleSubmit = async () => {
-    if (seleccion !== 1 || seleccion == 1) {
-      setSeleccion(11);
-      handleCargando();
-      await busqueda(buscar);
-      handleCargando();
-
-      setBuscar("");
-    }
-
-    if (selectInicio !== 1 || selectInicio == 1) {
-      setSelectInicio(7);
-      handleCargando();
-      await busqueda(buscar);
-      handleCargando();
-      setBuscar("");
-    }
-
-    if (paginaLogisticaSelector !== 1 || paginaLogisticaSelector == 1) {
-      setPaginaLogisticaSelector(7);
-      handleCargando();
-      await busqueda(buscar);
-      handleCargando();
-      setBuscar("");
-    }
-
-    if (seleccionProveedor !== 1 || seleccionProveedor == 1) {
-      setSeleccionProveedor(7);
-      handleCargando();
-      await busqueda(buscar);
-      handleCargando();
-      setBuscar("");
-    }
+    handleCargando();
+    await busqueda(buscar);
+    handleCargando();
+    navigate("/busqueda");
+    setBuscar("");
   };
 
   return (

@@ -28,6 +28,8 @@ import Profile from "./components/clientes/Profile";
 import ListadodeClientes from "./components/clientes/ListadodeClientes";
 import ListadoDeProveedores from "./components/proveedores/ListadodeProveedores";
 import ProfileProveedor from "./components/proveedores/ProfileProveedor";
+import Buscar from "./components/inicio/Buscar";
+import ResultadoBusqueda from "./components/inicio/ResultadoBusqueda";
 
 //TODO:FALTA AGREGAR EL BAR AL MENU
 function App() {
@@ -46,6 +48,11 @@ function App() {
           {/* Rutas Home */}
           <Route path="/inicio" element={<RutaProtegida />}>
             <Route index element={<Home />} />
+          </Route>
+
+          {/* Ruta BUscar */}
+          <Route path="/busqueda" element={<RutaProtegida />}>
+            <Route index element={<ResultadoBusqueda />} />
           </Route>
 
           {/* Rutas Clientes */}

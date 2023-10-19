@@ -549,11 +549,7 @@ const ListadoOperacionesCoordinadasParaHoy = () => {
 
   const handleManana = (e) => {
     e.preventDefault();
-    // if (volverCoordinacion) {
-    //   setPaginaLogisticaSelector(12);
-    // } else {
-    //   setSelectInicio(10);
-    // }
+
     navigate("/coordinacion/listado-viajes-manana");
   };
 
@@ -574,7 +570,7 @@ const ListadoOperacionesCoordinadasParaHoy = () => {
         </div>
 
         <>
-          <div className="mb-8 ml-3 mr-3 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-5">
+          <div className="mb-8 ml-3 mr-3 grid gap-x-6 gap-y-10 md:grid-cols-2 xl:grid-cols-5">
             <Card
               className="cursor-pointer"
               onClick={(e) => handleNuevoServicio(e)}
@@ -631,7 +627,7 @@ const ListadoOperacionesCoordinadasParaHoy = () => {
         </>
         <div className="mb-4  grid grid-cols-1 gap-6  xl:grid-cols-3">
           <Card className="overflow-hidden xl:col-span-3">
-            <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
+            <CardBody className="overflow-x-scroll px-0 pb-2 pt-0">
               <div className="max-h-[78vh] overflow-y-auto">
                 <table className="w-full min-w-[640px] table-auto">
                   <thead className="sticky top-0 bg-blue-gray-50">
@@ -662,7 +658,7 @@ const ListadoOperacionesCoordinadasParaHoy = () => {
                       ].map((el) => (
                         <th
                           key={el}
-                          className="border-b border-blue-gray-50 py-3 px-6  text-center"
+                          className="border-b border-blue-gray-50 px-6 py-3  text-center"
                         >
                           <Typography
                             variant="small"
@@ -896,33 +892,6 @@ const ListadoOperacionesCoordinadasParaHoy = () => {
                               </td>
 
                               <td className={className}>
-                                {/* <Button
-                              className={`min-w-100 -mt-1 h-8 items-center gap-2 whitespace-nowrap bg-transparent px-4 py-1`}
-                              onClick={(e) =>
-                                handleClickGoogleMaps(
-                                  tipoServicio === "importacion"
-                                    ? nombreDomicilioOrigenTerminal
-                                    : tipoServicio === "nacional"
-                                    ? nombreDomicilioOrigenCliente
-                                    : tipoServicio === "one-way"
-                                    ? nombreDomicilioOrigenCliente
-                                    : tipoServicio === "transito-aduanero"
-                                    ? nombreDomicilioOrigenCliente
-                                    : ""
-                                )
-                              }
-                              title={
-                                tipoServicio === "importacion"
-                                  ? nombreDomicilioOrigenTerminal
-                                  : tipoServicio === "nacional"
-                                  ? nombreDomicilioOrigenCliente
-                                  : tipoServicio === "one-way"
-                                  ? nombreDomicilioOrigenCliente
-                                  : tipoServicio === "transito-aduanero"
-                                  ? nombreDomicilioOrigenCliente
-                                  : ""
-                              }
-                            > */}
                                 <Typography
                                   variant="small"
                                   className="word-wrap break-word w-40 overflow-hidden text-xs font-medium text-blue-gray-600 hover:cursor-pointer"
@@ -948,6 +917,14 @@ const ListadoOperacionesCoordinadasParaHoy = () => {
                                         ? fantasiaOrigen +
                                           " " +
                                           nombreDomicilioOrigenCliente
+                                        : tipoServicio === "round-trip"
+                                        ? fantasiaOrigen +
+                                          " " +
+                                          nombreDomicilioOrigenCliente
+                                        : tipoServicio === "empty-pick"
+                                        ? fantasiaOrigen +
+                                          " " +
+                                          nombreDomicilioOrigenCliente
                                         : ""
                                     )
                                   }
@@ -961,6 +938,10 @@ const ListadoOperacionesCoordinadasParaHoy = () => {
                                       : tipoServicio === "transito-aduanero"
                                       ? nombreDomicilioOrigenCliente
                                       : tipoServicio === "vacios"
+                                      ? nombreDomicilioOrigenCliente
+                                      : tipoServicio === "round-trip"
+                                      ? nombreDomicilioOrigenCliente
+                                      : tipoServicio === "empty-pick"
                                       ? nombreDomicilioOrigenCliente
                                       : ""
                                   }
@@ -980,38 +961,19 @@ const ListadoOperacionesCoordinadasParaHoy = () => {
                                     : tipoServicio === "vacios"
                                     ? fantasiaOrigen ??
                                       nombreDomicilioOrigenCliente
+                                    : tipoServicio === "importacion"
+                                    ? fantasiaOrigen ??
+                                      nombreDomicilioOrigenTerminal
+                                    : tipoServicio === "round-trip"
+                                    ? fantasiaOrigen ??
+                                      nombreDomicilioOrigenTerminal
+                                    : tipoServicio === "empty-pick"
+                                    ? fantasiaOrigen ??
+                                      nombreDomicilioOrigenTerminal
                                     : ""}
                                 </Typography>
-                                {/* </Button> */}
                               </td>
                               <td className={className}>
-                                {/* <Button
-                              className={`min-w-100 -mt-1 h-8 items-center gap-2 whitespace-nowrap bg-transparent px-4 py-1`}
-                              onClick={(e) =>
-                                handleClickGoogleMaps(
-                                  tipoServicio === "importacion"
-                                    ? nombreDomicilioDestinoCliente
-                                    : tipoServicio === "nacional"
-                                    ? nombreDomicilioDestinoCliente
-                                    : tipoServicio === "one-way"
-                                    ? nombreDomicilioDestinoTerminal
-                                    : tipoServicio === "transito-aduanero"
-                                    ? nombreDomicilioDestinoTerminal
-                                    : ""
-                                )
-                              }
-                              title={
-                                tipoServicio === "importacion"
-                                  ? nombreDomicilioDestinoCliente
-                                  : tipoServicio === "nacional"
-                                  ? nombreDomicilioDestinoCliente
-                                  : tipoServicio === "one-way"
-                                  ? nombreDomicilioDestinoTerminal
-                                  : tipoServicio === "transito-aduanero"
-                                  ? nombreDomicilioDestinoTerminal
-                                  : ""
-                              }
-                            > */}
                                 <Typography
                                   variant="small"
                                   className="word-wrap break-word w-40 overflow-hidden text-xs font-medium text-blue-gray-600 hover:cursor-pointer"
@@ -1037,6 +999,14 @@ const ListadoOperacionesCoordinadasParaHoy = () => {
                                         ? fantasiaDestino +
                                           " " +
                                           nombreDomicilioDestinoTerminal
+                                        : tipoServicio === "round-trip"
+                                        ? fantasiaDestino +
+                                          " " +
+                                          nombreDomicilioDestinoTerminal
+                                        : tipoServicio === "empty-pick"
+                                        ? fantasiaDestino +
+                                          " " +
+                                          nombreDomicilioDestinoCliente
                                         : ""
                                     )
                                   }
@@ -1051,6 +1021,10 @@ const ListadoOperacionesCoordinadasParaHoy = () => {
                                       ? nombreDomicilioDestinoTerminal
                                       : tipoServicio === "vacios"
                                       ? nombreDomicilioDestinoTerminal
+                                      : tipoServicio === "round-trip"
+                                      ? nombreDomicilioDestinoTerminal
+                                      : tipoServicio === "empty-pick"
+                                      ? nombreDomicilioDestinoCliente
                                       : ""
                                   }
                                 >
@@ -1069,6 +1043,12 @@ const ListadoOperacionesCoordinadasParaHoy = () => {
                                     : tipoServicio === "vacios"
                                     ? fantasiaDestino ??
                                       nombreDomicilioDestinoTerminal
+                                    : tipoServicio === "round-trip"
+                                    ? fantasiaDestino ??
+                                      nombreDomicilioDestinoTerminal
+                                    : tipoServicio === "empty-pick"
+                                    ? fantasiaDestino ??
+                                      nombreDomicilioDestinoCliente
                                     : ""}
                                 </Typography>
                                 {/* </Button> */}

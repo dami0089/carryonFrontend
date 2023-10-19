@@ -149,6 +149,29 @@ const ListadoDeTodosLosViajes = () => {
     setObservacionesViaje,
   } = useServicios();
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const totalPages = Math.ceil(todosLosViajes.length / itemsPerPage);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = todosLosViajes.slice(indexOfFirstItem, indexOfLastItem);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
   const handleClick = async (e, servicio) => {
     e.preventDefault();
     setPaginaLogisticaSelector(5);
@@ -376,7 +399,7 @@ const ListadoDeTodosLosViajes = () => {
     <>
       <ToastContainer pauseOnFocusLoss={false} />
 
-      <div className="mt-8 mb-5 flex items-center justify-between">
+      <div className="mb-5 mt-8 flex items-center justify-between">
         <Typography className="ml-5 font-bold">
           Listado Todos los Viajes
         </Typography>
@@ -391,7 +414,7 @@ const ListadoDeTodosLosViajes = () => {
       </div>
       <div className="mb-4  grid grid-cols-1 gap-6  xl:grid-cols-3">
         <Card className="overflow-hidden xl:col-span-3">
-          <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
+          <CardBody className="overflow-x-scroll px-0 pb-2 pt-0">
             <div className="max-h-[78vh] overflow-y-auto">
               <table className="w-full min-w-[640px] table-auto">
                 <thead className="sticky top-0 bg-blue-gray-50">
@@ -422,7 +445,7 @@ const ListadoDeTodosLosViajes = () => {
                     ].map((el) => (
                       <th
                         key={el}
-                        className="border-b border-blue-gray-50 py-3 px-6  text-center"
+                        className="border-b border-blue-gray-50 px-6 py-3  text-center"
                       >
                         <Typography
                           variant="small"
@@ -435,7 +458,7 @@ const ListadoDeTodosLosViajes = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {todosLosViajes // Filtrar proveedores con estado distinto a "Terminado"
+                  {currentItems // Filtrar proveedores con estado distinto a "Terminado"
                     .map(
                       (
                         {
@@ -656,33 +679,6 @@ const ListadoDeTodosLosViajes = () => {
                             </td>
 
                             <td className={className}>
-                              {/* <Button
-                            className={`min-w-100 -mt-1 h-8 items-center gap-2 whitespace-nowrap bg-transparent px-4 py-1`}
-                            onClick={(e) =>
-                              handleClickGoogleMaps(
-                                tipoServicio === "importacion"
-                                  ? nombreDomicilioOrigenTerminal
-                                  : tipoServicio === "nacional"
-                                  ? nombreDomicilioOrigenCliente
-                                  : tipoServicio === "one-way"
-                                  ? nombreDomicilioOrigenCliente
-                                  : tipoServicio === "transito-aduanero"
-                                  ? nombreDomicilioOrigenCliente
-                                  : ""
-                              )
-                            }
-                            title={
-                              tipoServicio === "importacion"
-                                ? nombreDomicilioOrigenTerminal
-                                : tipoServicio === "nacional"
-                                ? nombreDomicilioOrigenCliente
-                                : tipoServicio === "one-way"
-                                ? nombreDomicilioOrigenCliente
-                                : tipoServicio === "transito-aduanero"
-                                ? nombreDomicilioOrigenCliente
-                                : ""
-                            }
-                          > */}
                               <Typography
                                 variant="small"
                                 className="word-wrap break-word w-40 overflow-hidden text-xs font-medium text-blue-gray-600 hover:cursor-pointer"
@@ -708,6 +704,10 @@ const ListadoDeTodosLosViajes = () => {
                                       ? fantasiaOrigen +
                                         " " +
                                         nombreDomicilioOrigenCliente
+                                      : tipoServicio === "round-trip"
+                                      ? fantasiaOrigen +
+                                        " " +
+                                        nombreDomicilioOrigenCliente
                                       : ""
                                   )
                                 }
@@ -721,6 +721,8 @@ const ListadoDeTodosLosViajes = () => {
                                     : tipoServicio === "transito-aduanero"
                                     ? nombreDomicilioOrigenCliente
                                     : tipoServicio === "vacios"
+                                    ? nombreDomicilioOrigenCliente
+                                    : tipoServicio === "round-trip"
                                     ? nombreDomicilioOrigenCliente
                                     : ""
                                 }
@@ -740,38 +742,16 @@ const ListadoDeTodosLosViajes = () => {
                                   : tipoServicio === "vacios"
                                   ? fantasiaOrigen ??
                                     nombreDomicilioOrigenCliente
+                                  : tipoServicio === "importacion"
+                                  ? fantasiaOrigen ??
+                                    nombreDomicilioOrigenTerminal
+                                  : tipoServicio === "round-trip"
+                                  ? fantasiaOrigen ??
+                                    nombreDomicilioOrigenTerminal
                                   : ""}
                               </Typography>
-                              {/* </Button> */}
                             </td>
                             <td className={className}>
-                              {/* <Button
-                            className={`min-w-100 -mt-1 h-8 items-center gap-2 whitespace-nowrap bg-transparent px-4 py-1`}
-                            onClick={(e) =>
-                              handleClickGoogleMaps(
-                                tipoServicio === "importacion"
-                                  ? nombreDomicilioDestinoCliente
-                                  : tipoServicio === "nacional"
-                                  ? nombreDomicilioDestinoCliente
-                                  : tipoServicio === "one-way"
-                                  ? nombreDomicilioDestinoTerminal
-                                  : tipoServicio === "transito-aduanero"
-                                  ? nombreDomicilioDestinoTerminal
-                                  : ""
-                              )
-                            }
-                            title={
-                              tipoServicio === "importacion"
-                                ? nombreDomicilioDestinoCliente
-                                : tipoServicio === "nacional"
-                                ? nombreDomicilioDestinoCliente
-                                : tipoServicio === "one-way"
-                                ? nombreDomicilioDestinoTerminal
-                                : tipoServicio === "transito-aduanero"
-                                ? nombreDomicilioDestinoTerminal
-                                : ""
-                            }
-                          > */}
                               <Typography
                                 variant="small"
                                 className="word-wrap break-word w-40 overflow-hidden text-xs font-medium text-blue-gray-600 hover:cursor-pointer"
@@ -797,6 +777,10 @@ const ListadoDeTodosLosViajes = () => {
                                       ? fantasiaDestino +
                                         " " +
                                         nombreDomicilioDestinoTerminal
+                                      : tipoServicio === "round-trip"
+                                      ? fantasiaDestino +
+                                        " " +
+                                        nombreDomicilioDestinoTerminal
                                       : ""
                                   )
                                 }
@@ -810,6 +794,8 @@ const ListadoDeTodosLosViajes = () => {
                                     : tipoServicio === "transito-aduanero"
                                     ? nombreDomicilioDestinoTerminal
                                     : tipoServicio === "vacios"
+                                    ? nombreDomicilioDestinoTerminal
+                                    : tipoServicio === "round-trip"
                                     ? nombreDomicilioDestinoTerminal
                                     : ""
                                 }
@@ -829,9 +815,11 @@ const ListadoDeTodosLosViajes = () => {
                                   : tipoServicio === "vacios"
                                   ? fantasiaDestino ??
                                     nombreDomicilioDestinoTerminal
+                                  : tipoServicio === "round-trip"
+                                  ? fantasiaDestino ??
+                                    nombreDomicilioDestinoTerminal
                                   : ""}
                               </Typography>
-                              {/* </Button> */}
                             </td>
                             <td className={className}>
                               <div className="rounded-xl p-1 text-center">
@@ -1177,6 +1165,27 @@ const ListadoDeTodosLosViajes = () => {
               </table>
             </div>
           </CardBody>
+          <div className="mb-4 mt-4 flex items-center justify-center">
+            <Button
+              color="blue"
+              className="mx-1"
+              onClick={handlePreviousPage}
+              disabled={currentPage === 1}
+            >
+              Anterior
+            </Button>
+            <Typography variant="small" className="mx-1">
+              Página {currentPage} de {totalPages}
+            </Typography>
+            <Button
+              color="blue"
+              className="mx-1"
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+            >
+              Siguiente
+            </Button>
+          </div>
         </Card>
       </div>
       {cargando ? <Cargando /> : ""}

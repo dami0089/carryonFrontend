@@ -10,6 +10,7 @@ import useClientes from "@/hooks/useClientes";
 import { ToastContainer } from "react-toastify";
 import { formatearFechaNuevo } from "@/data/helpers/formatearFechaNuevo";
 import useProveedores from "@/hooks/useProveedores";
+import { useNavigate } from "react-router-dom";
 
 const ResultadoBusqueda = () => {
   const {
@@ -37,7 +38,7 @@ const ResultadoBusqueda = () => {
     enBusqueda,
     setEnbusqueda,
   } = useServicios();
-
+  const navigate = useNavigate();
   const {
     setSelectInicio,
     setValueProfile,
@@ -52,112 +53,28 @@ const ResultadoBusqueda = () => {
   const { seleccionProveedor, setSeleccionProveedor, setCuitEditarProveedor } =
     useProveedores();
 
-  const handleVolverInicio = (e) => {
-    e.preventDefault();
-
-    if (seleccion == 11) {
-      setSeleccion(1);
-      setBuscoActualizaciones(true);
-    }
-    if (selectInicio == 7) {
-      setSelectInicio(1);
-      setBuscoActualizaciones(true);
-    }
-    if (paginaLogisticaSelector == 7) {
-      setPaginaLogisticaSelector(100);
-    }
-
-    if (seleccionProveedor == 7) {
-      setSeleccionProveedor(1);
-      setBuscoActualizaciones(true);
-    }
-
-    if (seleccionComercial == 7) {
-      setSeleccionComercial(1);
-    }
-  };
-
   const handleResultadoCliente = async (e, id) => {
     e.preventDefault();
     await setCuitEditar(id);
-    setEnbusqueda(1);
-    if (seleccion == 11) {
-      setSeleccion(5);
-    }
-    if (selectInicio == 7) {
-      setSelectInicio(8);
-    }
-    if (paginaLogisticaSelector == 7) {
-      setPaginaLogisticaSelector(6);
-    }
-    if (seleccionProveedor == 7) {
-      setSeleccionProveedor(8);
-    }
+    navigate("/clientes/ficha-cliente");
   };
 
   const handleResultadoViaje = async (e, servicio) => {
     e.preventDefault();
     setIdObtenerServicio(servicio);
-    if (seleccion == 11) {
-      setEnbusqueda(2);
-      setSeleccion(10);
-    }
-    if (selectInicio == 7) {
-      setEnbusqueda(2);
-
-      setSelectInicio(5);
-    }
-    if (paginaLogisticaSelector == 7) {
-      setEnbusqueda(2);
-      setPaginaLogisticaSelector(5);
-    }
-    if (seleccionProveedor == 7) {
-      setEnbusqueda(2);
-      setSeleccionProveedor(9);
-    }
+    navigate("/coordinacion/ficha-servicio");
   };
 
   const handleResultadoServicio = async (e, servicio) => {
     e.preventDefault();
     setIdObtenerServicio(servicio);
-    if (seleccion == 11) {
-      setEnbusqueda(2);
-      setSeleccion(10);
-    }
-    if (selectInicio == 7) {
-      setEnbusqueda(2);
-
-      setSelectInicio(5);
-    }
-    if (paginaLogisticaSelector == 7) {
-      setEnbusqueda(2);
-      setPaginaLogisticaSelector(5);
-    }
-    if (seleccionProveedor == 7) {
-      setEnbusqueda(2);
-      setSeleccionProveedor(9);
-    }
+    navigate("/coordinacion/ficha-servicio");
   };
 
   const handleResultadoProveedor = async (e, id) => {
     e.preventDefault();
     setCuitEditarProveedor(id);
-    if (seleccion === 11) {
-      setEnbusqueda(3);
-      setSeleccion(12);
-    }
-    if (selectInicio === 7) {
-      setEnbusqueda(3);
-      setSelectInicio(9);
-    }
-    if (paginaLogisticaSelector === 7) {
-      setEnbusqueda(3);
-      setPaginaLogisticaSelector(8);
-    }
-    if (seleccionProveedor === 7) {
-      setEnbusqueda(3);
-      setSeleccionProveedor(10);
-    }
+    navigate("/proveedores/ficha-proveedor");
   };
 
   return (
@@ -167,24 +84,17 @@ const ResultadoBusqueda = () => {
 
         <div className="mb-5 flex justify-between">
           <Typography className="font-bold uppercase">
-            Servicios sin Notificar
+            Resultado Busqueda
           </Typography>
-          <Button
-            className="w-30 mx-2 bg-green-300 text-center"
-            fullWidth
-            onClick={(e) => handleVolverInicio(e)}
-          >
-            Volver
-          </Button>
         </div>
-        <CardBody className=" overflow-x-scroll px-0 pt-0 pb-2">
+        <CardBody className=" overflow-x-scroll px-0 pb-2 pt-0">
           <table className="w-full min-w-[640px] table-auto text-center">
             <thead>
               <tr>
                 {["Tipo", "Descripcion", "Accion"].map((el) => (
                   <th
                     key={el}
-                    className="border-b border-blue-gray-50 py-3 px-6 text-left"
+                    className="border-b border-blue-gray-50 px-6 py-3 text-left"
                   >
                     <Typography
                       variant="small"
@@ -234,7 +144,7 @@ const ResultadoBusqueda = () => {
                           <td className={className}>
                             <Button
                               color="blue"
-                              className="-mt-1 h-8 items-center gap-4 px-6 pt-1 pb-1 capitalize"
+                              className="-mt-1 h-8 items-center gap-4 px-6 pb-1 pt-1 capitalize"
                               onClick={(e) => handleResultadoViaje(e, servicio)}
                             >
                               <Typography
@@ -300,7 +210,7 @@ const ResultadoBusqueda = () => {
                           <td className={className}>
                             <Button
                               color="blue"
-                              className="-mt-1 h-8 items-center gap-4 px-6 pt-1 pb-1 capitalize"
+                              className="-mt-1 h-8 items-center gap-4 px-6 pb-1 pt-1 capitalize"
                               onClick={(e) => handleResultadoCliente(e, _id)}
                             >
                               <Typography
@@ -365,7 +275,7 @@ const ResultadoBusqueda = () => {
                           <td className={className}>
                             <Button
                               color="blue"
-                              className="-mt-1 h-8 items-center gap-4 px-6 pt-1 pb-1 capitalize"
+                              className="-mt-1 h-8 items-center gap-4 px-6 pb-1 pt-1 capitalize"
                               onClick={(e) => handleResultadoProveedor(e, _id)}
                             >
                               <Typography
@@ -435,7 +345,7 @@ const ResultadoBusqueda = () => {
                           <td className={className}>
                             <Button
                               color="blue"
-                              className="-mt-1 h-8 items-center gap-4 px-6 pt-1 pb-1 capitalize"
+                              className="-mt-1 h-8 items-center gap-4 px-6 pb-1 pt-1 capitalize"
                               onClick={(e) => handleResultadoServicio(e, _id)}
                             >
                               <Typography

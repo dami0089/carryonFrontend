@@ -595,7 +595,7 @@ const ListadoOperacionesCoordinadasDiasAnteriores = () => {
         </div>
 
         <>
-          <div className="mb-8 ml-3 mr-3 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-5">
+          <div className="mb-8 ml-3 mr-3 grid gap-x-6 gap-y-10 md:grid-cols-2 xl:grid-cols-5">
             <Card
               className="cursor-pointer"
               onClick={(e) => handleNuevoServicio(e)}
@@ -652,7 +652,7 @@ const ListadoOperacionesCoordinadasDiasAnteriores = () => {
         </>
         <div className="mb-4  grid grid-cols-1 gap-6  xl:grid-cols-3">
           <Card className="overflow-hidden xl:col-span-3">
-            <CardBody className=" overflow-x-scroll px-0 pt-0 pb-2">
+            <CardBody className=" overflow-x-scroll px-0 pb-2 pt-0">
               <div className="max-h-[78vh] overflow-y-auto">
                 <table className="w-full min-w-[640px] table-auto">
                   <thead className="sticky top-0 bg-blue-gray-50">
@@ -683,7 +683,7 @@ const ListadoOperacionesCoordinadasDiasAnteriores = () => {
                       ].map((el) => (
                         <th
                           key={el}
-                          className="border-b border-blue-gray-50 py-3 px-6  text-center"
+                          className="border-b border-blue-gray-50 px-6 py-3  text-center"
                         >
                           <Typography
                             variant="small"
@@ -917,33 +917,6 @@ const ListadoOperacionesCoordinadasDiasAnteriores = () => {
                               </td>
 
                               <td className={className}>
-                                {/* <Button
-                              className={`min-w-100 -mt-1 h-8 items-center gap-2 whitespace-nowrap bg-transparent px-4 py-1`}
-                              onClick={(e) =>
-                                handleClickGoogleMaps(
-                                  tipoServicio === "importacion"
-                                    ? nombreDomicilioOrigenTerminal
-                                    : tipoServicio === "nacional"
-                                    ? nombreDomicilioOrigenCliente
-                                    : tipoServicio === "one-way"
-                                    ? nombreDomicilioOrigenCliente
-                                    : tipoServicio === "transito-aduanero"
-                                    ? nombreDomicilioOrigenCliente
-                                    : ""
-                                )
-                              }
-                              title={
-                                tipoServicio === "importacion"
-                                  ? nombreDomicilioOrigenTerminal
-                                  : tipoServicio === "nacional"
-                                  ? nombreDomicilioOrigenCliente
-                                  : tipoServicio === "one-way"
-                                  ? nombreDomicilioOrigenCliente
-                                  : tipoServicio === "transito-aduanero"
-                                  ? nombreDomicilioOrigenCliente
-                                  : ""
-                              }
-                            > */}
                                 <Typography
                                   variant="small"
                                   className="word-wrap break-word w-40 overflow-hidden text-xs font-medium text-blue-gray-600 hover:cursor-pointer"
@@ -969,6 +942,10 @@ const ListadoOperacionesCoordinadasDiasAnteriores = () => {
                                         ? fantasiaOrigen +
                                           " " +
                                           nombreDomicilioOrigenCliente
+                                        : tipoServicio === "round-trip"
+                                        ? fantasiaOrigen +
+                                          " " +
+                                          nombreDomicilioOrigenCliente
                                         : ""
                                     )
                                   }
@@ -982,6 +959,8 @@ const ListadoOperacionesCoordinadasDiasAnteriores = () => {
                                       : tipoServicio === "transito-aduanero"
                                       ? nombreDomicilioOrigenCliente
                                       : tipoServicio === "vacios"
+                                      ? nombreDomicilioOrigenCliente
+                                      : tipoServicio === "round-trip"
                                       ? nombreDomicilioOrigenCliente
                                       : ""
                                   }
@@ -1001,38 +980,16 @@ const ListadoOperacionesCoordinadasDiasAnteriores = () => {
                                     : tipoServicio === "vacios"
                                     ? fantasiaOrigen ??
                                       nombreDomicilioOrigenCliente
+                                    : tipoServicio === "importacion"
+                                    ? fantasiaOrigen ??
+                                      nombreDomicilioOrigenTerminal
+                                    : tipoServicio === "round-trip"
+                                    ? fantasiaOrigen ??
+                                      nombreDomicilioOrigenTerminal
                                     : ""}
                                 </Typography>
-                                {/* </Button> */}
                               </td>
                               <td className={className}>
-                                {/* <Button
-                              className={`min-w-100 -mt-1 h-8 items-center gap-2 whitespace-nowrap bg-transparent px-4 py-1`}
-                              onClick={(e) =>
-                                handleClickGoogleMaps(
-                                  tipoServicio === "importacion"
-                                    ? nombreDomicilioDestinoCliente
-                                    : tipoServicio === "nacional"
-                                    ? nombreDomicilioDestinoCliente
-                                    : tipoServicio === "one-way"
-                                    ? nombreDomicilioDestinoTerminal
-                                    : tipoServicio === "transito-aduanero"
-                                    ? nombreDomicilioDestinoTerminal
-                                    : ""
-                                )
-                              }
-                              title={
-                                tipoServicio === "importacion"
-                                  ? nombreDomicilioDestinoCliente
-                                  : tipoServicio === "nacional"
-                                  ? nombreDomicilioDestinoCliente
-                                  : tipoServicio === "one-way"
-                                  ? nombreDomicilioDestinoTerminal
-                                  : tipoServicio === "transito-aduanero"
-                                  ? nombreDomicilioDestinoTerminal
-                                  : ""
-                              }
-                            > */}
                                 <Typography
                                   variant="small"
                                   className="word-wrap break-word w-40 overflow-hidden text-xs font-medium text-blue-gray-600 hover:cursor-pointer"
@@ -1058,6 +1015,10 @@ const ListadoOperacionesCoordinadasDiasAnteriores = () => {
                                         ? fantasiaDestino +
                                           " " +
                                           nombreDomicilioDestinoTerminal
+                                        : tipoServicio === "round-trip"
+                                        ? fantasiaDestino +
+                                          " " +
+                                          nombreDomicilioDestinoTerminal
                                         : ""
                                     )
                                   }
@@ -1071,6 +1032,8 @@ const ListadoOperacionesCoordinadasDiasAnteriores = () => {
                                       : tipoServicio === "transito-aduanero"
                                       ? nombreDomicilioDestinoTerminal
                                       : tipoServicio === "vacios"
+                                      ? nombreDomicilioDestinoTerminal
+                                      : tipoServicio === "round-trip"
                                       ? nombreDomicilioDestinoTerminal
                                       : ""
                                   }
@@ -1090,9 +1053,11 @@ const ListadoOperacionesCoordinadasDiasAnteriores = () => {
                                     : tipoServicio === "vacios"
                                     ? fantasiaDestino ??
                                       nombreDomicilioDestinoTerminal
+                                    : tipoServicio === "round-trip"
+                                    ? fantasiaDestino ??
+                                      nombreDomicilioDestinoTerminal
                                     : ""}
                                 </Typography>
-                                {/* </Button> */}
                               </td>
                               <td className={className}>
                                 <div className="rounded-xl p-1 text-center">
