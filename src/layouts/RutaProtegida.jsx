@@ -41,7 +41,7 @@ const RutaProtegida = () => {
   return (
     <>
       {auth._id && auth.rol === "admin" ? (
-        <div className={`min-h-screen  bg-blue-gray-50/50 `}>
+        <div className={`flex min-h-screen flex-col bg-blue-gray-50/50`}>
           <Sidenav
             routes={routes}
             brandImg={
@@ -52,16 +52,14 @@ const RutaProtegida = () => {
           />
           <div
             className={`flex flex-1 flex-col p-4 ${
-              openSide ? "ml-80" : "ml-4"
+              openSide ? "xl:ml-80" : "ml-4"
             } transition-all duration-300`}
           >
+            {/* <div className="flex flex-1 flex-col p-4 xl:ml-80"> */}
             <DashboardNavbar />
-
-            <Outlet />
-
-            {/* <div className="text-blue-gray-600">
-              <Footer />
-            </div> */}
+            <div className="flex-1">
+              <Outlet />
+            </div>
           </div>
         </div>
       ) : auth._id && auth.rol === "proveedor" ? (

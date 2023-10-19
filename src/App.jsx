@@ -30,6 +30,7 @@ import ListadoDeProveedores from "./components/proveedores/ListadodeProveedores"
 import ProfileProveedor from "./components/proveedores/ProfileProveedor";
 import Buscar from "./components/inicio/Buscar";
 import ResultadoBusqueda from "./components/inicio/ResultadoBusqueda";
+import ListadoViajesSinNotificar from "./components/inicio/ListadoViajesSinNotificar";
 
 //TODO:FALTA AGREGAR EL BAR AL MENU
 function App() {
@@ -48,6 +49,10 @@ function App() {
           {/* Rutas Home */}
           <Route path="/inicio" element={<RutaProtegida />}>
             <Route index element={<Home />} />
+            <Route
+              path="listado-viajes-sin-notificar"
+              element={<ListadoViajesSinNotificar />}
+            />
           </Route>
 
           {/* Ruta BUscar */}

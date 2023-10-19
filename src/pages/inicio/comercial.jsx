@@ -65,11 +65,11 @@ const Comercial = () => {
     <>
       {seleccionComercial == 1 ? (
         <>
-          <div className="mt-20 flex flex-wrap justify-between">
+          <div className="mt-10 flex flex-wrap justify-between">
             <ToastContainer pauseOnFocusLoss={false} />
 
             <div
-              className="w-1/3 p-2 hover:cursor-pointer"
+              className="w-full p-2 hover:cursor-pointer md:w-1/3"
               onClick={(e) => handleModalNuevoCliente()}
             >
               <div className="rounded-2xl bg-white p-4 shadow-lg dark:bg-gray-800">
@@ -89,7 +89,7 @@ const Comercial = () => {
             </div>
 
             <div
-              className="w-1/3 p-2 hover:cursor-pointer"
+              className="w-full p-2 hover:cursor-pointer md:w-1/3"
               onClick={(e) => handleClientes(e)}
             >
               <div className="rounded-2xl bg-white p-4 shadow-lg dark:bg-gray-800">
@@ -107,7 +107,7 @@ const Comercial = () => {
                 </div>
               </div>
             </div>
-            <div className="w-1/3 p-2">
+            <div className="w-full p-2 hover:cursor-pointer md:w-1/3">
               <div className="rounded-2xl bg-white p-4 shadow-lg dark:bg-gray-800">
                 <div className="flex flex-row items-center justify-between gap-4">
                   <div className="flex-shrink-0">
@@ -117,7 +117,7 @@ const Comercial = () => {
                   </div>
                   <div className="flex flex-col">
                     <span className="text-lg font-medium text-gray-600 dark:text-white">
-                      Liquidacion Mensual Clientes
+                      Liquidacion Clientes
                     </span>
                   </div>
                 </div>
@@ -128,7 +128,7 @@ const Comercial = () => {
 
           <div className="mt-5 flex flex-wrap justify-between">
             <div
-              className="w-1/3 p-2 hover:cursor-pointer"
+              className="w-full p-2 hover:cursor-pointer md:w-1/3"
               onClick={(e) => handleModalNuevoProveedor()}
             >
               <div className="rounded-2xl bg-white p-4 shadow-lg dark:bg-gray-800">
@@ -146,7 +146,7 @@ const Comercial = () => {
                 </div>
               </div>
             </div>
-            <div className="w-1/3 p-2">
+            <div className="w-full p-2 hover:cursor-pointer md:w-1/3">
               <div
                 className="rounded-2xl bg-white p-4 shadow-lg hover:cursor-pointer dark:bg-gray-800"
                 onClick={(e) => handleTransportes(e)}
@@ -165,7 +165,7 @@ const Comercial = () => {
                 </div>
               </div>
             </div>
-            <div className="w-1/3 p-2">
+            <div className="w-full p-2 hover:cursor-pointer md:w-1/3">
               <div
                 className="rounded-2xl bg-white p-4 shadow-lg hover:cursor-pointer dark:bg-gray-800"
                 // onClick={(e) => handleproximos()}

@@ -563,550 +563,317 @@ const ListadoOperacionesCoordinadasParaHoy = () => {
       <div className="mt-10">
         <ToastContainer pauseOnFocusLoss={false} />
 
-        <div className="mb-10 ml-3 mr-3 flex justify-between">
+        <div className="mb-5 ml-3 mr-3 text-center md:text-left">
           <Typography className="font-bold uppercase">
-            Coordinados para hoy
+            Coordinados Hoy
           </Typography>
         </div>
 
         <>
-          <div className="mb-8 ml-3 mr-3 grid gap-x-6 gap-y-10 md:grid-cols-2 xl:grid-cols-5">
-            <Card
-              className="cursor-pointer"
+          <div className="mb-8 ml-3 mr-3 flex flex-row gap-x-6 gap-y-10 md:grid md:flex-none md:grid-cols-2 xl:grid-cols-5">
+            {/* Nuevo Servicio */}
+            <div
+              className="hidden cursor-pointer p-2 md:block"
               onClick={(e) => handleNuevoServicio(e)}
             >
-              <StatisticsCard
-                key="1"
-                title="Nuevo Servicio"
-                color="white"
-                icon={<PlusCircleIcon className=" h-8 w-8 " />}
-              />
-            </Card>
-            <Card
-              className="cursor-pointer"
+              <Card>
+                <StatisticsCard
+                  key="1"
+                  title="Nuevo Servicio"
+                  icon={<PlusCircleIcon className=" h-8 w-8 " />}
+                  color="white"
+                />
+              </Card>
+            </div>
+            <div
+              className="flex-1 cursor-pointer p-2 md:hidden"
+              onClick={(e) => handleNuevoServicio(e)}
+            >
+              <PlusCircleIcon className="mx-auto h-6 w-6" />
+            </div>
+
+            {/* Días anteriores */}
+            <div
+              className="hidden cursor-pointer p-2 md:block"
               onClick={(e) => handleSeleccion(e)}
             >
-              <StatisticsCard
-                key="1"
-                title="Dias anteriores"
-                icon={<ChevronDoubleLeftIcon className=" h-8 w-8 " />}
-                color="white"
-              />
-            </Card>
-            <Card
-              className="cursor-pointer"
+              <Card>
+                <StatisticsCard
+                  key="1"
+                  title="Dias anteriores"
+                  icon={<ChevronDoubleLeftIcon className=" h-8 w-8 " />}
+                  color="white"
+                />
+              </Card>
+            </div>
+            <div
+              className="flex-1 cursor-pointer p-2 md:hidden"
+              onClick={(e) => handleSeleccion(e)}
+            >
+              <ChevronDoubleLeftIcon className="mx-auto h-6 w-6 " />
+            </div>
+
+            {/* Coordinados hoy */}
+            <div
+              className="hidden cursor-pointer p-2 md:block"
               onClick={(e) => handleSeleccion2(e)}
             >
-              <StatisticsCard
-                key="2"
-                title="Coordinados hoy"
-                icon={<CalendarDaysIcon className=" h-8 w-8" />}
-                color="blue"
-              />
-            </Card>
-            <Card className="cursor-pointer" onClick={(e) => handleManana(e)}>
-              <StatisticsCard
-                key="3"
-                title="Coordinados Mañana"
-                icon={<ChevronDoubleRightIcon className="h-8 w-8 " />}
-                color="white"
-              />
-            </Card>
-            <Card
-              className="cursor-pointer"
+              <Card>
+                <StatisticsCard
+                  key="2"
+                  title="Coordinados hoy"
+                  icon={<CalendarDaysIcon className=" h-8 w-8" />}
+                  color="blue"
+                />
+              </Card>
+            </div>
+            <div
+              className="flex-1 cursor-pointer p-2 md:hidden"
+              onClick={(e) => handleSeleccion2(e)}
+            >
+              <CalendarDaysIcon className="mx-auto h-6 w-6 text-blue-300" />
+            </div>
+
+            {/* Coordinados Mañana */}
+            <div
+              className="hidden cursor-pointer p-2 md:block"
+              onClick={(e) => handleManana(e)}
+            >
+              <Card>
+                <StatisticsCard
+                  key="3"
+                  title="Coordinados Mañana"
+                  icon={<ChevronDoubleRightIcon className="h-8 w-8 " />}
+                  color="white"
+                />
+              </Card>
+            </div>
+            <div
+              className="flex-1 cursor-pointer p-2 md:hidden"
+              onClick={(e) => handleManana(e)}
+            >
+              <ChevronDoubleRightIcon className="mx-auto h-6 w-6" />
+            </div>
+
+            {/* Próximos Viajes */}
+            <div
+              className="hidden cursor-pointer p-2 md:block"
               onClick={(e) => handleSeleccion3(e)}
             >
-              <StatisticsCard
-                key="3"
-                title="Proximos dias"
-                icon={<ChevronDoubleRightIcon className="h-8 w-8 " />}
-                color="white"
-              />
-            </Card>
+              <Card>
+                <StatisticsCard
+                  key="3"
+                  title="Proximos Viajes"
+                  icon={<ChevronDoubleRightIcon className="h-8 w-8 " />}
+                  color="white"
+                />
+              </Card>
+            </div>
+            <div
+              className="flex-1 cursor-pointer p-2 md:hidden"
+              onClick={(e) => handleSeleccion3(e)}
+            >
+              <ChevronDoubleRightIcon className="mx-auto h-6 w-6 " />
+            </div>
           </div>
         </>
-        <div className="mb-4  grid grid-cols-1 gap-6  xl:grid-cols-3">
-          <Card className="overflow-hidden xl:col-span-3">
-            <CardBody className="overflow-x-scroll px-0 pb-2 pt-0">
-              <div className="max-h-[78vh] overflow-y-auto">
-                <table className="w-full min-w-[640px] table-auto">
-                  <thead className="sticky top-0 bg-blue-gray-50">
-                    <tr>
-                      {[
-                        "Nro Viaje",
-                        "Fecha y Hora Carga",
-                        "Tipo Servicio",
-                        "Cliente",
-                        "Nro Contenedor",
-                        "Tipo Carga",
-                        "Cantidad",
-                        "Peso",
-                        "Volumen",
-                        "Observaciones Servicio",
-                        "Domicilio Origen",
-                        "Domicilio Destino",
-                        "Proveedor",
-                        "Chofer/Camion/Semi",
-                        "Estado Servicio",
-                        "Estado Viaje",
-                        "Adicionales",
-                        "Fecha de Terminacion",
-                        "Hora Terminacion",
-                        "Observaciones Viaje",
+        {serviciosOrdenados.length > 0 ? (
+          <div className="mb-4  grid grid-cols-1 gap-6  xl:grid-cols-3">
+            <Card className="overflow-hidden xl:col-span-3">
+              <CardBody className="overflow-x-scroll px-0 pb-2 pt-0">
+                <div className="max-h-[78vh] overflow-y-auto">
+                  <table className="w-full min-w-[640px] table-auto">
+                    <thead className="sticky top-0 bg-blue-gray-50">
+                      <tr>
+                        {[
+                          "Nro Viaje",
+                          "Fecha y Hora Carga",
+                          "Tipo Servicio",
+                          "Cliente",
+                          "Nro Contenedor",
+                          "Tipo Carga",
+                          "Cantidad",
+                          "Peso",
+                          "Volumen",
+                          "Observaciones Servicio",
+                          "Domicilio Origen",
+                          "Domicilio Destino",
+                          "Proveedor",
+                          "Chofer/Camion/Semi",
+                          "Estado Servicio",
+                          "Estado Viaje",
+                          "Adicionales",
+                          "Fecha de Terminacion",
+                          "Hora Terminacion",
+                          "Observaciones Viaje",
 
-                        "Accion",
-                      ].map((el) => (
-                        <th
-                          key={el}
-                          className="border-b border-blue-gray-50 px-6 py-3  text-center"
-                        >
-                          <Typography
-                            variant="small"
-                            className="text-[11px] font-medium uppercase text-blue-gray-400"
+                          "Accion",
+                        ].map((el) => (
+                          <th
+                            key={el}
+                            className="border-b border-blue-gray-50 px-6 py-3  text-center"
                           >
-                            {el}
-                          </Typography>
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {serviciosOrdenados // Filtrar proveedores con estado distinto a "Terminado"
-                      .map(
-                        (
-                          {
-                            _id,
-                            estadoServicio,
-                            numeroDeViaje,
-                            fechaOrigen,
-                            horaOrigen,
-                            tipoServicio,
-                            nombreCliente,
-                            numeroContenedor,
+                            <Typography
+                              variant="small"
+                              className="text-[11px] font-medium uppercase text-blue-gray-400"
+                            >
+                              {el}
+                            </Typography>
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {serviciosOrdenados // Filtrar proveedores con estado distinto a "Terminado"
+                        .map(
+                          (
+                            {
+                              _id,
+                              estadoServicio,
+                              numeroDeViaje,
+                              fechaOrigen,
+                              horaOrigen,
+                              tipoServicio,
+                              nombreCliente,
+                              numeroContenedor,
 
-                            tipoCarga,
-                            cantidadCarga,
-                            pesoCarga,
-                            volumenCarga,
-                            nombreDomicilioOrigenCliente,
-                            nombreDomicilioOrigenTerminal,
-                            nombreDomicilioDestinoCliente,
-                            nombreDomicilioDestinoTerminal,
-                            nombreProveedor,
-                            nombreChofer,
-                            patenteSemi,
-                            patenteCamion,
-                            adicionales,
-                            fechaTerminacion,
-                            horaTerminacion,
-                            diasDemora,
-                            estado,
-                            observacionesServicio,
-                            observacionesViaje,
-                            servicio,
-                            notificado,
-                            proveedor,
-                            fantasiaOrigen,
-                            fantasiaDestino,
-                            chofer,
-                            fechaDevolucion,
-                            horaDevolucion,
-                            fechaVencimientoDevolucion,
-                            lugarDevolucion,
-                            cliente,
-                            direccionRetorno,
-                            domicilioOrigenTerminal,
-                            domicilioOrigenCliente,
-                            domicilioDestinoTerminal,
-                            domicilioDestinoCliente,
-                            camion,
-                            semi,
-                            idEquipo,
-                            horaDevolucionDesde,
-                            horaDevolucionHasta,
-                          },
-                          key
-                        ) => {
-                          const className = `text-center py-3 px-5 ${
-                            key === projectsTableData.length - 1
-                              ? ""
-                              : "border-b border-blue-gray-50"
-                          }`;
+                              tipoCarga,
+                              cantidadCarga,
+                              pesoCarga,
+                              volumenCarga,
+                              nombreDomicilioOrigenCliente,
+                              nombreDomicilioOrigenTerminal,
+                              nombreDomicilioDestinoCliente,
+                              nombreDomicilioDestinoTerminal,
+                              nombreProveedor,
+                              nombreChofer,
+                              patenteSemi,
+                              patenteCamion,
+                              adicionales,
+                              fechaTerminacion,
+                              horaTerminacion,
+                              diasDemora,
+                              estado,
+                              observacionesServicio,
+                              observacionesViaje,
+                              servicio,
+                              notificado,
+                              proveedor,
+                              fantasiaOrigen,
+                              fantasiaDestino,
+                              chofer,
+                              fechaDevolucion,
+                              horaDevolucion,
+                              fechaVencimientoDevolucion,
+                              lugarDevolucion,
+                              cliente,
+                              direccionRetorno,
+                              domicilioOrigenTerminal,
+                              domicilioOrigenCliente,
+                              domicilioDestinoTerminal,
+                              domicilioDestinoCliente,
+                              camion,
+                              semi,
+                              idEquipo,
+                              horaDevolucionDesde,
+                              horaDevolucionHasta,
+                            },
+                            key
+                          ) => {
+                            const className = `text-center py-3 px-5 ${
+                              key === projectsTableData.length - 1
+                                ? ""
+                                : "border-b border-blue-gray-50"
+                            }`;
 
-                          return (
-                            <tr key={_id}>
-                              <td className={className}>
-                                <Button
-                                  color="blue"
-                                  className={`min-w-100 -mt-1 h-8 items-center gap-2 whitespace-nowrap ${
-                                    estadoServicio === "Coordinado"
-                                      ? "bg-green-300"
-                                      : "bg-deep-orange-300"
-                                  }  px-4 py-1 `}
-                                  fullWidth
-                                  onClick={(e) => handleClick(e, servicio)}
-                                >
-                                  <Typography
-                                    variant="small"
-                                    className="flex items-center justify-between text-sm font-medium capitalize"
-                                  >
-                                    <span className="mr-1 text-black">
-                                      {numeroDeViaje}
-                                    </span>
-                                    <div className="h-4 w-4 text-black">
-                                      <ChevronRightIcon />
-                                    </div>
-                                  </Typography>
-                                </Button>
-                              </td>
-                              <td className={className}>
-                                <div className="flex items-center gap-4">
-                                  <Typography
-                                    variant="small"
-                                    color="blue-gray"
-                                    className="w-40 text-center text-xs font-medium"
-                                  >
-                                    {formateoFechaCorto(fechaOrigen)}
-                                    <br />
-                                    <strong>{horaOrigen} Hs</strong>
-                                  </Typography>
-                                </div>
-                              </td>
-
-                              <td className={className}>
-                                <Typography
-                                  variant="small"
-                                  className="text-xs font-medium uppercase text-blue-gray-600"
-                                >
-                                  {tipoServicio}
-                                </Typography>
-                              </td>
-                              <td className={className}>
-                                <Typography
-                                  variant="small"
-                                  className="w-40 text-xs font-black uppercase text-blue-gray-600"
-                                >
-                                  {nombreCliente}
-                                </Typography>
-                              </td>
-                              <td className={className}>
-                                <div className="rounded-xl p-1 text-center">
+                            return (
+                              <tr key={_id}>
+                                <td className={className}>
                                   <Button
-                                    className={`${
-                                      fechaVencimientoDevolucion
-                                        ? lugarDevolucion
-                                          ? "bg-green-300"
-                                          : "bg-red-200"
-                                        : "bg-red-200"
-                                    } min-w-100 -mt-1 h-8 items-center gap-2 whitespace-nowrap  px-4 py-1 text-black shadow-gray-300`}
+                                    color="blue"
+                                    className={`min-w-100 -mt-1 h-8 items-center gap-2 whitespace-nowrap ${
+                                      estadoServicio === "Coordinado"
+                                        ? "bg-green-300"
+                                        : "bg-deep-orange-300"
+                                    }  px-4 py-1 `}
                                     fullWidth
-                                    onClick={(e) =>
-                                      handleCompletarContenedor(
-                                        _id,
-                                        numeroContenedor,
-                                        fechaDevolucion,
-                                        horaDevolucion,
-                                        fechaVencimientoDevolucion,
-                                        lugarDevolucion,
-                                        horaDevolucionDesde,
-                                        horaDevolucionHasta
-                                      )
-                                    }
+                                    onClick={(e) => handleClick(e, servicio)}
                                   >
                                     <Typography
                                       variant="small"
                                       className="flex items-center justify-between text-sm font-medium capitalize"
                                     >
-                                      <span className="mr-1">
-                                        {numeroContenedor != 0
-                                          ? numeroContenedor
-                                          : "Ingresar"}
+                                      <span className="mr-1 text-black">
+                                        {numeroDeViaje}
                                       </span>
-                                      <div className="h-4 w-4">
-                                        <ChevronDownIcon />
+                                      <div className="h-4 w-4 text-black">
+                                        <ChevronRightIcon />
                                       </div>
                                     </Typography>
                                   </Button>
-                                </div>
-                              </td>
-                              <td className={className}>
-                                <Typography
-                                  variant="small"
-                                  className="w-40 text-xs font-medium uppercase text-blue-gray-600"
-                                >
-                                  {tipoCarga === "Contenedor20"
-                                    ? "Contenedor 20"
-                                    : ""}
-                                  {tipoCarga === "Contenedor40"
-                                    ? "Contenedor 40"
-                                    : ""}
-                                  {tipoCarga === "Contenedor40HC"
-                                    ? "Contenedor 40 HC"
-                                    : ""}
-                                  {tipoCarga !== "Contenedor20"
-                                    ? tipoCarga !== "Contendor40"
-                                      ? tipoCarga !== "Contenedor40HC"
-                                        ? tipoCarga
-                                        : ""
-                                      : ""
-                                    : ""}
-                                </Typography>
-                              </td>
-                              <td className={className}>
-                                <Typography
-                                  variant="small"
-                                  className="text-center text-xs font-medium text-blue-gray-600"
-                                >
-                                  {tipoCarga === "Contenedor20" ||
-                                  tipoCarga === "Contenedor40" ||
-                                  tipoCarga === "Contenedor40HC"
-                                    ? "-"
-                                    : cantidadCarga}
-                                </Typography>
-                              </td>
-                              <td className={className}>
-                                <Typography
-                                  variant="small"
-                                  className="text-xs font-medium text-blue-gray-600"
-                                >
-                                  {pesoCarga} Kg
-                                </Typography>
-                              </td>
-                              <td className={className}>
-                                <Typography
-                                  variant="small"
-                                  className="text-center text-xs font-medium text-blue-gray-600"
-                                >
-                                  {volumenCarga === "" ? "-" : volumenCarga}
-                                </Typography>
-                              </td>
-                              <td className={className}>
-                                <Typography
-                                  variant="small"
-                                  className="text-xs font-bold uppercase text-red-600"
-                                >
-                                  {observacionesServicio === ""
-                                    ? "-"
-                                    : observacionesServicio}
-                                </Typography>
-                              </td>
-
-                              <td className={className}>
-                                <Typography
-                                  variant="small"
-                                  className="word-wrap break-word w-40 overflow-hidden text-xs font-medium text-blue-gray-600 hover:cursor-pointer"
-                                  onClick={(e) =>
-                                    handleClickGoogleMaps(
-                                      tipoServicio === "importacion"
-                                        ? fantasiaOrigen +
-                                            " " +
-                                            nombreDomicilioOrigenTerminal
-                                        : tipoServicio === "nacional"
-                                        ? fantasiaOrigen +
-                                          " " +
-                                          nombreDomicilioOrigenCliente
-                                        : tipoServicio === "one-way"
-                                        ? fantasiaOrigen +
-                                          " " +
-                                          nombreDomicilioOrigenCliente
-                                        : tipoServicio === "transito-aduanero"
-                                        ? fantasiaOrigen +
-                                          " " +
-                                          nombreDomicilioOrigenCliente
-                                        : tipoServicio === "vacios"
-                                        ? fantasiaOrigen +
-                                          " " +
-                                          nombreDomicilioOrigenCliente
-                                        : tipoServicio === "round-trip"
-                                        ? fantasiaOrigen +
-                                          " " +
-                                          nombreDomicilioOrigenCliente
-                                        : tipoServicio === "empty-pick"
-                                        ? fantasiaOrigen +
-                                          " " +
-                                          nombreDomicilioOrigenCliente
-                                        : ""
-                                    )
-                                  }
-                                  title={
-                                    tipoServicio === "importacion"
-                                      ? nombreDomicilioOrigenTerminal
-                                      : tipoServicio === "nacional"
-                                      ? nombreDomicilioOrigenCliente
-                                      : tipoServicio === "one-way"
-                                      ? nombreDomicilioOrigenCliente
-                                      : tipoServicio === "transito-aduanero"
-                                      ? nombreDomicilioOrigenCliente
-                                      : tipoServicio === "vacios"
-                                      ? nombreDomicilioOrigenCliente
-                                      : tipoServicio === "round-trip"
-                                      ? nombreDomicilioOrigenCliente
-                                      : tipoServicio === "empty-pick"
-                                      ? nombreDomicilioOrigenCliente
-                                      : ""
-                                  }
-                                >
-                                  {tipoServicio === "importacion"
-                                    ? fantasiaOrigen ??
-                                      nombreDomicilioOrigenTerminal
-                                    : tipoServicio === "nacional"
-                                    ? fantasiaOrigen ??
-                                      nombreDomicilioOrigenCliente
-                                    : tipoServicio === "one-way"
-                                    ? fantasiaOrigen ??
-                                      nombreDomicilioOrigenCliente
-                                    : tipoServicio === "transito-aduanero"
-                                    ? fantasiaOrigen ??
-                                      nombreDomicilioOrigenCliente
-                                    : tipoServicio === "vacios"
-                                    ? fantasiaOrigen ??
-                                      nombreDomicilioOrigenCliente
-                                    : tipoServicio === "importacion"
-                                    ? fantasiaOrigen ??
-                                      nombreDomicilioOrigenTerminal
-                                    : tipoServicio === "round-trip"
-                                    ? fantasiaOrigen ??
-                                      nombreDomicilioOrigenTerminal
-                                    : tipoServicio === "empty-pick"
-                                    ? fantasiaOrigen ??
-                                      nombreDomicilioOrigenTerminal
-                                    : ""}
-                                </Typography>
-                              </td>
-                              <td className={className}>
-                                <Typography
-                                  variant="small"
-                                  className="word-wrap break-word w-40 overflow-hidden text-xs font-medium text-blue-gray-600 hover:cursor-pointer"
-                                  onClick={(e) =>
-                                    handleClickGoogleMaps(
-                                      tipoServicio === "importacion"
-                                        ? fantasiaDestino +
-                                            " " +
-                                            nombreDomicilioDestinoCliente
-                                        : tipoServicio === "nacional"
-                                        ? fantasiaDestino +
-                                          " " +
-                                          nombreDomicilioDestinoCliente
-                                        : tipoServicio === "one-way"
-                                        ? fantasiaDestino +
-                                          " " +
-                                          nombreDomicilioDestinoTerminal
-                                        : tipoServicio === "transito-aduanero"
-                                        ? fantasiaDestino +
-                                          " " +
-                                          nombreDomicilioDestinoTerminal
-                                        : tipoServicio === "vacios"
-                                        ? fantasiaDestino +
-                                          " " +
-                                          nombreDomicilioDestinoTerminal
-                                        : tipoServicio === "round-trip"
-                                        ? fantasiaDestino +
-                                          " " +
-                                          nombreDomicilioDestinoTerminal
-                                        : tipoServicio === "empty-pick"
-                                        ? fantasiaDestino +
-                                          " " +
-                                          nombreDomicilioDestinoCliente
-                                        : ""
-                                    )
-                                  }
-                                  title={
-                                    tipoServicio === "importacion"
-                                      ? nombreDomicilioDestinoCliente
-                                      : tipoServicio === "nacional"
-                                      ? nombreDomicilioDestinoCliente
-                                      : tipoServicio === "one-way"
-                                      ? nombreDomicilioDestinoTerminal
-                                      : tipoServicio === "transito-aduanero"
-                                      ? nombreDomicilioDestinoTerminal
-                                      : tipoServicio === "vacios"
-                                      ? nombreDomicilioDestinoTerminal
-                                      : tipoServicio === "round-trip"
-                                      ? nombreDomicilioDestinoTerminal
-                                      : tipoServicio === "empty-pick"
-                                      ? nombreDomicilioDestinoCliente
-                                      : ""
-                                  }
-                                >
-                                  {tipoServicio === "importacion"
-                                    ? fantasiaDestino ??
-                                      nombreDomicilioDestinoCliente
-                                    : tipoServicio === "nacional"
-                                    ? fantasiaDestino ??
-                                      nombreDomicilioDestinoCliente
-                                    : tipoServicio === "one-way"
-                                    ? fantasiaDestino ??
-                                      nombreDomicilioDestinoTerminal
-                                    : tipoServicio === "transito-aduanero"
-                                    ? fantasiaDestino ??
-                                      nombreDomicilioDestinoTerminal
-                                    : tipoServicio === "vacios"
-                                    ? fantasiaDestino ??
-                                      nombreDomicilioDestinoTerminal
-                                    : tipoServicio === "round-trip"
-                                    ? fantasiaDestino ??
-                                      nombreDomicilioDestinoTerminal
-                                    : tipoServicio === "empty-pick"
-                                    ? fantasiaDestino ??
-                                      nombreDomicilioDestinoCliente
-                                    : ""}
-                                </Typography>
-                                {/* </Button> */}
-                              </td>
-                              <td className={className}>
-                                <div className="rounded-xl p-1 text-center">
-                                  <Button
-                                    className={`min-w-100 -mt-1 h-8 items-center gap-2 whitespace-nowrap bg-transparent px-4 py-1`}
-                                    onClick={(e) =>
-                                      handleReasignar(e, proveedor, _id)
-                                    }
-                                  >
+                                </td>
+                                <td className={className}>
+                                  <div className="flex items-center gap-4">
                                     <Typography
                                       variant="small"
-                                      className="flex items-center justify-between text-sm font-medium capitalize text-black"
+                                      color="blue-gray"
+                                      className="w-40 text-center text-xs font-medium"
                                     >
-                                      <span className="mr-1">
-                                        {nombreProveedor
-                                          ? nombreProveedor
-                                          : "Asignar Proveedor"}
-                                      </span>
-                                      <div className="h-4 w-4">
-                                        <ChevronDownIcon />
-                                      </div>
+                                      {formateoFechaCorto(fechaOrigen)}
+                                      <br />
+                                      <strong>{horaOrigen} Hs</strong>
                                     </Typography>
-                                  </Button>
-                                </div>
-                              </td>
-                              <td className={className}>
-                                {proveedor != "" ? (
+                                  </div>
+                                </td>
+
+                                <td className={className}>
+                                  <Typography
+                                    variant="small"
+                                    className="text-xs font-medium uppercase text-blue-gray-600"
+                                  >
+                                    {tipoServicio}
+                                  </Typography>
+                                </td>
+                                <td className={className}>
+                                  <Typography
+                                    variant="small"
+                                    className="w-40 text-xs font-black uppercase text-blue-gray-600"
+                                  >
+                                    {nombreCliente}
+                                  </Typography>
+                                </td>
+                                <td className={className}>
                                   <div className="rounded-xl p-1 text-center">
                                     <Button
-                                      className={`min-w-100 -mt-1 h-8 items-center gap-2 whitespace-nowrap bg-transparent px-4 py-1`}
+                                      className={`${
+                                        fechaVencimientoDevolucion
+                                          ? lugarDevolucion
+                                            ? "bg-green-300"
+                                            : "bg-red-200"
+                                          : "bg-red-200"
+                                      } min-w-100 -mt-1 h-8 items-center gap-2 whitespace-nowrap  px-4 py-1 text-black shadow-gray-300`}
+                                      fullWidth
                                       onClick={(e) =>
-                                        handleEquipos(
-                                          e,
+                                        handleCompletarContenedor(
                                           _id,
-                                          proveedor,
-                                          idEquipo,
-                                          chofer,
-                                          camion,
-                                          semi
+                                          numeroContenedor,
+                                          fechaDevolucion,
+                                          horaDevolucion,
+                                          fechaVencimientoDevolucion,
+                                          lugarDevolucion,
+                                          horaDevolucionDesde,
+                                          horaDevolucionHasta
                                         )
                                       }
                                     >
                                       <Typography
                                         variant="small"
-                                        className="flex items-center justify-between text-sm font-medium capitalize text-black"
+                                        className="flex items-center justify-between text-sm font-medium capitalize"
                                       >
                                         <span className="mr-1">
-                                          {nombreChofer
-                                            ? `${nombreChofer} / ${patenteCamion.toUpperCase()} ${
-                                                patenteSemi
-                                                  ? "/" +
-                                                    patenteSemi.toUpperCase()
-                                                  : ""
-                                              }`
-                                            : "Asignar Equipo"}
+                                          {numeroContenedor != 0
+                                            ? numeroContenedor
+                                            : "Ingresar"}
                                         </span>
                                         <div className="h-4 w-4">
                                           <ChevronDownIcon />
@@ -1114,76 +881,362 @@ const ListadoOperacionesCoordinadasParaHoy = () => {
                                       </Typography>
                                     </Button>
                                   </div>
-                                ) : (
-                                  "-"
-                                )}
-                              </td>
+                                </td>
+                                <td className={className}>
+                                  <Typography
+                                    variant="small"
+                                    className="w-40 text-xs font-medium uppercase text-blue-gray-600"
+                                  >
+                                    {tipoCarga === "Contenedor20"
+                                      ? "Contenedor 20"
+                                      : ""}
+                                    {tipoCarga === "Contenedor40"
+                                      ? "Contenedor 40"
+                                      : ""}
+                                    {tipoCarga === "Contenedor40HC"
+                                      ? "Contenedor 40 HC"
+                                      : ""}
+                                    {tipoCarga !== "Contenedor20"
+                                      ? tipoCarga !== "Contendor40"
+                                        ? tipoCarga !== "Contenedor40HC"
+                                          ? tipoCarga
+                                          : ""
+                                        : ""
+                                      : ""}
+                                  </Typography>
+                                </td>
+                                <td className={className}>
+                                  <Typography
+                                    variant="small"
+                                    className="text-center text-xs font-medium text-blue-gray-600"
+                                  >
+                                    {tipoCarga === "Contenedor20" ||
+                                    tipoCarga === "Contenedor40" ||
+                                    tipoCarga === "Contenedor40HC"
+                                      ? "-"
+                                      : cantidadCarga}
+                                  </Typography>
+                                </td>
+                                <td className={className}>
+                                  <Typography
+                                    variant="small"
+                                    className="text-xs font-medium text-blue-gray-600"
+                                  >
+                                    {pesoCarga} Kg
+                                  </Typography>
+                                </td>
+                                <td className={className}>
+                                  <Typography
+                                    variant="small"
+                                    className="text-center text-xs font-medium text-blue-gray-600"
+                                  >
+                                    {volumenCarga === "" ? "-" : volumenCarga}
+                                  </Typography>
+                                </td>
+                                <td className={className}>
+                                  <Typography
+                                    variant="small"
+                                    className="text-xs font-bold uppercase text-red-600"
+                                  >
+                                    {observacionesServicio === ""
+                                      ? "-"
+                                      : observacionesServicio}
+                                  </Typography>
+                                </td>
 
-                              <td className={className}>
-                                <div className="rounded-xl p-1 text-center">
-                                  <Button
-                                    className={`min-w-100 -mt-1 h-8 items-center gap-2 whitespace-nowrap ${
-                                      estadoServicio == "Aceptado"
-                                        ? "bg-deep-orange-300"
-                                        : ""
-                                    } ${
-                                      estadoServicio == "Coordinado"
-                                        ? "bg-green-400 text-black"
-                                        : ""
-                                    } ${
-                                      estadoServicio == "Por Facturar"
-                                        ? "bg-blue-300"
-                                        : ""
-                                    } ${
-                                      estadoServicio == "Terminado"
-                                        ? "bg-blue-gray-500 text-black"
-                                        : ""
-                                    } px-4 py-1`}
-                                    fullWidth
+                                <td className={className}>
+                                  <Typography
+                                    variant="small"
+                                    className="word-wrap break-word w-40 overflow-hidden text-xs font-medium text-blue-gray-600 hover:cursor-pointer"
                                     onClick={(e) =>
-                                      handleCambiarEstadoServicio(
-                                        servicio,
-                                        estadoServicio,
-                                        proveedor,
-                                        adicionales,
-                                        fechaTerminacion,
-                                        horaTerminacion,
-                                        observacionesViaje,
-                                        _id
+                                      handleClickGoogleMaps(
+                                        tipoServicio === "importacion"
+                                          ? fantasiaOrigen +
+                                              " " +
+                                              nombreDomicilioOrigenTerminal
+                                          : tipoServicio === "nacional"
+                                          ? fantasiaOrigen +
+                                            " " +
+                                            nombreDomicilioOrigenCliente
+                                          : tipoServicio === "one-way"
+                                          ? fantasiaOrigen +
+                                            " " +
+                                            nombreDomicilioOrigenCliente
+                                          : tipoServicio === "transito-aduanero"
+                                          ? fantasiaOrigen +
+                                            " " +
+                                            nombreDomicilioOrigenCliente
+                                          : tipoServicio === "vacios"
+                                          ? fantasiaOrigen +
+                                            " " +
+                                            nombreDomicilioOrigenCliente
+                                          : tipoServicio === "round-trip"
+                                          ? fantasiaOrigen +
+                                            " " +
+                                            nombreDomicilioOrigenCliente
+                                          : tipoServicio === "empty-pick"
+                                          ? fantasiaOrigen +
+                                            " " +
+                                            nombreDomicilioOrigenCliente
+                                          : ""
                                       )
                                     }
-                                  >
-                                    <Typography
-                                      variant="small"
-                                      className="flex items-center justify-between text-sm font-medium capitalize"
-                                    >
-                                      <span className="mr-1">
-                                        {estadoServicio}
-                                      </span>
-                                      <div className="h-4 w-4">
-                                        <ChevronDownIcon />
-                                      </div>
-                                    </Typography>
-                                  </Button>
-                                </div>
-                              </td>
-
-                              <td className={className}>
-                                <div className="rounded-xl p-1 text-center">
-                                  <Button
-                                    className={`min-w-100 -mt-1 h-8 items-center gap-2 whitespace-nowrap ${
-                                      estado == "Por Asignar"
-                                        ? "bg-red-300"
-                                        : ""
-                                    } ${
-                                      estado == "Asignado"
-                                        ? "bg-yellow-300 text-black"
-                                        : ""
-                                    } ${
-                                      estado == "Cargando"
-                                        ? "bg-blue-100 text-black"
+                                    title={
+                                      tipoServicio === "importacion"
+                                        ? nombreDomicilioOrigenTerminal
+                                        : tipoServicio === "nacional"
+                                        ? nombreDomicilioOrigenCliente
+                                        : tipoServicio === "one-way"
+                                        ? nombreDomicilioOrigenCliente
+                                        : tipoServicio === "transito-aduanero"
+                                        ? nombreDomicilioOrigenCliente
+                                        : tipoServicio === "vacios"
+                                        ? nombreDomicilioOrigenCliente
+                                        : tipoServicio === "round-trip"
+                                        ? nombreDomicilioOrigenCliente
+                                        : tipoServicio === "empty-pick"
+                                        ? nombreDomicilioOrigenCliente
                                         : ""
                                     }
+                                  >
+                                    {tipoServicio === "importacion"
+                                      ? fantasiaOrigen ??
+                                        nombreDomicilioOrigenTerminal
+                                      : tipoServicio === "nacional"
+                                      ? fantasiaOrigen ??
+                                        nombreDomicilioOrigenCliente
+                                      : tipoServicio === "one-way"
+                                      ? fantasiaOrigen ??
+                                        nombreDomicilioOrigenCliente
+                                      : tipoServicio === "transito-aduanero"
+                                      ? fantasiaOrigen ??
+                                        nombreDomicilioOrigenCliente
+                                      : tipoServicio === "vacios"
+                                      ? fantasiaOrigen ??
+                                        nombreDomicilioOrigenCliente
+                                      : tipoServicio === "importacion"
+                                      ? fantasiaOrigen ??
+                                        nombreDomicilioOrigenTerminal
+                                      : tipoServicio === "round-trip"
+                                      ? fantasiaOrigen ??
+                                        nombreDomicilioOrigenTerminal
+                                      : tipoServicio === "empty-pick"
+                                      ? fantasiaOrigen ??
+                                        nombreDomicilioOrigenTerminal
+                                      : ""}
+                                  </Typography>
+                                </td>
+                                <td className={className}>
+                                  <Typography
+                                    variant="small"
+                                    className="word-wrap break-word w-40 overflow-hidden text-xs font-medium text-blue-gray-600 hover:cursor-pointer"
+                                    onClick={(e) =>
+                                      handleClickGoogleMaps(
+                                        tipoServicio === "importacion"
+                                          ? fantasiaDestino +
+                                              " " +
+                                              nombreDomicilioDestinoCliente
+                                          : tipoServicio === "nacional"
+                                          ? fantasiaDestino +
+                                            " " +
+                                            nombreDomicilioDestinoCliente
+                                          : tipoServicio === "one-way"
+                                          ? fantasiaDestino +
+                                            " " +
+                                            nombreDomicilioDestinoTerminal
+                                          : tipoServicio === "transito-aduanero"
+                                          ? fantasiaDestino +
+                                            " " +
+                                            nombreDomicilioDestinoTerminal
+                                          : tipoServicio === "vacios"
+                                          ? fantasiaDestino +
+                                            " " +
+                                            nombreDomicilioDestinoTerminal
+                                          : tipoServicio === "round-trip"
+                                          ? fantasiaDestino +
+                                            " " +
+                                            nombreDomicilioDestinoTerminal
+                                          : tipoServicio === "empty-pick"
+                                          ? fantasiaDestino +
+                                            " " +
+                                            nombreDomicilioDestinoCliente
+                                          : ""
+                                      )
+                                    }
+                                    title={
+                                      tipoServicio === "importacion"
+                                        ? nombreDomicilioDestinoCliente
+                                        : tipoServicio === "nacional"
+                                        ? nombreDomicilioDestinoCliente
+                                        : tipoServicio === "one-way"
+                                        ? nombreDomicilioDestinoTerminal
+                                        : tipoServicio === "transito-aduanero"
+                                        ? nombreDomicilioDestinoTerminal
+                                        : tipoServicio === "vacios"
+                                        ? nombreDomicilioDestinoTerminal
+                                        : tipoServicio === "round-trip"
+                                        ? nombreDomicilioDestinoTerminal
+                                        : tipoServicio === "empty-pick"
+                                        ? nombreDomicilioDestinoCliente
+                                        : ""
+                                    }
+                                  >
+                                    {tipoServicio === "importacion"
+                                      ? fantasiaDestino ??
+                                        nombreDomicilioDestinoCliente
+                                      : tipoServicio === "nacional"
+                                      ? fantasiaDestino ??
+                                        nombreDomicilioDestinoCliente
+                                      : tipoServicio === "one-way"
+                                      ? fantasiaDestino ??
+                                        nombreDomicilioDestinoTerminal
+                                      : tipoServicio === "transito-aduanero"
+                                      ? fantasiaDestino ??
+                                        nombreDomicilioDestinoTerminal
+                                      : tipoServicio === "vacios"
+                                      ? fantasiaDestino ??
+                                        nombreDomicilioDestinoTerminal
+                                      : tipoServicio === "round-trip"
+                                      ? fantasiaDestino ??
+                                        nombreDomicilioDestinoTerminal
+                                      : tipoServicio === "empty-pick"
+                                      ? fantasiaDestino ??
+                                        nombreDomicilioDestinoCliente
+                                      : ""}
+                                  </Typography>
+                                  {/* </Button> */}
+                                </td>
+                                <td className={className}>
+                                  <div className="rounded-xl p-1 text-center">
+                                    <Button
+                                      className={`min-w-100 -mt-1 h-8 items-center gap-2 whitespace-nowrap bg-transparent px-4 py-1`}
+                                      onClick={(e) =>
+                                        handleReasignar(e, proveedor, _id)
+                                      }
+                                    >
+                                      <Typography
+                                        variant="small"
+                                        className="flex items-center justify-between text-sm font-medium capitalize text-black"
+                                      >
+                                        <span className="mr-1">
+                                          {nombreProveedor
+                                            ? nombreProveedor
+                                            : "Asignar Proveedor"}
+                                        </span>
+                                        <div className="h-4 w-4">
+                                          <ChevronDownIcon />
+                                        </div>
+                                      </Typography>
+                                    </Button>
+                                  </div>
+                                </td>
+                                <td className={className}>
+                                  {proveedor != "" ? (
+                                    <div className="rounded-xl p-1 text-center">
+                                      <Button
+                                        className={`min-w-100 -mt-1 h-8 items-center gap-2 whitespace-nowrap bg-transparent px-4 py-1`}
+                                        onClick={(e) =>
+                                          handleEquipos(
+                                            e,
+                                            _id,
+                                            proveedor,
+                                            idEquipo,
+                                            chofer,
+                                            camion,
+                                            semi
+                                          )
+                                        }
+                                      >
+                                        <Typography
+                                          variant="small"
+                                          className="flex items-center justify-between text-sm font-medium capitalize text-black"
+                                        >
+                                          <span className="mr-1">
+                                            {nombreChofer
+                                              ? `${nombreChofer} / ${patenteCamion.toUpperCase()} ${
+                                                  patenteSemi
+                                                    ? "/" +
+                                                      patenteSemi.toUpperCase()
+                                                    : ""
+                                                }`
+                                              : "Asignar Equipo"}
+                                          </span>
+                                          <div className="h-4 w-4">
+                                            <ChevronDownIcon />
+                                          </div>
+                                        </Typography>
+                                      </Button>
+                                    </div>
+                                  ) : (
+                                    "-"
+                                  )}
+                                </td>
+
+                                <td className={className}>
+                                  <div className="rounded-xl p-1 text-center">
+                                    <Button
+                                      className={`min-w-100 -mt-1 h-8 items-center gap-2 whitespace-nowrap ${
+                                        estadoServicio == "Aceptado"
+                                          ? "bg-deep-orange-300"
+                                          : ""
+                                      } ${
+                                        estadoServicio == "Coordinado"
+                                          ? "bg-green-400 text-black"
+                                          : ""
+                                      } ${
+                                        estadoServicio == "Por Facturar"
+                                          ? "bg-blue-300"
+                                          : ""
+                                      } ${
+                                        estadoServicio == "Terminado"
+                                          ? "bg-blue-gray-500 text-black"
+                                          : ""
+                                      } px-4 py-1`}
+                                      fullWidth
+                                      onClick={(e) =>
+                                        handleCambiarEstadoServicio(
+                                          servicio,
+                                          estadoServicio,
+                                          proveedor,
+                                          adicionales,
+                                          fechaTerminacion,
+                                          horaTerminacion,
+                                          observacionesViaje,
+                                          _id
+                                        )
+                                      }
+                                    >
+                                      <Typography
+                                        variant="small"
+                                        className="flex items-center justify-between text-sm font-medium capitalize"
+                                      >
+                                        <span className="mr-1">
+                                          {estadoServicio}
+                                        </span>
+                                        <div className="h-4 w-4">
+                                          <ChevronDownIcon />
+                                        </div>
+                                      </Typography>
+                                    </Button>
+                                  </div>
+                                </td>
+
+                                <td className={className}>
+                                  <div className="rounded-xl p-1 text-center">
+                                    <Button
+                                      className={`min-w-100 -mt-1 h-8 items-center gap-2 whitespace-nowrap ${
+                                        estado == "Por Asignar"
+                                          ? "bg-red-300"
+                                          : ""
+                                      } ${
+                                        estado == "Asignado"
+                                          ? "bg-yellow-300 text-black"
+                                          : ""
+                                      } ${
+                                        estado == "Cargando"
+                                          ? "bg-blue-100 text-black"
+                                          : ""
+                                      }
                                   ${estado == "Transito" ? "bg-blue-300" : ""}
                                   ${
                                     estado == "Descargando" ? "bg-blue-500" : ""
@@ -1193,216 +1246,220 @@ const ListadoOperacionesCoordinadasParaHoy = () => {
                                       ? "bg-orange-300"
                                       : ""
                                   } ${
-                                      estado == "Terminado"
-                                        ? "bg-green-300 "
-                                        : ""
-                                    } px-4 py-1`}
-                                    fullWidth
-                                    onClick={(e) =>
-                                      handleCambiarEstado(_id, estado, chofer)
-                                    }
-                                  >
-                                    <Typography
-                                      variant="small"
-                                      className="flex items-center justify-between text-sm font-medium capitalize"
+                                        estado == "Terminado"
+                                          ? "bg-green-300 "
+                                          : ""
+                                      } px-4 py-1`}
+                                      fullWidth
+                                      onClick={(e) =>
+                                        handleCambiarEstado(_id, estado, chofer)
+                                      }
                                     >
-                                      <span className="mr-1">{estado}</span>
-                                      <div className="h-4 w-4">
-                                        <ChevronDownIcon />
-                                      </div>
-                                    </Typography>
-                                  </Button>
-                                </div>
-                              </td>
+                                      <Typography
+                                        variant="small"
+                                        className="flex items-center justify-between text-sm font-medium capitalize"
+                                      >
+                                        <span className="mr-1">{estado}</span>
+                                        <div className="h-4 w-4">
+                                          <ChevronDownIcon />
+                                        </div>
+                                      </Typography>
+                                    </Button>
+                                  </div>
+                                </td>
 
-                              <td className={className}>
-                                <div className="rounded-xl p-1 text-center">
-                                  <Button
-                                    className={`min-w-100 -mt-1 h-8 items-center gap-2 whitespace-nowrap bg-transparent px-4 py-1`}
-                                    onClick={(e) =>
-                                      handleCompletarData(
-                                        _id,
-                                        adicionales,
-                                        fechaTerminacion,
-                                        horaTerminacion,
-                                        diasDemora,
-                                        observacionesViaje
-                                      )
-                                    }
-                                  >
-                                    <Typography
-                                      variant="small"
-                                      className="flex items-center justify-between text-sm font-medium capitalize text-black"
-                                    >
-                                      <span className="mr-1 uppercase">
-                                        {adicionales ? (
-                                          adicionales === "Vacio" ? (
-                                            "Vacio al dia siguiente"
-                                          ) : (
-                                            adicionales
-                                          )
-                                        ) : (
-                                          <ArrowsPointingOutIcon className="h-4 w-4" />
-                                        )}
-                                      </span>
-                                    </Typography>
-                                  </Button>
-                                </div>
-                              </td>
-                              <td className={className}>
-                                <div className="rounded-xl p-1 text-center">
-                                  <Button
-                                    className={`min-w-100 -mt-1 h-8 items-center gap-2 whitespace-nowrap bg-transparent px-4 py-1`}
-                                    onClick={(e) =>
-                                      handleCompletarData(
-                                        _id,
-                                        adicionales,
-                                        fechaTerminacion,
-                                        horaTerminacion,
-                                        diasDemora,
-                                        observacionesViaje
-                                      )
-                                    }
-                                  >
-                                    <Typography
-                                      variant="small"
-                                      className="flex items-center justify-between text-sm font-medium capitalize text-black"
-                                    >
-                                      <span className="mr-1">
-                                        {fechaTerminacion ? (
-                                          fechaTerminacion
-                                        ) : (
-                                          <ArrowsPointingOutIcon className="h-4 w-4" />
-                                        )}
-                                      </span>
-                                    </Typography>
-                                  </Button>
-                                </div>
-                              </td>
-                              <td className={className}>
-                                <div className="rounded-xl p-1 text-center">
-                                  <Button
-                                    className={`min-w-100 -mt-1 h-8 items-center gap-2 whitespace-nowrap bg-transparent px-4 py-1`}
-                                    onClick={(e) =>
-                                      handleCompletarData(
-                                        _id,
-                                        adicionales,
-                                        fechaTerminacion,
-                                        horaTerminacion,
-                                        diasDemora,
-                                        observacionesViaje
-                                      )
-                                    }
-                                  >
-                                    <Typography
-                                      variant="small"
-                                      className="flex items-center justify-between text-sm font-medium capitalize text-black"
-                                    >
-                                      <span className="mr-1">
-                                        {horaTerminacion ? (
-                                          horaTerminacion
-                                        ) : (
-                                          <ArrowsPointingOutIcon className="h-4 w-4" />
-                                        )}
-                                      </span>
-                                    </Typography>
-                                  </Button>
-                                </div>
-                              </td>
-                              <td className={className}>
-                                <div className="rounded-xl p-1 text-center">
-                                  <Button
-                                    className={`min-w-100 -mt-1 h-8 items-center gap-2 whitespace-nowrap bg-transparent px-4 py-1`}
-                                    onClick={(e) =>
-                                      handleCompletarData(
-                                        _id,
-                                        adicionales,
-                                        fechaTerminacion,
-                                        horaTerminacion,
-                                        diasDemora,
-                                        observacionesViaje
-                                      )
-                                    }
-                                  >
-                                    <Typography
-                                      variant="small"
-                                      className="flex items-center justify-between text-sm font-medium capitalize text-black"
-                                    >
-                                      <span className="mr-1">
-                                        {observacionesViaje ? (
+                                <td className={className}>
+                                  <div className="rounded-xl p-1 text-center">
+                                    <Button
+                                      className={`min-w-100 -mt-1 h-8 items-center gap-2 whitespace-nowrap bg-transparent px-4 py-1`}
+                                      onClick={(e) =>
+                                        handleCompletarData(
+                                          _id,
+                                          adicionales,
+                                          fechaTerminacion,
+                                          horaTerminacion,
+                                          diasDemora,
                                           observacionesViaje
-                                        ) : (
-                                          <ArrowsPointingOutIcon className="h-4 w-4" />
-                                        )}
-                                      </span>
-                                    </Typography>
-                                  </Button>
-                                </div>
-                              </td>
-
-                              <td className={className}>
-                                <Typography
-                                  variant="small"
-                                  className="mx-2 flex text-xs font-medium text-blue-gray-600"
-                                >
-                                  <Button
-                                    color="blue"
-                                    className="mx-1 items-center gap-4 px-6 capitalize"
-                                    fullWidth
-                                    onClick={(e) =>
-                                      handleEditarViaje(
-                                        _id,
-                                        numeroContenedor,
-                                        nombreDomicilioOrigenTerminal,
-                                        nombreDomicilioOrigenCliente,
-                                        nombreDomicilioDestinoCliente,
-                                        nombreDomicilioDestinoTerminal,
-                                        fechaOrigen,
-                                        estado,
-                                        proveedor,
-                                        horaOrigen,
-                                        nombreProveedor,
-                                        nombreChofer,
-                                        patenteCamion,
-                                        patenteSemi,
-                                        tipoServicio,
-                                        observacionesViaje,
-                                        pesoCarga,
-                                        volumenCarga,
-                                        cantidadCarga,
-                                        tipoCarga,
-                                        cliente,
-                                        direccionRetorno,
-                                        domicilioOrigenTerminal,
-                                        domicilioOrigenCliente,
-                                        domicilioDestinoTerminal,
-                                        domicilioDestinoCliente,
-                                        fechaDevolucion,
-                                        horaDevolucion,
-                                        fechaVencimientoDevolucion,
-                                        lugarDevolucion
-                                      )
-                                    }
-                                  >
-                                    <Typography
-                                      color="inherit"
-                                      className="font-medium capitalize"
+                                        )
+                                      }
                                     >
-                                      Editar
-                                    </Typography>
-                                  </Button>
-                                </Typography>
-                              </td>
-                            </tr>
-                          );
-                        }
-                      )}
-                  </tbody>
-                </table>
-              </div>
-            </CardBody>
-          </Card>
-        </div>
+                                      <Typography
+                                        variant="small"
+                                        className="flex items-center justify-between text-sm font-medium capitalize text-black"
+                                      >
+                                        <span className="mr-1 uppercase">
+                                          {adicionales ? (
+                                            adicionales === "Vacio" ? (
+                                              "Vacio al dia siguiente"
+                                            ) : (
+                                              adicionales
+                                            )
+                                          ) : (
+                                            <ArrowsPointingOutIcon className="h-4 w-4" />
+                                          )}
+                                        </span>
+                                      </Typography>
+                                    </Button>
+                                  </div>
+                                </td>
+                                <td className={className}>
+                                  <div className="rounded-xl p-1 text-center">
+                                    <Button
+                                      className={`min-w-100 -mt-1 h-8 items-center gap-2 whitespace-nowrap bg-transparent px-4 py-1`}
+                                      onClick={(e) =>
+                                        handleCompletarData(
+                                          _id,
+                                          adicionales,
+                                          fechaTerminacion,
+                                          horaTerminacion,
+                                          diasDemora,
+                                          observacionesViaje
+                                        )
+                                      }
+                                    >
+                                      <Typography
+                                        variant="small"
+                                        className="flex items-center justify-between text-sm font-medium capitalize text-black"
+                                      >
+                                        <span className="mr-1">
+                                          {fechaTerminacion ? (
+                                            fechaTerminacion
+                                          ) : (
+                                            <ArrowsPointingOutIcon className="h-4 w-4" />
+                                          )}
+                                        </span>
+                                      </Typography>
+                                    </Button>
+                                  </div>
+                                </td>
+                                <td className={className}>
+                                  <div className="rounded-xl p-1 text-center">
+                                    <Button
+                                      className={`min-w-100 -mt-1 h-8 items-center gap-2 whitespace-nowrap bg-transparent px-4 py-1`}
+                                      onClick={(e) =>
+                                        handleCompletarData(
+                                          _id,
+                                          adicionales,
+                                          fechaTerminacion,
+                                          horaTerminacion,
+                                          diasDemora,
+                                          observacionesViaje
+                                        )
+                                      }
+                                    >
+                                      <Typography
+                                        variant="small"
+                                        className="flex items-center justify-between text-sm font-medium capitalize text-black"
+                                      >
+                                        <span className="mr-1">
+                                          {horaTerminacion ? (
+                                            horaTerminacion
+                                          ) : (
+                                            <ArrowsPointingOutIcon className="h-4 w-4" />
+                                          )}
+                                        </span>
+                                      </Typography>
+                                    </Button>
+                                  </div>
+                                </td>
+                                <td className={className}>
+                                  <div className="rounded-xl p-1 text-center">
+                                    <Button
+                                      className={`min-w-100 -mt-1 h-8 items-center gap-2 whitespace-nowrap bg-transparent px-4 py-1`}
+                                      onClick={(e) =>
+                                        handleCompletarData(
+                                          _id,
+                                          adicionales,
+                                          fechaTerminacion,
+                                          horaTerminacion,
+                                          diasDemora,
+                                          observacionesViaje
+                                        )
+                                      }
+                                    >
+                                      <Typography
+                                        variant="small"
+                                        className="flex items-center justify-between text-sm font-medium capitalize text-black"
+                                      >
+                                        <span className="mr-1">
+                                          {observacionesViaje ? (
+                                            observacionesViaje
+                                          ) : (
+                                            <ArrowsPointingOutIcon className="h-4 w-4" />
+                                          )}
+                                        </span>
+                                      </Typography>
+                                    </Button>
+                                  </div>
+                                </td>
+
+                                <td className={className}>
+                                  <Typography
+                                    variant="small"
+                                    className="mx-2 flex text-xs font-medium text-blue-gray-600"
+                                  >
+                                    <Button
+                                      color="blue"
+                                      className="mx-1 items-center gap-4 px-6 capitalize"
+                                      fullWidth
+                                      onClick={(e) =>
+                                        handleEditarViaje(
+                                          _id,
+                                          numeroContenedor,
+                                          nombreDomicilioOrigenTerminal,
+                                          nombreDomicilioOrigenCliente,
+                                          nombreDomicilioDestinoCliente,
+                                          nombreDomicilioDestinoTerminal,
+                                          fechaOrigen,
+                                          estado,
+                                          proveedor,
+                                          horaOrigen,
+                                          nombreProveedor,
+                                          nombreChofer,
+                                          patenteCamion,
+                                          patenteSemi,
+                                          tipoServicio,
+                                          observacionesViaje,
+                                          pesoCarga,
+                                          volumenCarga,
+                                          cantidadCarga,
+                                          tipoCarga,
+                                          cliente,
+                                          direccionRetorno,
+                                          domicilioOrigenTerminal,
+                                          domicilioOrigenCliente,
+                                          domicilioDestinoTerminal,
+                                          domicilioDestinoCliente,
+                                          fechaDevolucion,
+                                          horaDevolucion,
+                                          fechaVencimientoDevolucion,
+                                          lugarDevolucion
+                                        )
+                                      }
+                                    >
+                                      <Typography
+                                        color="inherit"
+                                        className="font-medium capitalize"
+                                      >
+                                        Editar
+                                      </Typography>
+                                    </Button>
+                                  </Typography>
+                                </td>
+                              </tr>
+                            );
+                          }
+                        )}
+                    </tbody>
+                  </table>
+                </div>
+              </CardBody>
+            </Card>
+          </div>
+        ) : (
+          <div className="text-center">No tiene viajes coordinados</div>
+        )}
+
         {cargando ? <Cargando /> : ""}
         {modalFiltrarViajes ? <ModalFiltrarViajes /> : ""}
         {modalNuevoProveedor ? <ModalNuevoProveedor /> : ""}

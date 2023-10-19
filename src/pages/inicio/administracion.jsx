@@ -59,11 +59,11 @@ const Administracion = () => {
 
   return (
     <>
-      <div className="mt-20 flex flex-wrap justify-between">
+      <div className="mt-10 flex flex-wrap justify-between">
         <ToastContainer pauseOnFocusLoss={false} />
 
         <div
-          className="w-1/3 p-2 hover:cursor-pointer"
+          className="w-full p-2 hover:cursor-pointer md:w-1/3"
           onClick={(e) => handleNuevaFactura()}
         >
           <div className="rounded-2xl bg-white p-4 shadow-lg dark:bg-gray-800">
@@ -83,7 +83,7 @@ const Administracion = () => {
         </div>
 
         <div
-          className="w-1/3 p-2 hover:cursor-pointer"
+          className="w-full p-2 hover:cursor-pointer md:w-1/3"
           onClick={(e) => handleTodosServicios()}
         >
           <div className="rounded-2xl bg-white p-4 shadow-lg dark:bg-gray-800">
@@ -101,7 +101,7 @@ const Administracion = () => {
             </div>
           </div>
         </div>
-        <div className="w-1/3 p-2">
+        <div className="w-full p-2 hover:cursor-pointer md:w-1/3">
           <div className="rounded-2xl bg-white p-4 shadow-lg dark:bg-gray-800">
             <div className="flex flex-row items-center justify-between gap-4">
               <div className="flex-shrink-0">
@@ -122,7 +122,7 @@ const Administracion = () => {
 
       <div className="mt-5 flex flex-wrap justify-between">
         <div
-          className="w-1/3 p-2 hover:cursor-pointer"
+          className="w-full p-2 hover:cursor-pointer md:w-1/3"
           onClick={(e) => handleAyer()}
         >
           <div className="rounded-2xl bg-white p-4 shadow-lg dark:bg-gray-800">

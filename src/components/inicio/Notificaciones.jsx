@@ -57,7 +57,7 @@ const Notificaciones = () => {
   };
 
   return (
-    <div className="relative z-50" ref={contenedorRef}>
+    <div className="z-09 relative" ref={contenedorRef}>
       <div
         className="group"
         onMouseEnter={handleHover}
@@ -67,7 +67,7 @@ const Notificaciones = () => {
         <BellAlertIcon className="h-8 w-8 cursor-pointer text-blue-gray-200" />
 
         {/* Número con círculo rojo */}
-        <div className="absolute top-0 right-0">
+        <div className="absolute right-0 top-0">
           <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs text-white">
             {notificaciones.length}
           </span>
@@ -77,7 +77,7 @@ const Notificaciones = () => {
       {/* Popover de notificaciones */}
       {(mostrarNotificaciones || contenedorFijado) && (
         <div
-          className="absolute top-10 right-0 z-50"
+          className="absolute right-0 top-10 z-50"
           onMouseEnter={handleHover}
           onMouseLeave={handleLeave}
         >

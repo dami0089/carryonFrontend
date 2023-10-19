@@ -77,11 +77,11 @@ export function Logistica() {
 
   return (
     <>
-      <div className="mt-20 flex flex-wrap justify-between">
+      <div className="mt-10 flex flex-wrap justify-between">
         <ToastContainer pauseOnFocusLoss={false} />
 
         <div
-          className="w-1/3 p-2 hover:cursor-pointer"
+          className="w-full p-2 hover:cursor-pointer md:w-1/3"
           onClick={(e) => handleNuevoServicio()}
         >
           <div className="rounded-2xl bg-white p-4 shadow-lg dark:bg-gray-800">
@@ -101,7 +101,7 @@ export function Logistica() {
         </div>
 
         <div
-          className="w-1/3 p-2 hover:cursor-pointer"
+          className="w-full p-2 hover:cursor-pointer md:w-1/3"
           onClick={(e) => handleTodosServicios()}
         >
           <div className="rounded-2xl bg-white p-4 shadow-lg dark:bg-gray-800">
@@ -120,7 +120,7 @@ export function Logistica() {
           </div>
         </div>
         <div
-          className="w-1/3 p-2 hover:cursor-pointer"
+          className="w-full p-2 hover:cursor-pointer md:w-1/3"
           onClick={(e) => handlePendiente()}
         >
           <div className="rounded-2xl bg-white p-4 shadow-lg dark:bg-gray-800">
@@ -143,7 +143,7 @@ export function Logistica() {
 
       <div className="mt-5 flex flex-wrap justify-between">
         <div
-          className="w-1/4 p-2 hover:cursor-pointer"
+          className="w-full p-2 hover:cursor-pointer md:w-1/4"
           onClick={(e) => handleAyer()}
         >
           <div className="rounded-2xl bg-white p-4 shadow-lg dark:bg-gray-800">
@@ -161,7 +161,7 @@ export function Logistica() {
             </div>
           </div>
         </div>
-        <div className="w-1/4 p-2">
+        <div className="w-full p-2 hover:cursor-pointer md:w-1/4">
           <div
             className="rounded-2xl bg-white p-4 shadow-lg hover:cursor-pointer dark:bg-gray-800"
             onClick={(e) => handleHoy()}
@@ -180,7 +180,7 @@ export function Logistica() {
             </div>
           </div>
         </div>
-        <div className="w-1/4 p-2">
+        <div className="w-full p-2 hover:cursor-pointer md:w-1/4">
           <div
             className="rounded-2xl bg-white p-4 shadow-lg hover:cursor-pointer dark:bg-gray-800"
             onClick={(e) => handleManana()}
@@ -199,7 +199,7 @@ export function Logistica() {
             </div>
           </div>
         </div>
-        <div className="w-1/4 p-2">
+        <div className="w-full p-2 hover:cursor-pointer md:w-1/4">
           <div
             className="rounded-2xl bg-white p-4 shadow-lg hover:cursor-pointer dark:bg-gray-800"
             onClick={(e) => handleproximos()}

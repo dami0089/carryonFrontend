@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
 export const MaterialTailwind = React.createContext(null);
@@ -30,10 +30,20 @@ export function reducer(state, action) {
   }
 }
 
+function isScreenLarge() {
+  // Verifica si estás en el lado del cliente
+  if (typeof window !== "undefined") {
+    // Por ejemplo, considera "grande" a pantallas mayores a 1280px (punto de interrupción 'xl' de Tailwind)
+    return window.innerWidth > 1000;
+  }
+  // Si no estás en el lado del cliente, asume que es grande por defecto
+  return true;
+}
+
 export function MaterialTailwindControllerProvider({ children }) {
   const initialState = {
-    openSidenav: true,
-    sidenavColor: "blue-gray",
+    openSidenav: isScreenLarge(),
+    sidenavColor: "blue",
     sidenavType: "white",
     transparentNavbar: true,
     fixedNavbar: false,
@@ -68,13 +78,11 @@ export function useMaterialTailwindController() {
 MaterialTailwindControllerProvider.displayName = "/src/context/index.jsx";
 
 MaterialTailwindControllerProvider.propTypes = {
-  // children: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
-export const setOpenSidenav = (dispatch, value) => {
-  console.log(value);
+export const setOpenSidenav = (dispatch, value) =>
   dispatch({ type: "OPEN_SIDENAV", value });
-};
 export const setSidenavType = (dispatch, value) =>
   dispatch({ type: "SIDENAV_TYPE", value });
 export const setSidenavColor = (dispatch, value) =>

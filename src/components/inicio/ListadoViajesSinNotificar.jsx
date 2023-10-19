@@ -29,7 +29,6 @@ const ListadoViajesSinNotificar = () => {
     handleCargando,
   } = useServicios();
 
-  const { setSelectInicio, setSeleccion, setValueProfile } = useClientes();
   const [recargarListado, setRecargarListado] = useState(false);
 
   useEffect(() => {
@@ -58,13 +57,6 @@ const ListadoViajesSinNotificar = () => {
     obtenerViajes();
   }, [recargarListado]);
 
-  const handleVolverInicio = (e) => {
-    e.preventDefault();
-    setSelectInicio(1);
-    setIdViajeAsignarProveedor("");
-    setIdObtenerServicio("");
-    setBuscoActualizaciones(true);
-  };
   const handleNotificar = async (_id) => {
     handleCargando();
     await notificarViajes(_id);
@@ -78,22 +70,15 @@ const ListadoViajesSinNotificar = () => {
 
   return (
     <>
-      <div className="mt-20">
+      <div className="mt-8">
         <ToastContainer pauseOnFocusLoss={false} />
 
         <div className="mb-5 flex justify-between">
           <Typography className="font-bold uppercase">
             Servicios sin Notificar
           </Typography>
-          <Button
-            className="w-30 mx-2 bg-green-300 text-center"
-            fullWidth
-            onClick={(e) => handleVolverInicio(e)}
-          >
-            Volver a Inicio
-          </Button>
         </div>
-        <CardBody className=" overflow-x-scroll px-0 pt-0 pb-2">
+        <CardBody className=" overflow-x-scroll px-0 pb-2 pt-0">
           <table className="w-full min-w-[640px] table-auto">
             <thead>
               <tr>
@@ -108,7 +93,7 @@ const ListadoViajesSinNotificar = () => {
                 ].map((el) => (
                   <th
                     key={el}
-                    className="border-b border-blue-gray-50 py-3 px-6 text-left"
+                    className="border-b border-blue-gray-50 px-6 py-3 text-left"
                   >
                     <Typography
                       variant="small"
@@ -203,7 +188,7 @@ const ListadoViajesSinNotificar = () => {
                         <td className={className}>
                           <Button
                             color="blue"
-                            className="-mt-1 h-8 items-center gap-4 px-6 pt-1 pb-1 capitalize"
+                            className="-mt-1 h-8 items-center gap-4 px-6 pb-1 pt-1 capitalize"
                             fullWidth
                             onClick={(e) => handleNotificar(_id)}
                           >
@@ -220,7 +205,7 @@ const ListadoViajesSinNotificar = () => {
                         <td className={className}>
                           <Button
                             color="blue"
-                            className="-mt-1 h-8 items-center gap-4 px-6 pt-1 pb-1 capitalize"
+                            className="-mt-1 h-8 items-center gap-4 px-6 pb-1 pt-1 capitalize"
                             fullWidth
                             onClick={(e) => handleAceptar(_id)}
                           >

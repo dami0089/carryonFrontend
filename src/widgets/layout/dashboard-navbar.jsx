@@ -102,7 +102,7 @@ export function DashboardNavbar() {
 
   return (
     <Navbar
-      color={fixedNavbar ? "white" : "transparent"}
+      color={"transparent"}
       className={`rounded-xl transition-all ${
         fixedNavbar
           ? "sticky top-4 z-40 py-3 shadow-md shadow-blue-gray-500/5"
@@ -111,16 +111,77 @@ export function DashboardNavbar() {
       fullWidth
       blurred={fixedNavbar}
     >
-      <div className="flex flex-wrap items-center justify-between">
-        <div className="flex items-center">
-          {auth.rol === "proveedor" && ""}
-          <div className="capitalize"></div>
+      <div className="hidden items-center gap-6 xl:flex">
+        <div className="flex w-full justify-between gap-6">
+          <div>
+            <IconButton
+              variant="text"
+              color="blue-gray"
+              onClick={() => onClickHandler()}
+            >
+              <Bars3Icon
+                strokeWidth={3}
+                className="h-6 w-6 text-blue-gray-500"
+              />
+            </IconButton>
+          </div>
+          <div className="flex items-center gap-6">
+            <Buscar />
+            <QrCodeIcon
+              className={`h-8 w-8 text-black hover:cursor-pointer ${
+                autenticado == "1"
+                  ? "text-green-300"
+                  : autenticado == "2"
+                  ? "text-red-300"
+                  : autenticado == "0"
+                  ? "text-gray-300"
+                  : ""
+              }`}
+              onClick={(e) => handleAbrirModal()}
+            />
+            <Link to="">
+              <Button
+                variant="text"
+                color="blue-gray"
+                disabled={true}
+                className="hidden items-center gap-1 px-4 xl:flex"
+              >
+                <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />
+                {auth.nombre} {auth.apellido}
+              </Button>
+              <IconButton
+                variant="text"
+                color="blue-gray"
+                className="grid xl:hidden"
+              >
+                <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />
+              </IconButton>
+            </Link>
+            <Menu onClick={handleclose}>
+              <MenuHandler onClick={handleclose}>
+                <IconButton variant="text" color="blue-gray">
+                  <ArrowLeftOnRectangleIcon
+                    className="h-5 w-5 text-blue-gray-500"
+                    onClick={handleclose}
+                  />
+                </IconButton>
+              </MenuHandler>
+            </Menu>
+          </div>
         </div>
-        <div className="ml-auto flex items-center gap-6">
-          {auth.rol === "admin" && <Buscar />}
-          <Notificaciones />
+      </div>
+      <div className="ml-auto flex flex-col items-center  gap-6 xl:hidden">
+        <div className="flex items-center justify-between gap-6">
+          <IconButton
+            variant="text"
+            color="blue-gray"
+            className="xl:grid"
+            onClick={() => onClickHandler()}
+          >
+            <Bars3Icon strokeWidth={3} className="h-6 w-6 text-blue-gray-500" />
+          </IconButton>
           <QrCodeIcon
-            className={`h-8 w-8 text-black hover:cursor-pointer ${
+            className={`h-8 w-8 text-black hover:cursor-pointer md:hidden ${
               autenticado == "1"
                 ? "text-green-300"
                 : autenticado == "2"
@@ -131,16 +192,7 @@ export function DashboardNavbar() {
             }`}
             onClick={(e) => handleAbrirModal()}
           />
-          <IconButton
-            variant="text"
-            color="blue-gray"
-            className="grid "
-            onClick={() => onClickHandler()}
-          >
-            <Bars3Icon strokeWidth={3} className="h-6 w-6 text-blue-gray-500" />
-          </IconButton>
-
-          <Link to="">
+          {/* <Link to="">
             <Button
               variant="text"
               color="blue-gray"
@@ -157,7 +209,7 @@ export function DashboardNavbar() {
             >
               <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />
             </IconButton>
-          </Link>
+          </Link> */}
 
           <Menu onClick={handleclose}>
             <MenuHandler onClick={handleclose}>
@@ -170,7 +222,11 @@ export function DashboardNavbar() {
             </MenuHandler>
           </Menu>
         </div>
+        <div className="text-center">
+          <Buscar />
+        </div>
       </div>
+
       <Cargando />
     </Navbar>
   );
