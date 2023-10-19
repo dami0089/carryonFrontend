@@ -8,6 +8,7 @@ import {
   Input,
   Menu,
   MenuHandler,
+  Avatar,
 } from "@material-tailwind/react";
 import {
   UserCircleIcon,
@@ -180,7 +181,7 @@ export function DashboardNavbar() {
           >
             <Bars3Icon strokeWidth={3} className="h-6 w-6 text-blue-gray-500" />
           </IconButton>
-          <QrCodeIcon
+          {/* <QrCodeIcon
             className={`h-8 w-8 text-black hover:cursor-pointer md:hidden ${
               autenticado == "1"
                 ? "text-green-300"
@@ -191,25 +192,12 @@ export function DashboardNavbar() {
                 : ""
             }`}
             onClick={(e) => handleAbrirModal()}
+          /> */}
+          <Avatar
+            src={"/public/img/Logo-en-Blanco.png"}
+            size="md"
+            className="w-30"
           />
-          {/* <Link to="">
-            <Button
-              variant="text"
-              color="blue-gray"
-              disabled={true}
-              className="hidden items-center gap-1 px-4 xl:flex"
-            >
-              <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />
-              {auth.nombre} {auth.apellido}
-            </Button>
-            <IconButton
-              variant="text"
-              color="blue-gray"
-              className="grid xl:hidden"
-            >
-              <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />
-            </IconButton>
-          </Link> */}
 
           <Menu onClick={handleclose}>
             <MenuHandler onClick={handleclose}>

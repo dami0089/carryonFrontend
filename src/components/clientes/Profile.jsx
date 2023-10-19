@@ -51,6 +51,7 @@ import ModalNuevoServicioDesdeFicha from "./servicios/ModalNuevoServicioDesdeFic
 import ModalEditarDomicilio from "./profileCliente/ModalEditarDomicilio";
 import useProveedores from "@/hooks/useProveedores";
 import ListadosUsuariosProfile from "./ListadosUsuariosProfile";
+import ModalEditarUsuarioCliente from "./ModalEditarUsuarioCliente";
 
 export function Profile() {
   const {
@@ -91,6 +92,7 @@ export function Profile() {
     modalResumen,
     modalNuevoServicio3,
     modalNuevoServicio4,
+    modalEditarUsuarioCliente,
   } = useClientes();
 
   const {
@@ -194,7 +196,7 @@ export function Profile() {
     <>
       <ToastContainer pauseOnFocusLoss={false} />
 
-      <Card className="mx-3 mt-10 mb-6 lg:mx-4">
+      <Card className="mx-3 mb-6 mt-10 lg:mx-4">
         <CardBody className="p-4">
           <div className="mb-10 flex items-center justify-between gap-6">
             <div className="flex items-center gap-6">
@@ -302,6 +304,7 @@ export function Profile() {
       {modalCargarDevolucion ? <ModalDevolucion /> : ""}
 
       {modalEditarDomicilio ? <ModalEditarDomicilio /> : ""}
+      {modalEditarUsuarioCliente ? <ModalEditarUsuarioCliente /> : ""}
 
       <ModalNuevoUsuario />
       <Cargando />
