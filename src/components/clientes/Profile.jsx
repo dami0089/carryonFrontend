@@ -16,8 +16,6 @@ import {
   UserGroupIcon,
 } from "@heroicons/react/24/solid";
 
-import { SpinnerCircular } from "spinners-react";
-
 import useClientes from "@/hooks/useClientes";
 import useServicios from "@/hooks/useServicios";
 import { useEffect, useState } from "react";

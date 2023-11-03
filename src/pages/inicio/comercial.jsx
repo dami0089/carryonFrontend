@@ -61,136 +61,141 @@ const Comercial = () => {
     navigate("/proveedores/listado-proveedores");
   };
 
+  const handleLiquidacionClientes = (e) => {
+    e.preventDefault();
+    navigate("/administracion/liquidacion-clientes");
+  };
+
+  const handleLiquidacionProveedores = (e) => {
+    e.preventDefault();
+    navigate("/administracion/liquidacion-proveedores");
+  };
+
   return (
     <>
-      {seleccionComercial == 1 ? (
-        <>
-          <div className="mt-10 flex flex-wrap justify-between">
-            <ToastContainer pauseOnFocusLoss={false} />
+      <div className="mt-10 flex flex-wrap justify-between">
+        <ToastContainer pauseOnFocusLoss={false} />
 
-            <div
-              className="w-full p-2 hover:cursor-pointer md:w-1/3"
-              onClick={(e) => handleModalNuevoCliente()}
-            >
-              <div className="rounded-2xl bg-white p-4 shadow-lg dark:bg-gray-800">
-                <div className="flex flex-row items-center justify-between gap-4">
-                  <div className="flex-shrink-0">
-                    <a href="#" className="relative block">
-                      <UserPlusIcon className="mx-auto h-8 w-8 rounded-full object-cover" />
-                    </a>
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-lg font-medium text-gray-600 dark:text-white">
-                      Nuevo Cliente
-                    </span>
-                  </div>
-                </div>
+        <div
+          className="w-full p-2 hover:cursor-pointer md:w-1/3"
+          onClick={(e) => handleModalNuevoCliente()}
+        >
+          <div className="rounded-2xl bg-white p-4 shadow-lg dark:bg-gray-800">
+            <div className="flex flex-row items-center justify-between gap-4">
+              <div className="flex-shrink-0">
+                <a href="#" className="relative block">
+                  <UserPlusIcon className="mx-auto h-8 w-8 rounded-full object-cover" />
+                </a>
               </div>
-            </div>
-
-            <div
-              className="w-full p-2 hover:cursor-pointer md:w-1/3"
-              onClick={(e) => handleClientes(e)}
-            >
-              <div className="rounded-2xl bg-white p-4 shadow-lg dark:bg-gray-800">
-                <div className="flex flex-row items-center justify-between gap-4">
-                  <div className="flex-shrink-0">
-                    <a href="#" className="relative block">
-                      <ListBulletIcon className="mx-auto h-8 w-8 rounded-full object-cover" />
-                    </a>
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-lg font-medium text-gray-600 dark:text-white">
-                      Listado de Clientes
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="w-full p-2 hover:cursor-pointer md:w-1/3">
-              <div className="rounded-2xl bg-white p-4 shadow-lg dark:bg-gray-800">
-                <div className="flex flex-row items-center justify-between gap-4">
-                  <div className="flex-shrink-0">
-                    <a href="#" className="relative block">
-                      <PencilSquareIcon className="mx-auto h-8 w-8 rounded-full object-cover" />
-                    </a>
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-lg font-medium text-gray-600 dark:text-white">
-                      Liquidacion Clientes
-                    </span>
-                  </div>
-                </div>
+              <div className="flex flex-col">
+                <span className="text-lg font-medium text-gray-600 dark:text-white">
+                  Nuevo Cliente
+                </span>
               </div>
             </div>
           </div>
-          <div className="my-4 mt-10 h-0.5 bg-gray-300 shadow-md"></div>
+        </div>
 
-          <div className="mt-5 flex flex-wrap justify-between">
-            <div
-              className="w-full p-2 hover:cursor-pointer md:w-1/3"
-              onClick={(e) => handleModalNuevoProveedor()}
-            >
-              <div className="rounded-2xl bg-white p-4 shadow-lg dark:bg-gray-800">
-                <div className="flex flex-row items-center justify-between gap-4">
-                  <div className="flex-shrink-0">
-                    <a href="#" className="relative block">
-                      <TruckIcon className="mx-auto h-8 w-8 rounded-full object-cover" />
-                    </a>
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-lg font-medium text-gray-600 dark:text-white">
-                      Nuevo Transporte
-                    </span>
-                  </div>
-                </div>
+        <div
+          className="w-full p-2 hover:cursor-pointer md:w-1/3"
+          onClick={(e) => handleClientes(e)}
+        >
+          <div className="rounded-2xl bg-white p-4 shadow-lg dark:bg-gray-800">
+            <div className="flex flex-row items-center justify-between gap-4">
+              <div className="flex-shrink-0">
+                <a href="#" className="relative block">
+                  <ListBulletIcon className="mx-auto h-8 w-8 rounded-full object-cover" />
+                </a>
               </div>
-            </div>
-            <div className="w-full p-2 hover:cursor-pointer md:w-1/3">
-              <div
-                className="rounded-2xl bg-white p-4 shadow-lg hover:cursor-pointer dark:bg-gray-800"
-                onClick={(e) => handleTransportes(e)}
-              >
-                <div className="flex flex-row items-center justify-between gap-4">
-                  <div className="flex-shrink-0">
-                    <a href="#" className="relative block">
-                      <QueueListIcon className="mx-auto h-8 w-8 rounded-full object-cover" />
-                    </a>
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-lg font-medium text-gray-600 dark:text-white">
-                      Listado Transportes
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="w-full p-2 hover:cursor-pointer md:w-1/3">
-              <div
-                className="rounded-2xl bg-white p-4 shadow-lg hover:cursor-pointer dark:bg-gray-800"
-                // onClick={(e) => handleproximos()}
-              >
-                <div className="flex flex-row items-center justify-between gap-4">
-                  <div className="flex-shrink-0">
-                    <a href="#" className="relative block">
-                      <ArchiveBoxIcon className="mx-auto h-8 w-8 rounded-full object-cover" />
-                    </a>
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-lg font-medium text-gray-600 dark:text-white">
-                      Liquidacion por Transporte
-                    </span>
-                  </div>
-                </div>
+              <div className="flex flex-col">
+                <span className="text-lg font-medium text-gray-600 dark:text-white">
+                  Listado de Clientes
+                </span>
               </div>
             </div>
           </div>
-        </>
-      ) : seleccionComercial == 7 ? (
-        <ResultadoBusqueda />
-      ) : (
-        ""
-      )}
+        </div>
+        <div
+          className="w-full p-2 hover:cursor-pointer md:w-1/3"
+          onClick={(e) => handleLiquidacionClientes(e)}
+        >
+          <div className="rounded-2xl bg-white p-4 shadow-lg dark:bg-gray-800">
+            <div className="flex flex-row items-center justify-between gap-4">
+              <div className="flex-shrink-0">
+                <a href="#" className="relative block">
+                  <PencilSquareIcon className="mx-auto h-8 w-8 rounded-full object-cover" />
+                </a>
+              </div>
+              <div className="flex flex-col">
+                <span className="text-lg font-medium text-gray-600 dark:text-white">
+                  Liquidacion Clientes
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="my-4 mt-10 h-0.5 bg-gray-300 shadow-md"></div>
+
+      <div className="mt-5 flex flex-wrap justify-between">
+        <div
+          className="w-full p-2 hover:cursor-pointer md:w-1/3"
+          onClick={(e) => handleModalNuevoProveedor()}
+        >
+          <div className="rounded-2xl bg-white p-4 shadow-lg dark:bg-gray-800">
+            <div className="flex flex-row items-center justify-between gap-4">
+              <div className="flex-shrink-0">
+                <a href="#" className="relative block">
+                  <TruckIcon className="mx-auto h-8 w-8 rounded-full object-cover" />
+                </a>
+              </div>
+              <div className="flex flex-col">
+                <span className="text-lg font-medium text-gray-600 dark:text-white">
+                  Nuevo Transporte
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="w-full p-2 hover:cursor-pointer md:w-1/3">
+          <div
+            className="rounded-2xl bg-white p-4 shadow-lg hover:cursor-pointer dark:bg-gray-800"
+            onClick={(e) => handleTransportes(e)}
+          >
+            <div className="flex flex-row items-center justify-between gap-4">
+              <div className="flex-shrink-0">
+                <a href="#" className="relative block">
+                  <QueueListIcon className="mx-auto h-8 w-8 rounded-full object-cover" />
+                </a>
+              </div>
+              <div className="flex flex-col">
+                <span className="text-lg font-medium text-gray-600 dark:text-white">
+                  Listado Transportes
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="w-full p-2 hover:cursor-pointer md:w-1/3">
+          <div
+            className="rounded-2xl bg-white p-4 shadow-lg hover:cursor-pointer dark:bg-gray-800"
+            onClick={(e) => handleLiquidacionProveedores(e)}
+          >
+            <div className="flex flex-row items-center justify-between gap-4">
+              <div className="flex-shrink-0">
+                <a href="#" className="relative block">
+                  <ArchiveBoxIcon className="mx-auto h-8 w-8 rounded-full object-cover" />
+                </a>
+              </div>
+              <div className="flex flex-col">
+                <span className="text-lg font-medium text-gray-600 dark:text-white">
+                  Liquidacion por Transporte
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {modalNuevoCliente ? <ModalNuevoCliente /> : ""}
       {modalNuevoCliente2 ? <ModalNuevoCliente2 /> : ""}

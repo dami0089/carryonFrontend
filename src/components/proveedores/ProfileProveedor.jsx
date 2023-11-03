@@ -41,6 +41,7 @@ import Cargando from "../deTodos/Cargando";
 import useClientes from "@/hooks/useClientes";
 import useServicios from "@/hooks/useServicios";
 import ListadoUsuariosProfileProveedor from "./ListadoUsuariosProfileProveedor";
+import ModalEditarUsuarioCliente from "../clientes/ModalEditarUsuarioCliente";
 
 export function ProfileProveedor() {
   const {
@@ -79,6 +80,7 @@ export function ProfileProveedor() {
     setSeleccion,
     setSeleccionComercial,
     seleccionComercial,
+    modalEditarUsuarioCliente,
   } = useClientes();
   const {
     enBusqueda,
@@ -223,7 +225,7 @@ export function ProfileProveedor() {
       <>
         <ToastContainer pauseOnFocusLoss={false} />
 
-        <Card className="mx-3 mt-8 mb-6 lg:mx-4">
+        <Card className="mx-3 mb-6 mt-8 lg:mx-4">
           <CardBody className="p-4">
             <div className="mb-10 flex items-center justify-between gap-6">
               <div className="flex items-center gap-6">
@@ -302,6 +304,7 @@ export function ProfileProveedor() {
 
       <ModalEditarUsuario />
       {modalEditarCamion ? <ModalEditarCamion /> : ""}
+      {modalEditarUsuarioCliente ? <ModalEditarUsuarioCliente /> : ""}
       <ModalNuevoCamion />
       <ModalNuevoChofer />
       <ModalNuevoSemi />

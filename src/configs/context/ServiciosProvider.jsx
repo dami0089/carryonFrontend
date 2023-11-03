@@ -3039,6 +3039,46 @@ const ServiciosProvider = ({ children }) => {
     }
   };
 
+  const notificarCoordinadorWhatsapp = async (id) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await clienteAxios.post(
+        `/servicio/notificar-coordinador/${id}`,
+        {},
+        config
+      );
+
+      toast.success("Whatsapp Enviado Con Exito Al Coordinador", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } catch (error) {
+      toast.error(error, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+
   return (
     <ServiciosContext.Provider
       value={{
@@ -3491,6 +3531,7 @@ const ServiciosProvider = ({ children }) => {
         localidadDevolucionEditar,
         setLocalidadDevolucionEditar,
         asignarEquipoPreArmado,
+        notificarCoordinadorWhatsapp,
       }}
     >
       {children}

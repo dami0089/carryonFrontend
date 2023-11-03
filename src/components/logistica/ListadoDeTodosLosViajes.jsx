@@ -9,14 +9,10 @@ import {
 import React, { useEffect, useState } from "react";
 import { projectsTableData } from "@/data";
 
-import useProveedores from "@/hooks/useProveedores";
-
 import useServicios from "@/hooks/useServicios";
-import useClientes from "@/hooks/useClientes";
 
 import { formateoFechaCorto } from "@/data/helpers/formateoFechaCorto";
 import {
-  ArrowLeftCircleIcon,
   ArrowsPointingOutIcon,
   ChevronDownIcon,
   ChevronRightIcon,
@@ -42,6 +38,7 @@ import ModalDevolucionMasDeUnContendor from "../clientes/servicios/ModalDevoluci
 import ModalEditarContenedorListado from "../clientes/servicios/ModalEditarContenedorDesdeListados";
 import ModalReasignarProveedor from "../clientes/servicios/ModalReasignarProveedor";
 import { ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const ListadoDeTodosLosViajes = () => {
   const {
@@ -149,6 +146,8 @@ const ListadoDeTodosLosViajes = () => {
     setObservacionesViaje,
   } = useServicios();
 
+  const navigate = useNavigate();
+
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const totalPages = Math.ceil(todosLosViajes.length / itemsPerPage);
@@ -174,9 +173,8 @@ const ListadoDeTodosLosViajes = () => {
 
   const handleClick = async (e, servicio) => {
     e.preventDefault();
-    setPaginaLogisticaSelector(5);
     setIdObtenerServicio(servicio);
-    setVolver(6);
+    navigate("/coordinacion/ficha-servicio");
   };
 
   useEffect(() => {

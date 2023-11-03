@@ -31,6 +31,8 @@ import ProfileProveedor from "./components/proveedores/ProfileProveedor";
 import Buscar from "./components/inicio/Buscar";
 import ResultadoBusqueda from "./components/inicio/ResultadoBusqueda";
 import ListadoViajesSinNotificar from "./components/inicio/ListadoViajesSinNotificar";
+import ListadoLiquidacionMensualPorCliente from "./components/clientes/ListadoLiquidacionMensualPorCliente";
+import ListadoLIquidacionMensualPorProveedor from "./components/proveedores/ListadoLIquidacionMensualPorProveedor";
 
 //TODO:FALTA AGREGAR EL BAR AL MENU
 function App() {
@@ -108,6 +110,14 @@ function App() {
           {/* Rutas de Administracion */}
           <Route path="/administracion" element={<RutaProtegida />}>
             <Route index element={<Administracion />} />
+            <Route
+              path="liquidacion-clientes"
+              element={<ListadoLiquidacionMensualPorCliente />}
+            />
+            <Route
+              path="liquidacion-proveedores"
+              element={<ListadoLIquidacionMensualPorProveedor />}
+            />
           </Route>
 
           {/* Rutas de Comercial */}

@@ -2,7 +2,7 @@ import { Button, Card, CardBody, Typography } from "@material-tailwind/react";
 import React, { useEffect } from "react";
 import { projectsTableData } from "@/data";
 import useClientes from "@/hooks/useClientes";
-import { PlusCircleIcon } from "@heroicons/react/24/solid";
+import { PencilSquareIcon, PlusCircleIcon } from "@heroicons/react/24/solid";
 import useProveedores from "@/hooks/useProveedores";
 
 const ListadoUsuariosProfileProveedor = () => {
@@ -75,7 +75,7 @@ const ListadoUsuariosProfileProveedor = () => {
 
   return (
     <>
-      <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-2 ">
+      <div className="mb-12 grid gap-x-6 gap-y-10 md:grid-cols-2 xl:grid-cols-2 ">
         <Card onClick={(e) => handleModalNuevoUsuarioCliente()}>
           <Card
             variant="gradient"
@@ -94,7 +94,7 @@ const ListadoUsuariosProfileProveedor = () => {
           </CardBody>
         </Card>
       </div>
-      <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
+      <CardBody className="overflow-x-scroll px-0 pb-2 pt-0">
         <table className="w-full min-w-[640px] table-auto">
           <thead>
             <tr>
@@ -109,7 +109,7 @@ const ListadoUsuariosProfileProveedor = () => {
               ].map((el) => (
                 <th
                   key={el}
-                  className="border-b border-blue-gray-50 py-3 px-6 text-center"
+                  className="border-b border-blue-gray-50 px-6 py-3 text-center"
                 >
                   <Typography
                     variant="small"
@@ -146,7 +146,7 @@ const ListadoUsuariosProfileProveedor = () => {
                 return (
                   <tr key={_id}>
                     <td className={className}>
-                      <div className="flex items-center gap-4">
+                      <div className="flex items-center justify-center gap-4">
                         <Typography
                           variant="small"
                           color="blue-gray"
@@ -157,54 +157,60 @@ const ListadoUsuariosProfileProveedor = () => {
                       </div>
                     </td>
                     <td className={className}>
-                      <Typography
-                        variant="small"
-                        className="text-xs font-medium text-blue-gray-600"
-                      >
-                        {email}
-                      </Typography>
+                      <div className="flex items-center justify-center gap-4">
+                        <Typography
+                          variant="small"
+                          className="text-xs font-medium text-blue-gray-600"
+                        >
+                          {email}
+                        </Typography>
+                      </div>
+                    </td>
+
+                    <td className={className}>
+                      <div className="flex items-center justify-center gap-4">
+                        <Typography
+                          variant="small"
+                          className="text-xs font-medium uppercase text-blue-gray-600"
+                        >
+                          {sector}
+                        </Typography>
+                      </div>
                     </td>
                     <td className={className}>
-                      <Typography
-                        variant="small"
-                        className="text-xs font-medium uppercase text-blue-gray-600"
-                      >
-                        {sector}
-                      </Typography>
+                      <div className="flex items-center justify-center gap-4">
+                        <Typography
+                          variant="small"
+                          className="text-xs font-medium uppercase text-blue-gray-600"
+                        >
+                          {nuevoPedidoNotifMail ? "Si" : "No"}
+                        </Typography>
+                      </div>
                     </td>
                     <td className={className}>
-                      <Typography
-                        variant="small"
-                        className="text-xs font-medium uppercase text-blue-gray-600"
-                      >
-                        {nuevoPedidoNotifMail ? "Si" : "No"}
-                      </Typography>
+                      <div className="flex items-center justify-center gap-4">
+                        <Typography
+                          variant="small"
+                          className="text-xs font-medium uppercase text-blue-gray-600"
+                        >
+                          {infoViajeNotifMail ? "Si" : "No"}
+                        </Typography>
+                      </div>
                     </td>
                     <td className={className}>
-                      <Typography
-                        variant="small"
-                        className="text-xs font-medium uppercase text-blue-gray-600"
-                      >
-                        {infoViajeNotifMail ? "Si" : "No"}
-                      </Typography>
+                      <div className="flex items-center justify-center gap-4">
+                        <Typography
+                          variant="small"
+                          className="text-xs font-medium uppercase text-blue-gray-600"
+                        >
+                          {infoViajeWhatsapp ? "Si" : "No"}
+                        </Typography>
+                      </div>
                     </td>
                     <td className={className}>
-                      <Typography
-                        variant="small"
-                        className="text-xs font-medium uppercase text-blue-gray-600"
-                      >
-                        {infoViajeWhatsapp ? "Si" : "No"}
-                      </Typography>
-                    </td>
-                    <td className={className}>
-                      <Typography
-                        variant="small"
-                        className="mx-2 flex text-xs font-medium text-blue-gray-600"
-                      >
-                        <Button
-                          color="blue"
-                          className="items-center gap-4 px-6 capitalize"
-                          fullWidth
+                      <div className="flex items-center justify-center gap-4">
+                        <PencilSquareIcon
+                          className="h-8 w-8 hover:cursor-pointer"
                           onClick={(e) =>
                             handleEdit(
                               email,
@@ -218,15 +224,8 @@ const ListadoUsuariosProfileProveedor = () => {
                               celu
                             )
                           }
-                        >
-                          <Typography
-                            color="inherit"
-                            className="font-medium capitalize"
-                          >
-                            editar
-                          </Typography>
-                        </Button>
-                      </Typography>
+                        />
+                      </div>
                     </td>
                   </tr>
                 );

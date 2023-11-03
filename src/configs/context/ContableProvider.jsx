@@ -235,7 +235,13 @@ const ContableProvider = ({ children }) => {
     }, 500);
   };
 
-  const emitirFactura = async (id) => {
+  const crearFactura = async (id, cantidad, importe, titulo, descripcion) => {
+    const info = {
+      cantidad,
+      importe,
+      titulo,
+      descripcion,
+    };
     try {
       const token = localStorage.getItem("token");
       if (!token) return;
@@ -246,11 +252,22 @@ const ContableProvider = ({ children }) => {
         },
       };
 
-      await clienteAxios.post(
-        `proveedores/cambiar-estado/${id}`,
-        gastoId,
+      const data = await clienteAxios.post(
+        `contable/nueva-factura/${id}`,
+        info,
         config
       );
+      console.log(data);
+      toast.success("Factura Creada Correctamente", {
+        position: "top-right",
+        autoClose: 500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     } catch (error) {
       toast.error(error, {
         position: "top-right",
@@ -305,6 +322,7 @@ const ContableProvider = ({ children }) => {
         gastoId,
         handleModalNuevaFactura,
         modalNuevaFactura,
+        crearFactura,
       }}
     >
       {children}

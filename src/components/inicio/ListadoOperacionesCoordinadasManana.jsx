@@ -846,34 +846,7 @@ const ListadoOperacionesCoordinadasManana = () => {
                                     {volumenCarga === "" ? "-" : volumenCarga}
                                   </Typography>
                                 </td>
-                                {/* <td className={className}>
-                            <Typography
-                              variant="small"
-                              className="text-center text-xs font-medium text-blue-gray-600"
-                            >
-                              {tipoCarga === "Contenedor20" ||
-                              tipoCarga === "Contenedor40" ||
-                              tipoCarga === "Contenedor40HC"
-                                ? "-"
-                                : cantidadCarga}
-                            </Typography>
-                          </td>
-                          <td className={className}>
-                            <Typography
-                              variant="small"
-                              className="text-xs font-medium text-blue-gray-600"
-                            >
-                              {pesoCarga} Kg
-                            </Typography>
-                          </td>
-                          <td className={className}>
-                            <Typography
-                              variant="small"
-                              className="text-center text-xs font-medium text-blue-gray-600"
-                            >
-                              {volumenCarga === "" ? "-" : volumenCarga}
-                            </Typography>
-                          </td> */}
+
                                 <td className={className}>
                                   <Typography
                                     variant="small"

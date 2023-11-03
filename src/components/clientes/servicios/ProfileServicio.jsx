@@ -130,6 +130,10 @@ export function ProfileServicio() {
   }, []);
 
   useEffect(() => {
+    setValueProfile(1);
+  }, []);
+
+  useEffect(() => {
     formaDePago;
   }, [formaDePago]);
 
@@ -179,106 +183,12 @@ export function ProfileServicio() {
     obtenerEstados();
   }, []);
 
-  const handleBack = (e) => {
-    e.preventDefault();
-    if (selectInicio === 5) {
-      if (enBusqueda === 2) {
-        setSelectInicio(7);
-        setEnbusqueda(0);
-      } else {
-        setSelectInicio(1);
-        setValueProfile(1);
-      }
-    }
-
-    if (seleccion === 10 && volver === 8) {
-      setSeleccion(20);
-      setVolver(0);
-    } else if (seleccion === 10) {
-      if (enBusqueda == 2) {
-        setSeleccion(11);
-        setEnbusqueda(0);
-      } else {
-        setValueProfile(1);
-        setSeleccion(5);
-        setBuscoActualizaciones(true);
-      }
-    }
-
-    if (paginaLogisticaSelector == 5) {
-      if (enBusqueda == 2) {
-        setPaginaLogisticaSelector(7);
-        setEnbusqueda(0);
-      } else {
-        setPaginaLogisticaSelector(1);
-      }
-    }
-
-    if (seleccionProveedor == 9) {
-      if (enBusqueda == 2) {
-        setSeleccionProveedor(7);
-        setEnbusqueda(0);
-      } else {
-        setSeleccionProveedor(1);
-      }
-    }
-
-    if (volver === 1) {
-      setSelectInicio(3);
-      setVolver(0);
-    }
-    if (volver === 20) {
-      setSelectInicio(10);
-      setVolver(0);
-    }
-    if (volver === 2) {
-      setSelectInicio(4);
-      setVolver(0);
-    }
-    if (volver === 3) {
-      setSelectInicio(2);
-      setVolver(0);
-    }
-    if (volver === 6) {
-      setPaginaLogisticaSelector(3);
-      setVolver(0);
-    }
-    if (volver === 7) {
-      setPaginaLogisticaSelector(1);
-      setVolver(0);
-    }
-    if (volver === 8) {
-      setSeleccion(20);
-      setVolver(0);
-    }
-    if (volver === 9) {
-      setPaginaLogisticaSelector(4);
-      setVolver(0);
-    }
-    if (volver === 10) {
-      setPaginaLogisticaSelector(10);
-      setVolver(0);
-    }
-    if (volver === 11) {
-      setPaginaLogisticaSelector(11);
-      setVolver(0);
-    }
-    if (volver === 12) {
-      setPaginaLogisticaSelector(12);
-      setVolver(0);
-    }
-    if (volver === 13) {
-      setPaginaLogisticaSelector(9);
-      setVolver(0);
-    }
-  };
-
   return (
     <>
       <>
         <ToastContainer pauseOnFocusLoss={false} />
 
-        <Card className="mx-3 mt-8 mb-6 lg:mx-4">
+        <Card className="mx-3 mb-6 mt-8 lg:mx-4">
           <CardBody className="p-4">
             <div className="mb-10 flex items-center justify-between gap-6">
               <div className="flex items-center gap-6">

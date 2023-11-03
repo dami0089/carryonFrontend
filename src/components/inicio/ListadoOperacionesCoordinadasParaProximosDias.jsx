@@ -298,7 +298,7 @@ const ListadoOperacionesCoordinadasProximosDias = () => {
   const handleClick = async (e, servicio) => {
     e.preventDefault();
     setIdObtenerServicio(servicio);
-    navigate("/inicio/ficha-servicio");
+    navigate("/coordinacion/ficha-servicio");
   };
 
   const handleVolverInicio = (e) => {

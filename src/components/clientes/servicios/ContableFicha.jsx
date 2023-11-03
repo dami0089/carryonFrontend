@@ -10,14 +10,16 @@ import { StatisticsCard } from "@/widgets/cards";
 import {
   BanknotesIcon,
   ChevronDoubleDownIcon,
+  ChevronRightIcon,
   CurrencyDollarIcon,
   DocumentPlusIcon,
   PaperClipIcon,
   SquaresPlusIcon,
 } from "@heroicons/react/24/solid";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import { formatearFechaNuevo } from "@/data/helpers/formatearFechaNuevo";
 import { formateoFechaCorto } from "@/data/helpers/formateoFechaCorto";
+import useContable from "@/hooks/useContable";
 
 const ContableFicha = () => {
   const {
@@ -28,106 +30,27 @@ const ContableFicha = () => {
   } = useClientes();
 
   const {
-    handleModalAsignarProveedor,
-
     viajesServicio,
-
-    setIdViajeAsignarProveedor,
     idObtenerServicio,
-    obtenerViajesServicio,
-    idAsignarProveedor,
-
-    handleModalEditarViaje,
-
-    setNumeroContenedorEditar,
-
-    setFechaCargaEditar,
-
-    setHoraCargaEditar,
-
-    setEstadoEditar,
-
-    setOrigenEditar,
-    setDestinoEDitar,
-    setProveedorEditar,
-
-    setChoferEditar,
-
-    setTipoServicioViajeEditar,
-    setCamionEditar,
-    nombreProveedorEditar,
-    setNombreProveedorEditar,
-    setSemiEditar,
-
-    setClienteEditarViaje,
-
-    setIdEditarViaje,
-    direccionRetornoEditarViaje,
-    setDireccionRetornoEditarViaje,
-    buscoEnEditarViaje,
-    setBuscoEnEDitarViaje,
-    seAsignoProveedor,
     handleCargando,
-    editeViaje,
-    setEditeViaje,
-    observacionesViaje,
-    setObservacionesViaje,
-    adicionales,
-    setAdicionales,
-    fechaTerminacion,
-    setFechaTerminacion,
-    horaTerminacion,
-    setHoraTerminacion,
-    diasDemora,
-    setDiasDemora,
-    handleTerminarViaje,
-    notificarAlChofer,
-    obtenerDocumentacion,
-    documentacionViaje,
-    handleModalEditarDocumento,
-    estadoDocu,
-    setEstadoDocu,
-    numeroContenedorDocu,
-    setNumeroContenedorDocu,
-    numeroDocumento,
-    setNumeroDocumento,
-    linkDocumento,
-    setLinkDocumento,
-    idDocumento,
-    setIdDocumento,
-    actualizoListadoDocu,
-    setActualizoListadoDocu,
     conceptosAFacturar,
     obtenerConceptos,
     actualizoConceptos,
     setActualizoConceptos,
-    handleModalValorizar,
-    fechaFactura,
-    setFechaFactura,
-    conceptoFactura,
-    setConceptoFactura,
-    descripcionFactura,
-    setDescripcionFactura,
-    referenciaClienteFactura,
-    setReferenciaClienteFactura,
-    despachoFactura,
-    setDespachoFactura,
-    remitoFactura,
-    setRemitoFactura,
-    contenedorFactura,
-    setContenedorFactura,
-    logicsarFactura,
-    setLogicsarFactura,
-    precioFactura,
-    setPrecioFactura,
-    idConceptoFactura,
-    setIdConceptoFactura,
     seActualizaConceptos,
     setSeActualizaConceptos,
-    modalAgragarCampo,
-    handleModalAgregarCampo,
-    handleModalFactura,
+    fijarPrecioViajeCliente,
+    fijarPrecioAdicional,
+    estadoObtenerServicio,
+    clienteObtenerServicio,
   } = useServicios();
+
+  const { crearFactura } = useContable();
+
+  const [fichaoNo, setFichaOno] = useState(1);
+  const [precioDelViaje, setPrecioDelViaje] = useState({});
+  const [precioDelAdicional, setPrecioDelAdicional] = useState({});
+  const [numeroFact, setNumeroFact] = useState({});
 
   const { equiposData, choferesProveedor, camionesProveedor } =
     useProveedores();
@@ -167,52 +90,63 @@ const ContableFicha = () => {
     obtenerCons();
   }, [seActualizaConceptos]);
 
-  const handleValor = (
-    e,
-    fecha,
-    descripcion0,
-    descripcion1,
-    descripcion2,
-    descripcion3,
-    descripcion4,
-    descripcion5,
-    precioBruto,
-    _id
-  ) => {
-    console.log(fecha);
-    e.preventDefault();
-    setFechaFactura(fecha);
-    setConceptoFactura(descripcion0);
-    setDescripcionFactura(descripcion1);
-    setReferenciaClienteFactura(descripcion2);
-    setDespachoFactura(descripcion3);
-    // setRemitoFactura(descripcion4);
-    setContenedorFactura(descripcion4);
-    setLogicsarFactura(descripcion5);
-    setPrecioFactura(precioBruto);
-    setIdConceptoFactura(_id);
-    handleModalValorizar();
+  const guardarPrecioViajeEnLaBaseDeDatos = async (id, precio) => {
+    try {
+      await fijarPrecioViajeCliente(id, precio);
+      setSeActualizaConceptos(true);
+    } catch (error) {
+      toast.error("El valor del viaje no se guardo", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
   };
 
-  const handleVerDocumento = (linkDocumento) => {
-    window.open(linkDocumento, "_blank");
+  const guardarPrecioAdicionalEnLaBaseDeDatos = async (id, precio) => {
+    await fijarPrecioAdicional(id, precio);
+    setSeActualizaConceptos(true);
   };
 
-  const handleAgregarCampoFactura = (e) => {
+  const facturar = async (e) => {
     e.preventDefault();
-    handleModalAgregarCampo();
-  };
-
-  const handleModalCompletarFactura = (e) => {
-    e.preventDefault();
-    handleModalFactura();
+    if (estadoObtenerServicio !== "Por Facturar") {
+      return toast.error(
+        "Para facturar, el servicio tiene que tener estado -Por Facturar-",
+        {
+          position: "top-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        }
+      );
+    }
+    await crearFactura(
+      clienteObtenerServicio,
+      1,
+      10,
+      "Servicio de Importacion",
+      `-Por transporte de 2 Contenedor20 - 25000 - desde TRP - Terminal rio de la plata - (Av. Ramon Castillo 13-Caba) hasta People Coworking - (Av. Rivadavia 4975, local)
+    -Ref: 100200
+    -IC0423405R-Contenedores: 0/0
+    -Pedido Logicsar 251`
+    );
   };
 
   return (
     <>
       <ToastContainer pauseOnFocusLoss={false} />
 
-      <div className="mb-3 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4 ">
+      {/* <div className="mb-3 grid gap-x-6 gap-y-10 md:grid-cols-2 xl:grid-cols-4 ">
         <Card
           onClick={(e) => handleModalCompletarFactura(e)}
           className="cursor-pointer"
@@ -253,46 +187,401 @@ const ContableFicha = () => {
             </Typography>
           </CardBody>
         </Card>
-      </div>
-      <Card className="mb-5 p-4">
+      </div> */}
+
+      {/* <Card className="mb-5 p-4">
         <Typography variant="small" className="mb-2 text-2xl font-bold">
           Información
         </Typography>
         <Typography variant="small">
           <span className="text-l font-bold">Nombre Cliente: </span>
-          <spane
+          <span
             onClick={(e) => handleReturnProfile(e)}
             className="cursor-pointer text-blue-500"
-          >
-            {/* {nombreClienteObtenerServicio} */}
-          </spane>
+          > */}
+      {/* {nombreClienteObtenerServicio} */}
+      {/* </span>
         </Typography>
         <Typography variant="small">
-          <span className="font-bold">Importe Bruto:</span>{" "}
-          {/* {origenCargaObtenerServicio} */}
-        </Typography>
+          <span className="font-bold">Importe Bruto:</span>{" "} */}
+      {/* {origenCargaObtenerServicio} */}
+      {/* </Typography>
         <Typography variant="small">
-          <span className="font-bold">IVA:</span>{" "}
-          {/* {destinoCargaObtenerServicio} */}
-        </Typography>
+          <span className="font-bold">IVA:</span>{" "} */}
+      {/* {destinoCargaObtenerServicio} */}
+      {/* </Typography>
         <Typography variant="small">
-          <span className="font-bold">Neto a Pagar:</span>{" "}
-          {/* {camionesObtenerServicio} */}
-        </Typography>
-      </Card>
+          <span className="font-bold">Neto a Pagar:</span>{" "} */}
+      {/* {camionesObtenerServicio} */}
+      {/* </Typography>
+      </Card> */}
 
-      <Typography variant="h6" color="blue-gray" className="mb-1">
-        Conceptos a Facturar
-      </Typography>
+      <div className="ml-4 mr-4 flex justify-between">
+        <Typography variant="h6" color="blue-gray" className="mb-1">
+          Conceptos a Facturar
+        </Typography>
+        <Button onClick={(e) => facturar(e)}>Facturar</Button>
+      </div>
 
-      <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
+      <div className="mb-4  mt-5 grid grid-cols-1  gap-6 xl:grid-cols-3">
+        <Card className="overflow-hidden xl:col-span-3">
+          <CardBody className=" overflow-x-scroll px-0 pb-2 pt-0">
+            <div className="max-h-[78vh] overflow-y-auto">
+              <table className="w-full min-w-[640px] table-auto">
+                <thead className="sticky top-0 bg-blue-gray-50">
+                  <tr>
+                    {[
+                      "Nro Viaje",
+                      "Fecha Inicio y Terminacion",
+                      "Por cuenta y Orden De",
+                      "Tipo de Servicio",
+                      "Origen y Destino",
+                      "Observaciones del Pedido",
+                      "Observaciones del viaje",
+                      "Adicionales",
+                      "Dias de Demora",
+                      "Factura",
+                      "Estado",
+                      "Importe Cobrado",
+                      "Adicional Cobrado",
+                      "Importe Pagado",
+                      "Adicional Pagado",
+                    ].map((el) => (
+                      <th
+                        key={el}
+                        className="border-b border-blue-gray-50 px-6 py-3  text-center"
+                      >
+                        <Typography
+                          variant="small"
+                          className="text-[11px] font-medium uppercase text-blue-gray-400"
+                        >
+                          {el}
+                        </Typography>
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {viajesServicio // Filtrar proveedores con estado distinto a "Terminado"
+                    .map(
+                      (
+                        {
+                          _id,
+                          estadoServicio,
+                          numeroDeViaje,
+                          fechaOrigen,
+                          horaOrigen,
+                          tipoServicio,
+                          nombreCliente,
+                          tipoCarga,
+                          nombreDomicilioOrigenCliente,
+                          nombreDomicilioOrigenTerminal,
+                          nombreDomicilioDestinoCliente,
+                          nombreDomicilioDestinoTerminal,
+                          adicionales,
+                          fechaTerminacion,
+                          horaTerminacion,
+                          diasDemora,
+                          estado,
+                          observacionesServicio,
+                          observacionesViaje,
+                          servicio,
+                          fantasiaOrigen,
+                          fantasiaDestino,
+                          numeroFactura,
+                          precioViaje,
+                          precioAdicional,
+                          AdicionalPagado,
+                          importePagado,
+                        },
+                        key
+                      ) => {
+                        const className = `text-center py-3 px-5 ${
+                          key === projectsTableData.length - 1
+                            ? ""
+                            : "border-b border-blue-gray-50"
+                        }`;
+
+                        return (
+                          <tr key={_id}>
+                            <td className={className}>
+                              <Button
+                                color="blue"
+                                className={`min-w-100 -mt-1 h-8 items-center gap-2 whitespace-nowrap ${
+                                  estadoServicio === "Coordinado"
+                                    ? "bg-green-300"
+                                    : "bg-deep-orange-300"
+                                }  px-4 py-1 `}
+                                fullWidth
+                                // onClick={(e) => handleClick(e, servicio)}
+                              >
+                                <Typography
+                                  variant="small"
+                                  className="flex items-center justify-between text-sm font-medium capitalize"
+                                >
+                                  <span className="mr-1 text-black ">
+                                    {numeroDeViaje}
+                                  </span>
+                                </Typography>
+                              </Button>
+                            </td>
+                            <td className={className}>
+                              <div className="flex items-center gap-4">
+                                <Typography
+                                  variant="small"
+                                  color="blue-gray"
+                                  className="w-40 text-center text-xs font-medium "
+                                >
+                                  {formateoFechaCorto(fechaOrigen)}-{horaOrigen}{" "}
+                                  Hs
+                                  <br />
+                                  {fechaTerminacion
+                                    ? formateoFechaCorto(fechaTerminacion)
+                                    : ""}
+                                  {horaTerminacion
+                                    ? "-" + horaTerminacion + "HS"
+                                    : ""}
+                                </Typography>
+                              </div>
+                            </td>
+
+                            <td className={className}>
+                              <Typography
+                                variant="small"
+                                className="w-40 text-xs font-black uppercase text-blue-gray-600"
+                              >
+                                {nombreCliente}
+                              </Typography>
+                            </td>
+                            <td className={className}>
+                              <Typography
+                                variant="small"
+                                className="text-xs font-medium uppercase text-blue-gray-600"
+                              >
+                                {tipoCarga}
+                              </Typography>
+                            </td>
+
+                            <td className={className}>
+                              <Typography
+                                variant="small"
+                                className="w-40 text-center text-xs font-medium text-blue-gray-600"
+                              >
+                                {tipoServicio === "importacion"
+                                  ? fantasiaOrigen ??
+                                    nombreDomicilioOrigenTerminal
+                                  : tipoServicio === "nacional"
+                                  ? fantasiaOrigen ??
+                                    nombreDomicilioOrigenCliente
+                                  : tipoServicio === "one-way"
+                                  ? fantasiaOrigen ??
+                                    nombreDomicilioOrigenCliente
+                                  : tipoServicio === "transito-aduanero"
+                                  ? fantasiaOrigen ??
+                                    nombreDomicilioOrigenCliente
+                                  : tipoServicio === "vacios"
+                                  ? fantasiaOrigen ??
+                                    nombreDomicilioOrigenCliente
+                                  : tipoServicio === "importacion"
+                                  ? fantasiaOrigen ??
+                                    nombreDomicilioOrigenTerminal
+                                  : tipoServicio === "round-trip"
+                                  ? fantasiaOrigen ??
+                                    nombreDomicilioOrigenTerminal
+                                  : ""}
+                                {"-"}
+                                <br />
+                                {tipoServicio === "importacion"
+                                  ? fantasiaDestino ??
+                                    nombreDomicilioDestinoCliente
+                                  : tipoServicio === "nacional"
+                                  ? fantasiaDestino ??
+                                    nombreDomicilioDestinoCliente
+                                  : tipoServicio === "one-way"
+                                  ? fantasiaDestino ??
+                                    nombreDomicilioDestinoTerminal
+                                  : tipoServicio === "transito-aduanero"
+                                  ? fantasiaDestino ??
+                                    nombreDomicilioDestinoTerminal
+                                  : tipoServicio === "vacios"
+                                  ? fantasiaDestino ??
+                                    nombreDomicilioDestinoTerminal
+                                  : tipoServicio === "round-trip"
+                                  ? fantasiaDestino ??
+                                    nombreDomicilioDestinoTerminal
+                                  : ""}
+                              </Typography>
+                            </td>
+                            <td className={className}>
+                              <Typography
+                                variant="small"
+                                className="text-xs font-medium text-blue-gray-600"
+                              >
+                                {observacionesServicio}
+                              </Typography>
+                            </td>
+                            <td className={className}>
+                              <Typography
+                                variant="small"
+                                className="text-center text-xs font-medium text-blue-gray-600"
+                              >
+                                {observacionesViaje}
+                              </Typography>
+                            </td>
+
+                            <td className={className}>
+                              <Typography
+                                variant="small"
+                                className="w-40 text-xs font-medium text-blue-gray-600"
+                              >
+                                {adicionales}
+                              </Typography>
+                            </td>
+                            <td className={className}>
+                              <Typography
+                                variant="small"
+                                className="text-center text-xs font-medium text-black"
+                              >
+                                {diasDemora}
+                              </Typography>
+                            </td>
+                            <td className={className}>
+                              <Typography
+                                variant="small"
+                                className="text-center text-xs font-medium text-black"
+                              >
+                                {numeroFactura ? numeroFactura : "-"}
+                              </Typography>
+                            </td>
+
+                            <td className={className}>
+                              <div className="rounded-xl p-1 text-center">
+                                <Button
+                                  className={`min-w-100 -mt-1 h-8 items-center gap-2 whitespace-nowrap ${
+                                    estadoServicio == "Aceptado"
+                                      ? "bg-deep-orange-300"
+                                      : ""
+                                  } ${
+                                    estadoServicio == "Coordinado"
+                                      ? "bg-green-400 text-black"
+                                      : ""
+                                  } ${
+                                    estadoServicio == "Por Facturar"
+                                      ? "bg-blue-300"
+                                      : ""
+                                  } ${
+                                    estadoServicio == "Terminado"
+                                      ? "bg-blue-gray-500 text-black"
+                                      : ""
+                                  }  px-4 py-1`}
+                                  fullWidth
+                                >
+                                  <Typography
+                                    variant="small"
+                                    className="flex items-center justify-between text-sm font-medium capitalize"
+                                  >
+                                    {estadoServicio}
+                                  </Typography>
+                                </Button>
+                              </div>
+                            </td>
+                            <td className={className}>
+                              <input
+                                type="text"
+                                className="h-8 rounded-lg border bg-white text-center text-xs font-medium text-black focus:bg-blue-200"
+                                value={
+                                  "$" +
+                                  (precioDelViaje[_id] ||
+                                    (precioViaje ? precioViaje : ""))
+                                }
+                                placeholder="$"
+                                onChange={(e) => {
+                                  const nuevoPrecio = e.target.value.replace(
+                                    /^\$/,
+                                    ""
+                                  ); // quita el signo de dolar al principio
+                                  setPrecioDelViaje({
+                                    ...precioDelViaje,
+                                    [_id]: nuevoPrecio,
+                                  });
+                                }}
+                                onKeyPress={(e) => {
+                                  if (e.key === "Enter") {
+                                    guardarPrecioViajeEnLaBaseDeDatos(
+                                      _id,
+                                      precioDelViaje[_id]
+                                    );
+                                  }
+                                }}
+                              />
+                            </td>
+
+                            <td className={className}>
+                              <input
+                                type="text"
+                                className="h-8 rounded-lg border bg-white text-center text-xs font-medium text-black focus:bg-blue-200"
+                                value={
+                                  "$" +
+                                  (precioDelAdicional[_id] ||
+                                    (precioAdicional ? precioAdicional : ""))
+                                }
+                                placeholder="$"
+                                onChange={(e) => {
+                                  const nuevoPrecio = e.target.value.replace(
+                                    /^\$/,
+                                    ""
+                                  ); // quita el signo de dolar al principio
+                                  setPrecioDelAdicional({
+                                    ...precioDelAdicional,
+                                    [_id]: nuevoPrecio,
+                                  });
+                                }}
+                                onKeyPress={(e) => {
+                                  if (e.key === "Enter") {
+                                    guardarPrecioAdicionalEnLaBaseDeDatos(
+                                      _id,
+                                      precioDelAdicional[_id]
+                                    );
+                                  }
+                                }}
+                              />
+                            </td>
+
+                            <td className={className}>
+                              <Typography
+                                variant="small"
+                                className="text-center text-xs font-medium text-black"
+                              >
+                                {importePagado ? importePagado : "-"}
+                              </Typography>
+                            </td>
+                            <td className={className}>
+                              <Typography
+                                variant="small"
+                                className="text-center text-xs font-medium text-black"
+                              >
+                                {AdicionalPagado ? AdicionalPagado : "-"}
+                              </Typography>
+                            </td>
+                          </tr>
+                        );
+                      }
+                    )}
+                </tbody>
+              </table>
+            </div>
+          </CardBody>
+        </Card>
+      </div>
+
+      <CardBody className="overflow-x-scroll px-0 pb-2 pt-0">
         <table className="w-full min-w-[640px] table-auto">
           <thead>
             <tr>
-              {["Fecha", "Servicio", "Importe", "Valorizar"].map((el) => (
+              {["Fecha", "Servicio", "Importe"].map((el) => (
                 <th
                   key={el}
-                  className="border-b border-blue-gray-50 py-3 px-6 text-center"
+                  className="border-b border-blue-gray-50 px-6 py-3 text-center"
                 >
                   <Typography
                     variant="small"
@@ -355,14 +644,20 @@ const ContableFicha = () => {
                         className="text-xs font-medium text-blue-gray-600"
                       >
                         -{descripcion1} <br />
-                        {descripcion2 !== "" ? "-" + descripcion2 : ""} <br />
-                        {descripcion3 === "" || descripcion3 == undefined
-                          ? ""
-                          : "-" + descripcion3}
-                        {descripcion3 === "" ? "" : <br />}
-                        {descripcion4 !== "" ? "-" + descripcion4 : ""}
+                        {descripcion2 && descripcion2 !== ""
+                          ? "-" + descripcion2
+                          : ""}{" "}
                         <br />
-                        {descripcion5 !== "" ? "-" + descripcion5 : ""}
+                        {descripcion3 && descripcion3 !== ""
+                          ? "-" + descripcion3
+                          : ""}
+                        {descripcion4 && descripcion4 !== ""
+                          ? "-" + descripcion4
+                          : ""}
+                        <br />
+                        {descripcion5 && descripcion5 !== ""
+                          ? "-" + descripcion5
+                          : ""}
                         <br />
                       </Typography>
                     </td>
@@ -374,35 +669,6 @@ const ContableFicha = () => {
                       >
                         {precioBruto ? "$" + precioBruto : "-"}
                       </Typography>
-                    </td>
-
-                    <td className={className}>
-                      <Button
-                        color="blue"
-                        className="mt-2 h-8 items-center gap-4 px-6 pt-1 pb-1 capitalize"
-                        fullWidth
-                        onClick={(e) =>
-                          handleValor(
-                            e,
-                            fecha,
-                            descripcion0,
-                            descripcion1,
-                            descripcion2,
-                            descripcion3,
-                            descripcion4,
-                            descripcion5,
-                            precioBruto,
-                            _id
-                          )
-                        }
-                      >
-                        <Typography
-                          color="inherit"
-                          className="font-medium capitalize"
-                        >
-                          Valorizar
-                        </Typography>
-                      </Button>
                     </td>
                   </tr>
                 );

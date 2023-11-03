@@ -3,6 +3,8 @@ import { Dialog, Transition } from "@headlessui/react";
 import { ToastContainer } from "react-toastify";
 import { FallingLines } from "react-loader-spinner";
 import useServicios from "@/hooks/useServicios";
+import Lottie from "lottie-react";
+import animationData from "../../../public/Animation - 1698417974768.json";
 
 const Cargando = () => {
   const { handleCargando, cargando } = useServicios();
@@ -11,10 +13,10 @@ const Cargando = () => {
     <Transition.Root show={cargando} as={Fragment}>
       <Dialog
         as="div"
-        className="fixed inset-0 z-50 overflow-y-auto"
+        className="fixed inset-0 z-50 overflow-y-auto "
         onClose={handleCargando}
       >
-        <div className="flex min-h-screen items-end justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+        <div className="flex min-h-screen items-end justify-center px-4 pb-20 pt-4 text-center sm:block sm:p-0">
           <ToastContainer pauseOnFocusLoss={false} />
 
           <Transition.Child
@@ -46,17 +48,23 @@ const Cargando = () => {
             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
-            <div className="inline-block transform overflow-hidden rounded-lg bg-gray-300 px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 sm:align-middle">
-              <button
+            <div className="inline-block transform overflow-hidden rounded-lg bg-gray-200 px-4 pb-4 pt-5 text-left   shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 sm:align-middle md:h-40">
+              {/* <button
                 onClick={handleCargando}
                 className="absolute right-4 top-4 text-gray-400 hover:text-gray-500 focus:outline-none"
-              ></button>
-              <div className="flex items-center justify-center">
-                <FallingLines
+              ></button> */}
+              <div className="mt-5 flex h-8 items-center justify-center bg-transparent">
+                {/* <FallingLines
                   color="#E8600E"
                   width="100"
                   visible={true}
                   ariaLabel="falling-lines-loading"
+                /> */}
+                <Lottie
+                  loop
+                  autoplay
+                  style={{ width: "400px", height: "400px" }}
+                  animationData={animationData}
                 />
               </div>
             </div>
