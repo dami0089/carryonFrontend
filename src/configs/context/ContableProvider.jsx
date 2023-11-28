@@ -235,13 +235,9 @@ const ContableProvider = ({ children }) => {
     }, 500);
   };
 
-  const crearFactura = async (id, cantidad, importe, titulo, descripcion) => {
-    const info = {
-      cantidad,
-      importe,
-      titulo,
-      descripcion,
-    };
+  const [infoDocumento, setInfoDocumento] = useState([]);
+
+  const crearFactura = async (id) => {
     try {
       const token = localStorage.getItem("token");
       if (!token) return;
@@ -254,10 +250,12 @@ const ContableProvider = ({ children }) => {
 
       const data = await clienteAxios.post(
         `contable/nueva-factura/${id}`,
-        info,
+        {},
         config
       );
-      console.log(data);
+
+      setInfoDocumento(data);
+
       toast.success("Factura Creada Correctamente", {
         position: "top-right",
         autoClose: 500,
@@ -279,6 +277,28 @@ const ContableProvider = ({ children }) => {
         progress: undefined,
         theme: "light",
       });
+    }
+  };
+
+  const [facturasEmitidas, setFacturasEmitidas] = useState([]);
+  const obtenerFacturasLibroDiario = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const { data } = await clienteAxios(
+        "/contable/obtener-facturas-emitidas",
+        config
+      );
+      setFacturasEmitidas(data);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -323,6 +343,8 @@ const ContableProvider = ({ children }) => {
         handleModalNuevaFactura,
         modalNuevaFactura,
         crearFactura,
+        facturasEmitidas,
+        obtenerFacturasLibroDiario,
       }}
     >
       {children}

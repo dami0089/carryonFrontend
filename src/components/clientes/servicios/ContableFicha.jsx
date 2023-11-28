@@ -20,6 +20,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { formatearFechaNuevo } from "@/data/helpers/formatearFechaNuevo";
 import { formateoFechaCorto } from "@/data/helpers/formateoFechaCorto";
 import useContable from "@/hooks/useContable";
+import { formatearPrecio } from "@/data/helpers/formatearPrecio";
 
 const ContableFicha = () => {
   const {
@@ -43,6 +44,7 @@ const ContableFicha = () => {
     fijarPrecioAdicional,
     estadoObtenerServicio,
     clienteObtenerServicio,
+    obtenerServicio,
   } = useServicios();
 
   const { crearFactura } = useContable();
@@ -76,6 +78,16 @@ const ContableFicha = () => {
       }
     };
     obtenerCons();
+  }, [actualizoConceptos]);
+
+  useEffect(() => {
+    const actualizar = async () => {
+      handleCargando();
+      await obtenerServicio(idObtenerServicio);
+      setActualizoConceptos(false);
+      handleCargando();
+    };
+    actualizar();
   }, [actualizoConceptos]);
 
   useEffect(() => {
@@ -130,16 +142,10 @@ const ContableFicha = () => {
         }
       );
     }
-    await crearFactura(
-      clienteObtenerServicio,
-      1,
-      10,
-      "Servicio de Importacion",
-      `-Por transporte de 2 Contenedor20 - 25000 - desde TRP - Terminal rio de la plata - (Av. Ramon Castillo 13-Caba) hasta People Coworking - (Av. Rivadavia 4975, local)
-    -Ref: 100200
-    -IC0423405R-Contenedores: 0/0
-    -Pedido Logicsar 251`
-    );
+    handleCargando();
+    await crearFactura(idObtenerServicio);
+    setSeActualizaConceptos(true);
+    handleCargando();
   };
 
   return (
@@ -220,7 +226,13 @@ const ContableFicha = () => {
         <Typography variant="h6" color="blue-gray" className="mb-1">
           Conceptos a Facturar
         </Typography>
-        <Button onClick={(e) => facturar(e)}>Facturar</Button>
+        {estadoObtenerServicio === "Por Facturar" ? (
+          <Button onClick={(e) => facturar(e)}>Facturar</Button>
+        ) : estadoObtenerServicio === "Facturado" ? (
+          <Button disabled={true}>Servicio Facturado</Button>
+        ) : (
+          ""
+        )}
       </div>
 
       <div className="mb-4  mt-5 grid grid-cols-1  gap-6 xl:grid-cols-3">
@@ -667,7 +679,7 @@ const ContableFicha = () => {
                         variant="small"
                         className="text-center text-xs font-medium text-blue-gray-600"
                       >
-                        {precioBruto ? "$" + precioBruto : "-"}
+                        {precioBruto ? "$" + formatearPrecio(precioBruto) : "-"}
                       </Typography>
                     </td>
                   </tr>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  @font-face {
+      font-family: 'Hanken Grotesk';
+      src: url('ruta/a/tu/fuente/HankenGrotesk-Regular.woff2') format('woff2'),
+           url('ruta/a/tu/fuente/HankenGrotesk-Regular.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+  
+  body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+  .container {
+    max-width: 600px;
+    margin: auto;
+    border: 1px solid #cccccc;
+    overflow: hidden;
+    margin-top: 20px;
+    border-radius: 10px;
+  }
+  .header {
+ background-color: #FF5E27;
+    padding: 10px;
+    text-align: left; /* Alinea el contenido a la izquierda */
+    height: 12vh;
+
+  }
+  .content {
+    padding: 20px;
+    text-align: center;
+    height: 22vh;
+    background-color: #CFD4D0;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  .content2 {
+    padding: 15px;
+    text-align: left;
+    height: 12vh;
+    font-family: 'Space Grotesk', sans-serif;
+
+    border-bottom: 2px solid #CFD4D0; /* Establece una línea sólida negra */
+  }
+
+  .content2 h2{
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  .content3 {
+    padding: 15px;
+    text-align: left;
+    height: 10vh;
+    font-family: 'Space Grotesk', sans-serif;
+
+    border-bottom: 2px solid #CFD4D0; /* Establece una línea sólida negra */
+
+  }
+  .content4 {
+    padding: 15px;
+    text-align: left;
+    height: 12vh;
+    font-family: 'Space Grotesk', sans-serif;
+    border-bottom: 2px solid #CFD4D0; /* Establece una línea sólida negra */
+
+  }
+  .footer {
+    text-align: center;
+    padding: 10px;
+    font-size: 12px;
+}
+
+.footer-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-content img {
+    margin-right: 20px; /* Ajusta según sea necesario */
+}
+
+.footer-content p {
+    margin-left: 20px; /* Ajusta según sea necesario */
+}
+  .icon {
+    width: 50px;
+    height: auto;
+  }
+  .logo img {
+    height: auto;
+    width: auto 
+  }
+
+  .parrafo {
+    text-align: center;
+    color: white;
+    font-weight: 800;
+    text-transform: uppercase;
+    display: inline-block; /* Esto hace que los elementos se coloquen en línea pero mantengan propiedades de bloque. */
+  margin: 0; /
+  }
+  .renglon {
+    text-align: center;
+
+  }
+  .info-table {
+    width: 100%; /* Ajusta al ancho del contenedor */
+    border-collapse: collapse; /* Elimina el espacio entre las celdas */
+    table-layout: fixed; /* Asegura una distribución uniforme del ancho de las columnas */
+
+
+  }
+  .info-table th,
+  .info-table td {
+    text-align: left; /* Alinea el texto a la izquierda */
+  }
+  .info-table th {
+    font-size: 0.6em; /* Fuente más pequeña para los títulos */
+    font-weight: normal; /* No negrita para los títulos */
+    color: #fff; /* Color gris para los títulos */
+    font-family: 'Hanken Grotesk', sans-serif;
+
+  }
+  .info-table td {
+    font-size: 2em; /* Fuente más grande para los datos */
+    font-weight: bold; /* Datos en negrita */
+    font-family: 'Hanken Grotesk', sans-serif;
+    color: #fff; /* Color gris para los títulos */
+
+  }
+  
+  .h2{
+    text-align: left;
+    color: #1B1B1C;
+  }
+
+  .info-table2 {
+    width: 100%; /* Ajusta al ancho del contenedor */
+    border-collapse: collapse; /* Elimina el espacio entre las celdas */
+    table-layout: fixed; /* Asegura una distribución uniforme del ancho de las columnas */
+
+
+  }
+  .info-table2 th,
+  .info-table2 td {
+    text-align: center; /* Alinea el texto a la izquierda */
+  }
+  .info-table2 th {
+    font-size: 0.6em; /* Fuente más pequeña para los títulos */
+
+    font-family: 'Space Grotesk', sans-serif;
+    color: #1B1B1C; /* Color gris para los títulos */
+  }
+  .info-table2 td {
+    font-size: 2em; /* Fuente más grande para los datos */
+    font-weight: bold; /* Datos en negrita */
+    font-family: 'Hanken Grotesk', sans-serif;
+    color: #1B1B1C; /* Color gris para los títulos */
+
+  }
+
+  .logo2{
+    height: auto;
+    width: 200px;
+  }
+
+  .iconos{
+    height: 40px;
+    width: 40px;
+  }
+  .iconos2{
+    height: 100px;
+    width: 100px;
+  }
+  .info-table3 {
+    width: 100%; /* Ajusta al ancho del contenedor */
+    border-collapse: collapse; /* Elimina el espacio entre las celdas */
+    table-layout: fixed; /* Asegura una distribución uniforme del ancho de las columnas */
+
+
+  }
+  .info-table3 th,
+  .info-table3 td {
+    text-align: center; /* Alinea el texto a la izquierda */
+  }
+  .info-table3 th {
+    font-size: 0.6em; /* Fuente más pequeña para los títulos */
+    font-weight: normal; /* No negrita para los títulos */
+    font-family: 'Hanken Grotesk', sans-serif;
+    color: #1B1B1C; /* Color gris para los títulos */
+  }
+  .info-table3 td {
+    font-size: 1em; /* Fuente más grande para los datos */
+    font-weight: bold; /* Datos en negrita */
+    font-family: 'Hanken Grotesk', sans-serif;
+    color: #1B1B1C; /* Color gris para los títulos */
+
+  }
+
+  .span {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 900;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .container {
+      width: 100%;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+
+      <img src="./public/img/Logos Logicsar-02.png" alt="logicsar" class="logo2">
+      <!-- <h1>Logicsar</h1> -->
+      <table class="info-table">
+        <tr>
+          <th>Pedido</th>
+          <th>Hora</th>
+          <th>Día</th>
+        </tr>
+        <tr>
+          <td>247</td>
+          <td>16:40</td>
+          <td>Lunes 27/10</td>
+        </tr>
+      </table>
+  </div>
+  <div class="content">
+    <h2 class="h2"><span>Cliente:</span> Marmoles y Granitos de San Luis</h2>
+    <img src="./public/img/camion.png" alt="camion" class="logo2">
+    <table class="info-table2">
+      <tr>
+        <th>Origen</th>
+        <th>Destino</th>
+
+      </tr>
+      <tr>
+        <td>TER 4</td>
+        <td>SACIAYG</td>
+
+      </tr>
+      <tr>
+        <th>Av. Rivadavia 1548 - CABA</th>
+        <th>Garcia Lorca 4393 - Ciudadela</th>
+      </tr>
+    </table>
+    <p><span class="span">Vacios a: </span>"HiperBaires" </p>
+
+
+    <!-- Agregar más contenido aquí según sea necesario -->
+  </div>
+  <div class="content2">
+    <h2>Mercaderia:</h2>
+    <table class="info-table3">
+      <tr>
+        <th><img src="./public/img/Iconos-06.png" alt="camion" class="iconos"></th>
+        <th><img src="./public/img/Iconos-07.png" alt="camion" class="iconos"></th>
+        <th><img src="./public/img/Iconos-09.png" alt="camion" class="iconos"></th>
+
+      </tr>
+      <tr>
+        <td>Pallets</td>
+        <td>Peso</td>
+        <td>Volumen</td>
+      </tr>
+    </table>
+    <!-- Agregar más contenido aquí según sea necesario -->
+  </div>
+  <div class="content3">
+    <h2>Observaciones:</h2>
+    <p>-----------------------------------------------------------------------------------------------------------------------------------------------------------</p>
+    <!-- Agregar más contenido aquí según sea necesario -->
+  </div>
+  <div class="content4">
+    <h2>Datos:</h2>
+    <p>------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
+    <!-- Agregar más contenido aquí según sea necesario -->
+  </div>
+  <div class="footer">
+    <div class="footer-content">
+        <img src="./public/img/QR.png" alt="camion" class="iconos2">
+        <p>El contratante y/o consignatario asume la obligación de asegurar la carga por su cuenta, carga y riesgo con cláusula de "NO REPETICIÓN CONTRA EL TRANSPORTISTA", por los daños y riesgos que pudieran producirse durante el curso de transporte, carga y/o descarga. Salvo que opte por la contratación del seguro por intermedio de nuestra empresa, quien deberá poseer entonces comunicación por escrito con debida anticipación.</p>
+    </div>
+</div>
+</div>
+</body>
+</html>

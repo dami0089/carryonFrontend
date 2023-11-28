@@ -22,6 +22,7 @@ import useContable from "@/hooks/useContable";
 import ModalNuevaFactura from "@/components/contable/ModalNuevaFactura";
 import ModalNuevoUsuario from "@/components/clientes/servicios/ModalNuevoUsuario";
 import ModalNuevoUsuarioProveedor from "@/components/proveedores/ModalNuevoUsuarioProveedor";
+import { useNavigate } from "react-router-dom";
 
 const Administracion = () => {
   const { handleModalNuevaFactura, modalNuevaFactura } = useContable();
@@ -31,6 +32,8 @@ const Administracion = () => {
 
   const { cargando, setPaginaLogisticaSelector, setVolverCoordinacion } =
     useServicios();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     setSeleccionComercial(1);
@@ -49,8 +52,7 @@ const Administracion = () => {
   };
 
   const handleAyer = () => {
-    setPaginaLogisticaSelector(9);
-    setVolverCoordinacion(true);
+    navigate("/administracion/libro-ventas");
   };
 
   const handleNuevaFactura = () => {

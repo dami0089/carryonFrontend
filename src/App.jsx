@@ -33,6 +33,7 @@ import ResultadoBusqueda from "./components/inicio/ResultadoBusqueda";
 import ListadoViajesSinNotificar from "./components/inicio/ListadoViajesSinNotificar";
 import ListadoLiquidacionMensualPorCliente from "./components/clientes/ListadoLiquidacionMensualPorCliente";
 import ListadoLIquidacionMensualPorProveedor from "./components/proveedores/ListadoLIquidacionMensualPorProveedor";
+import LibroVentas from "./components/contable/LibroVentas";
 
 //TODO:FALTA AGREGAR EL BAR AL MENU
 function App() {
@@ -118,6 +119,7 @@ function App() {
               path="liquidacion-proveedores"
               element={<ListadoLIquidacionMensualPorProveedor />}
             />
+            <Route path="libro-ventas" element={<LibroVentas />} />
           </Route>
 
           {/* Rutas de Comercial */}
