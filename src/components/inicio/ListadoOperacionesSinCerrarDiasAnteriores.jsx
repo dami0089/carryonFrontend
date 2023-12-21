@@ -289,6 +289,7 @@ const ListadoOperacionesCoordinadasDiasAnteriores = () => {
 
   const handleClick = async (e, servicio) => {
     e.preventDefault();
+    setIdObtenerServicio(servicio);
     navigate("/coordinacion/ficha-servicio");
   };
 

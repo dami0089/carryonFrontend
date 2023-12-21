@@ -27,7 +27,7 @@ import Buscar from "@/components/inicio/Buscar";
 import useServicios from "@/hooks/useServicios";
 import Cargando from "@/components/deTodos/Cargando";
 import { useEffect } from "react";
-import { QRCode } from "qrcode";
+import { QRCodeDataURLType } from "qrcode";
 
 export function DashboardNavbar() {
   const [controller, dispatch] = useMaterialTailwindController();
@@ -81,7 +81,8 @@ export function DashboardNavbar() {
         // Espera a que el evento "qr" sea emitido por el backend.
         socket.on("qr", async (qrText) => {
           // Genera la imagen QR a partir de la cadena recibida
-          const qrImageUrl = await QRCode.toDataURL(qrText);
+          // const qrImageUrl = await QRCode.toDataURL(qrText);
+          const qrImageUrl = await QRCode(qrText);
           setQr(qrImageUrl);
         });
       }

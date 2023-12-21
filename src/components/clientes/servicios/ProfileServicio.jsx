@@ -55,13 +55,10 @@ import ModalCompletarDatosFactura from "./ModalCompletarDatosFactura";
 export function ProfileServicio() {
   const {
     cuitEditar,
-    setSeleccion,
     obtenerCliente,
     valueProfile,
     setValueProfile,
     formaDePago,
-    selectInicio,
-    setSelectInicio,
     modalNuevoServicio3,
     modalNuevoServicio4,
     modalResumen,
@@ -69,7 +66,6 @@ export function ProfileServicio() {
     modalNuevoServicio,
     modalEditarUsuario,
     modalAgregarUsuario,
-    seleccion,
   } = useClientes();
   const { modalMensajeria } = useMensajeria();
 
@@ -77,14 +73,8 @@ export function ProfileServicio() {
     numeroPedidoObtenerServicio,
     obtenerViajesServicio,
     idObtenerServicio,
-
     obtenerEstadosServicios,
-
     obtenerEstadosViaje,
-
-    setBuscoActualizaciones,
-    volver,
-    setVolver,
     handleCargando,
     seAsignoProveedor,
     modalReAsignarEquipos,
@@ -95,7 +85,6 @@ export function ProfileServicio() {
     modalAsignarProveedor,
     modalTerminarViaje,
     modalAgregarObservaciones,
-    setPaginaLogisticaSelector,
     modalEditarDocumento,
     actualizoListadoViajes,
     setActualizoListadoViajes,
@@ -104,19 +93,10 @@ export function ProfileServicio() {
     modalCargarDevolucionEditar,
     modalValorizar,
     modalAgragarCampo,
-    actualizarEstadoServicio,
-    setActualizarEstadoServicio,
     modalCamposFactura,
-    enBusqueda,
-    setEnbusqueda,
-    paginaLogisticaSelector,
-    despachoDeAduanaObtenerServicio,
-    numeroCliente,
   } = useServicios();
 
   const { modalMinutas } = useMinutas();
-
-  const { seleccionProveedor, setSeleccionProveedor } = useProveedores();
 
   useEffect(() => {
     const traerData = async () => {

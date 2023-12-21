@@ -32,6 +32,27 @@ const ContableProvider = ({ children }) => {
   const [gasto, setGasto] = useState([]);
   const [gastoId, setGastoId] = useState({});
   const [modalNuevaFactura, setModalNuevaFactura] = useState("");
+  const [editarConcepto, setEditarConcepto] = useState(false);
+  const [tituloConcepto, setTituloConcepto] = useState("");
+  const [descripcion1, setDescripcion1] = useState("");
+  const [descripcion2, setDescripcion2] = useState("");
+  const [descripcion3, setDescripcion3] = useState("");
+  const [descripcion4, setDescripcion4] = useState("");
+  const [descripcion5, setDescripcion5] = useState("");
+  const [descripcion6, setDescripcion6] = useState("");
+  const [precioBrutoEditar, setPrecioBrutoEditar] = useState("");
+  const [idConceptoAFacturar, setIdConceptoAFActurar] = useState("");
+  const [idViajeConcepto, setIdViajeConcepto] = useState("");
+
+  const [agregarConcepto, setAgregarConcepto] = useState(false);
+
+  const handleAgregarConcepto = () => {
+    setAgregarConcepto(!agregarConcepto);
+  };
+
+  const handleModalEditarConcepto = () => {
+    setEditarConcepto(!editarConcepto);
+  };
 
   const handleModalNuevaFactura = () => {
     setModalNuevaFactura(!modalNuevaFactura);
@@ -83,7 +104,27 @@ const ContableProvider = ({ children }) => {
     });
   };
 
-  const editarMovimiento = async (gasto) => {
+  const editarMovimiento = async (
+    id,
+    titulo,
+    d1,
+    d2,
+    d3,
+    d4,
+    d5,
+    d6,
+    precioBruto
+  ) => {
+    const info = {
+      descripcion0: titulo,
+      descripcion1: d1,
+      descripcion2: d2,
+      descripcion3: d3,
+      descripcion4: d4,
+      descripcion5: d5,
+      descripcion6: d6,
+      precioBruto: precioBruto,
+    };
     try {
       const token = localStorage.getItem("token");
       if (!token) return;
@@ -94,16 +135,12 @@ const ContableProvider = ({ children }) => {
         },
       };
 
-      const { data } = await clienteAxios.put(
-        `/contable/${gasto.id}`,
-        gasto,
-        config
-      );
+      const { data } = await clienteAxios.put(`/contable/${id}`, info, config);
 
       //Mostrar la alerta
-      toast.success("Movimiento actualizado correctamente", {
+      toast.success("Concepto actualizado correctamente", {
         position: "top-right",
-        autoClose: 500,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -111,18 +148,6 @@ const ContableProvider = ({ children }) => {
         progress: undefined,
         theme: "light",
       });
-      setTimeout(() => {
-        setTipo("");
-        setNumeroFactura("");
-        setDescripcion("");
-        setPrecioBruto("");
-        setEntidad("");
-        setIdCliente("");
-        setIdProveedor("");
-        setIva("");
-        setPrecioNeto("");
-        handleModalEditarMovimiento();
-      }, 500);
     } catch (error) {
       console.log(error);
     }
@@ -254,9 +279,50 @@ const ContableProvider = ({ children }) => {
         config
       );
 
-      setInfoDocumento(data);
+      setInfoDocumento(data.data);
 
       toast.success("Factura Creada Correctamente", {
+        position: "top-right",
+        autoClose: 500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } catch (error) {
+      toast.error(error, {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+
+  const crearNC = async (id) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const data = await clienteAxios.post(
+        `contable/anular-factura/${id}`,
+        {},
+        config
+      );
+
+      toast.success("Factura Anulada Correctamente", {
         position: "top-right",
         autoClose: 500,
         hideProgressBar: false,
@@ -299,6 +365,83 @@ const ContableProvider = ({ children }) => {
       setFacturasEmitidas(data);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const [obtenerFacturaEmit, setObtenerFacturaEmitida] = useState([]);
+
+  const obtenerFacturaEmitida = async (id) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const { data } = await clienteAxios(
+        `/contable/obtener-datos-factura/${id}`,
+        config
+      );
+      console.log(data);
+      setObtenerFacturaEmitida(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const nuevoConcepto = async (
+    id,
+    titulo,
+    descripcion,
+    relacionar,
+    precioBruto
+  ) => {
+    const info = {
+      titulo,
+      descripcion,
+      relacionar,
+      precioBruto,
+    };
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const data = await clienteAxios.post(
+        `contable/nuevo-concepto/${id}`,
+        info,
+        config
+      );
+
+      toast.success("Concepto Agregado Correctamente", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } catch (error) {
+      toast.error(error, {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
@@ -345,6 +488,34 @@ const ContableProvider = ({ children }) => {
         crearFactura,
         facturasEmitidas,
         obtenerFacturasLibroDiario,
+        handleModalEditarConcepto,
+        editarConcepto,
+        obtenerFacturaEmit,
+        obtenerFacturaEmitida,
+        tituloConcepto,
+        setTituloConcepto,
+        descripcion1,
+        setDescripcion1,
+        descripcion2,
+        setDescripcion2,
+        descripcion3,
+        setDescripcion3,
+        descripcion4,
+        setDescripcion4,
+        descripcion5,
+        setDescripcion5,
+        descripcion6,
+        setDescripcion6,
+        precioBrutoEditar,
+        setPrecioBrutoEditar,
+        idConceptoAFacturar,
+        setIdConceptoAFActurar,
+        handleAgregarConcepto,
+        agregarConcepto,
+        idViajeConcepto,
+        setIdViajeConcepto,
+        nuevoConcepto,
+        crearNC,
       }}
     >
       {children}

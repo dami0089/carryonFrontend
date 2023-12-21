@@ -12,9 +12,6 @@ const ModalAsignarEquipoEditarViaje = () => {
     choferesProveedor,
     camionesProveedor,
     semisProveedor,
-
-    handleAsignarEquipo,
-
     equiposData,
     obtenerEquipos,
     obtenerChoferes,
@@ -24,18 +21,11 @@ const ModalAsignarEquipoEditarViaje = () => {
 
   const {
     asignarEquipo,
-    viajeObtenido,
     handleModalReasignarEquipos,
     modalReAsignarEquipos,
     idEditarViaje,
     proveedorEditar,
-    handleModalEditarViaje,
-    setChoferEditar,
-    setCamionEditar,
-    aprobarViaje,
-    setSemiEditar,
     handleCargando,
-    actualizoListadosDespuesDeAsignar,
     setActualizoListadosDespuesDeAsignar,
     idChoferEquipo,
     setIdCHoferEquipo,
@@ -46,7 +36,6 @@ const ModalAsignarEquipoEditarViaje = () => {
     idEquipoProveedor,
     setIdEquipoProveedor,
     eliminarEquipo,
-    notificarLogicsarWhatsapp,
     notificarChoferWhatsapp,
     notificarAlChoferPorMail,
     setRecargoProximosViajes,
@@ -124,7 +113,7 @@ const ModalAsignarEquipoEditarViaje = () => {
       );
 
       setActualizoListadosDespuesDeAsignar(true);
-
+      setRecargoProximosViajes(true);
       setIdCHoferEquipo("");
       setIdCamionEquipo("");
       setIdSemiEquipo("");

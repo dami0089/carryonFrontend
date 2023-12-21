@@ -52,10 +52,7 @@ const ListadoOperacionesCoordinadasParaHoy = () => {
     setEstadoCambiado,
     setBuscoActualizaciones,
     handleModalEditarContenedorDesdeListados,
-    setVolver,
-
     setChofer,
-    notificarViajes,
     obtenerServiciosHoy,
     recargoProximosViajes,
     setRecargoProximosViajes,
@@ -64,43 +61,26 @@ const ListadoOperacionesCoordinadasParaHoy = () => {
     setActualizoListadoViajes,
     seAsignoProveedor,
     setSeAsignoProveedor,
-
     handleModalEditarViaje,
-
     setNumeroContenedorEditar,
-
     setFechaCargaEditar,
-
     setHoraCargaEditar,
-
     setEstadoEditar,
-
     setOrigenEditar,
     setDestinoEDitar,
     setProveedorEditar,
-
     setChoferEditar,
-
     setTipoServicioViajeEditar,
     setCamionEditar,
-
     setNombreProveedorEditar,
     setSemiEditar,
-
     setClienteEditarViaje,
-
     setIdEditarViaje,
-
     setDireccionRetornoEditarViaje,
-
     setBuscoEnEDitarViaje,
-
     setCantidadEditar,
-
     setPesoEditar,
-
     setVolumenEditar,
-
     setTipoCargaEditar,
     setFechaDevolucionContenedor,
     setHoraDevolucionContenedor,
@@ -108,22 +88,15 @@ const ListadoOperacionesCoordinadasParaHoy = () => {
     setLugarDevolucionContenedorVacio,
     actualizoListadosDespuesDeAsignar,
     setActualizoListadosDespuesDeAsignar,
-    modalEditarDevolucion,
     setCambiarEstado,
     setIdProveedorEditarEstadoServicio,
     handleModalModificarEstadoServicio,
-    numeroContenedor,
     setNumeroContenedor,
     volverCoordinacion,
     setVolverCoordinacion,
     setPaginaLogisticaSelector,
-    //////
-    recargarListadoTodosViajes,
-    setRecargarListadoTodosViajes,
-    todosLosViajes,
     cargando,
     modalFiltrarServicios,
-    handleModalFiltrarViajes,
     modalFiltrarViajes,
     modalNuevoProveedor,
     modalNuevoChoferP,
@@ -141,18 +114,15 @@ const ListadoOperacionesCoordinadasParaHoy = () => {
     modalCargarDevolucionEditar,
     modalEditarContenedorDesdeListados,
     modalReAsignarProveedor,
-    obtenerViajes,
     handleModalReasignarEquipos,
     setIdCHoferEquipo,
     setIdCamionEquipo,
     setIdSemiEquipo,
     setIdEquipoProveedor,
     handleModalReasignarProveedor,
-
     setHoraDevolucionDesde,
     paginaLogisticaSelector,
     setHoraDevolucionHasta,
-
     handleTerminarViaje,
     setAdicionales,
     setFechaTerminacion,
@@ -163,8 +133,6 @@ const ListadoOperacionesCoordinadasParaHoy = () => {
 
   const {
     setSelectInicio,
-    setSeleccion,
-    setValueProfile,
     selectInicio,
     handleModalNuevoServicio,
     modalNuevoServicio,
@@ -175,9 +143,8 @@ const ListadoOperacionesCoordinadasParaHoy = () => {
   } = useClientes();
 
   useEffect(() => {
-    handleCargando();
-
     const obtenerServ = async () => {
+      handleCargando();
       await obtenerServiciosHoy();
       handleCargando();
     };
@@ -290,19 +257,6 @@ const ListadoOperacionesCoordinadasParaHoy = () => {
     e.preventDefault();
     setIdObtenerServicio(servicio);
     navigate("/coordinacion/ficha-servicio");
-  };
-
-  const handleVolverInicio = (e) => {
-    e.preventDefault();
-    if (volverCoordinacion) {
-      setPaginaLogisticaSelector(100);
-      setVolverCoordinacion(false);
-    } else {
-      setSelectInicio(1);
-      setIdViajeAsignarProveedor("");
-      setIdObtenerServicio("");
-      setBuscoActualizaciones(true);
-    }
   };
 
   const handleAsignarProveedor = (servicio, proveedor, id) => {

@@ -3,73 +3,70 @@ import { Dialog, Transition } from "@headlessui/react";
 import Dropzone from "./DropZone";
 import { ToastContainer, toast } from "react-toastify";
 import useServicios from "@/hooks/useServicios";
+import useContable from "@/hooks/useContable";
 
-const ModalEditarDocumento = () => {
+const ContableEditarConcepto = () => {
+  const { handleCargando, seActualizaConceptos, setSeActualizaConceptos } =
+    useServicios();
   const {
-    handleCargando,
-
-    modalEditarDocumento,
-    handleModalEditarDocumento,
-    estadoDocu,
-    setEstadoDocu,
-
-    numeroDocumento,
-    setNumeroDocumento,
-    linkDocumento,
-    setLinkDocumento,
-    idDocumento,
-    editarDocumento,
-    linkVacio,
-    setLinkVacio,
-    setActualizoListadoDocu,
-    actualizoListadoDocu,
-  } = useServicios();
+    handleModalEditarConcepto,
+    editarConcepto,
+    tituloConcepto,
+    setTituloConcepto,
+    descripcion1,
+    setDescripcion1,
+    descripcion2,
+    setDescripcion2,
+    descripcion3,
+    setDescripcion3,
+    descripcion4,
+    setDescripcion4,
+    descripcion5,
+    setDescripcion5,
+    descripcion6,
+    setDescripcion6,
+    precioBrutoEditar,
+    setPrecioBrutoEditar,
+    editarMovimiento,
+    idConceptoAFacturar,
+    setIdConceptoAFActurar,
+  } = useContable();
   const [selectedFile, setSelectedFile] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     handleCargando();
-
-    const formData = new FormData();
-
-    // 1. Añadir campos del formulario a FormData
-    formData.append("numeroDocumentacion", numeroDocumento);
-    formData.append("linkRemito", linkDocumento);
-    formData.append("estado", estadoDocu);
-    formData.append("linkVacio", linkVacio);
-
-    // 2. Añadir el archivo a FormData (si existe)
-    if (selectedFile) {
-      formData.append("archivo", selectedFile);
-    }
-
-    // 3. Llamar a editarDocumento
-    await editarDocumento(idDocumento, formData);
-
+    await editarMovimiento(
+      idConceptoAFacturar,
+      tituloConcepto,
+      descripcion1,
+      descripcion2,
+      descripcion3,
+      descripcion4,
+      descripcion5,
+      descripcion6,
+      precioBrutoEditar
+    );
+    setIdConceptoAFActurar("");
+    setTituloConcepto("");
+    setDescripcion1("");
+    setDescripcion2("");
+    setDescripcion3("");
+    setDescripcion4("");
+    setDescripcion5("");
+    setDescripcion6("");
+    setPrecioBrutoEditar("");
+    setSeActualizaConceptos(true);
+    handleModalEditarConcepto();
     handleCargando();
-    setNumeroDocumento("");
-    setLinkDocumento("");
-    setEstadoDocu("");
-    setLinkVacio("");
-    setActualizoListadoDocu(true);
-    handleModalEditarDocumento();
-  };
-
-  const handleFilesSelected = (file) => {
-    setSelectedFile(file);
-    console.log(file);
-  };
-
-  const handleFileRemoved = () => {
-    setSelectedFile(null);
   };
 
   return (
-    <Transition.Root show={modalEditarDocumento} as={Fragment}>
+    <Transition.Root show={editarConcepto} as={Fragment}>
       <Dialog
         as="div"
         className="fixed inset-0 z-50 overflow-y-auto"
-        onClose={handleModalEditarDocumento}
+        onClose={handleModalEditarConcepto}
       >
         <div className="flex min-h-screen items-end justify-center px-4 pb-20 pt-4 text-center sm:block sm:p-0">
           <ToastContainer pauseOnFocusLoss={false} />
@@ -108,7 +105,7 @@ const ModalEditarDocumento = () => {
                 <button
                   type="button"
                   className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                  onClick={handleModalEditarDocumento}
+                  onClick={handleModalEditarConcepto}
                 >
                   <span className="sr-only">Cerrar</span>
                   <svg
@@ -132,55 +129,79 @@ const ModalEditarDocumento = () => {
                     as="h3"
                     className="text-xl font-bold leading-6 text-gray-900"
                   >
-                    Editar Documentacion
+                    Editar Concepto
                   </Dialog.Title>
 
                   <form className="mx-2 my-2" onSubmit={handleSubmit}>
                     <div className="mb-1">
                       <label
                         className="text-sm font-bold uppercase text-gray-700"
-                        htmlFor="adicionales"
+                        htmlFor="titulo"
                       >
-                        Estado
+                        Titulo Concepto
                       </label>
-
-                      <select
-                        id="adicionales"
+                      <input
+                        id="titulo"
+                        type="text"
+                        placeholder="Titulo Concepto"
                         className="mt-2 w-full rounded-md border-2 p-2 placeholder-gray-400"
-                        value={estadoDocu}
-                        onChange={(e) => setEstadoDocu(e.target.value)}
-                      >
-                        <option value="">--Seleccionar--</option>
-
-                        <option key={1} value={"No entregado"}>
-                          No entregado
-                        </option>
-                        <option key={2} value={"Solo Virtual"}>
-                          Entregado solo virtual
-                        </option>
-                        <option key={3} value={"Solo Fisico"}>
-                          Entregado solo fisico
-                        </option>
-                        <option key={4} value={"Fisico y Virtual"}>
-                          Entregado virtual y fisico
-                        </option>
-                      </select>
+                        value={tituloConcepto}
+                        onChange={(e) => setTituloConcepto(e.target.value)}
+                        autocomplete="off"
+                      />
                     </div>
 
                     <div className="mb-1">
                       <label
                         className="text-sm font-bold uppercase text-gray-700"
                         htmlFor="dias"
+                      >
+                        Descripcion Servicio
+                      </label>
+                      <textarea
+                        id="dias"
+                        type="text"
+                        placeholder="Descripcion Servicio"
+                        className="mt-2 w-full resize-none rounded-md border-2 p-2 placeholder-gray-400"
+                        rows={3}
+                        value={descripcion1}
+                        onChange={(e) => setDescripcion1(e.target.value)}
+                        autocomplete="off"
+                      />
+                    </div>
+
+                    <div className="mb-1">
+                      <label
+                        className="text-sm font-bold uppercase text-gray-700"
+                        htmlFor="ref"
+                      >
+                        Referencia Cliente
+                      </label>
+                      <input
+                        id="ref"
+                        type="text"
+                        placeholder="Referencia Cliente"
+                        className="mt-2 w-full rounded-md border-2 p-2 placeholder-gray-400"
+                        value={descripcion2}
+                        onChange={(e) => setDescripcion2(e.target.value)}
+                        autocomplete="off"
+                      />
+                    </div>
+
+                    <div className="mb-1">
+                      <label
+                        className="text-sm font-bold uppercase text-gray-700"
+                        htmlFor="remito"
                       >
                         Numero Remito
                       </label>
                       <input
-                        id="dias"
+                        id="remito"
                         type="text"
                         placeholder="Numero Remito"
                         className="mt-2 w-full rounded-md border-2 p-2 placeholder-gray-400"
-                        value={numeroDocumento}
-                        onChange={(e) => setNumeroDocumento(e.target.value)}
+                        value={descripcion6}
+                        onChange={(e) => setDescripcion6(e.target.value)}
                         autocomplete="off"
                       />
                     </div>
@@ -188,17 +209,34 @@ const ModalEditarDocumento = () => {
                     <div className="mb-1">
                       <label
                         className="text-sm font-bold uppercase text-gray-700"
-                        htmlFor="dias"
+                        htmlFor="cont"
                       >
-                        Link Remito
+                        Numero Contenedor
                       </label>
                       <input
-                        id="dias"
+                        id="cont"
                         type="text"
-                        placeholder="Link Remito"
+                        placeholder="Numero Contenedor"
                         className="mt-2 w-full rounded-md border-2 p-2 placeholder-gray-400"
-                        value={linkDocumento}
-                        onChange={(e) => setLinkDocumento(e.target.value)}
+                        value={descripcion4}
+                        onChange={(e) => setDescripcion4(e.target.value)}
+                        autocomplete="off"
+                      />
+                    </div>
+                    <div className="mb-1">
+                      <label
+                        className="text-sm font-bold uppercase text-gray-700"
+                        htmlFor="log"
+                      >
+                        Pedido Logicsar
+                      </label>
+                      <input
+                        id="log"
+                        type="text"
+                        placeholder="Numero Pedido Logicsar"
+                        className="mt-2 w-full rounded-md border-2 p-2 placeholder-gray-400"
+                        value={descripcion5}
+                        onChange={(e) => setDescripcion5(e.target.value)}
                         autocomplete="off"
                       />
                     </div>
@@ -206,17 +244,35 @@ const ModalEditarDocumento = () => {
                     <div className="mb-1">
                       <label
                         className="text-sm font-bold uppercase text-gray-700"
-                        htmlFor="vacio"
+                        htmlFor="des"
                       >
-                        Link Vacio
+                        Despacho Aduana
                       </label>
                       <input
-                        id="vacio"
+                        id="des"
                         type="text"
-                        placeholder="Link Vacio"
+                        placeholder="Numero Despacho"
                         className="mt-2 w-full rounded-md border-2 p-2 placeholder-gray-400"
-                        value={linkVacio}
-                        onChange={(e) => setLinkVacio(e.target.value)}
+                        value={descripcion3}
+                        onChange={(e) => setDescripcion3(e.target.value)}
+                        autocomplete="off"
+                      />
+                    </div>
+
+                    <div className="mb-1">
+                      <label
+                        className="text-sm font-bold uppercase text-gray-700"
+                        htmlFor="precio"
+                      >
+                        Precio Bruto
+                      </label>
+                      <input
+                        id="precio"
+                        type="text"
+                        placeholder="Precio Bruto"
+                        className="mt-2 w-full rounded-md border-2 p-2 placeholder-gray-400"
+                        value={precioBrutoEditar}
+                        onChange={(e) => setPrecioBrutoEditar(e.target.value)}
                         autocomplete="off"
                       />
                     </div>
@@ -237,4 +293,4 @@ const ModalEditarDocumento = () => {
   );
 };
 
-export default ModalEditarDocumento;
+export default ContableEditarConcepto;

@@ -3,73 +3,54 @@ import { Dialog, Transition } from "@headlessui/react";
 import Dropzone from "./DropZone";
 import { ToastContainer, toast } from "react-toastify";
 import useServicios from "@/hooks/useServicios";
+import useContable from "@/hooks/useContable";
 
-const ModalEditarDocumento = () => {
+const ModalAgregarConcepto = () => {
   const {
     handleCargando,
-
-    modalEditarDocumento,
-    handleModalEditarDocumento,
-    estadoDocu,
-    setEstadoDocu,
-
-    numeroDocumento,
-    setNumeroDocumento,
-    linkDocumento,
-    setLinkDocumento,
-    idDocumento,
-    editarDocumento,
-    linkVacio,
-    setLinkVacio,
-    setActualizoListadoDocu,
-    actualizoListadoDocu,
+    setSeActualizaConceptos,
+    viajesServicio,
+    idObtenerServicio,
   } = useServicios();
-  const [selectedFile, setSelectedFile] = useState(null);
+  const {
+    tituloConcepto,
+    setTituloConcepto,
+    descripcion1,
+    setDescripcion1,
+    precioBrutoEditar,
+    setPrecioBrutoEditar,
+    handleAgregarConcepto,
+    agregarConcepto,
+    idViajeConcepto,
+    setIdViajeConcepto,
+    nuevoConcepto,
+  } = useContable();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     handleCargando();
-
-    const formData = new FormData();
-
-    // 1. Añadir campos del formulario a FormData
-    formData.append("numeroDocumentacion", numeroDocumento);
-    formData.append("linkRemito", linkDocumento);
-    formData.append("estado", estadoDocu);
-    formData.append("linkVacio", linkVacio);
-
-    // 2. Añadir el archivo a FormData (si existe)
-    if (selectedFile) {
-      formData.append("archivo", selectedFile);
-    }
-
-    // 3. Llamar a editarDocumento
-    await editarDocumento(idDocumento, formData);
-
+    await nuevoConcepto(
+      idObtenerServicio,
+      tituloConcepto,
+      descripcion1,
+      idViajeConcepto,
+      precioBrutoEditar
+    );
+    setTituloConcepto("");
+    setDescripcion1("");
+    setPrecioBrutoEditar("");
+    setIdViajeConcepto("");
+    setSeActualizaConceptos(true);
+    handleAgregarConcepto();
     handleCargando();
-    setNumeroDocumento("");
-    setLinkDocumento("");
-    setEstadoDocu("");
-    setLinkVacio("");
-    setActualizoListadoDocu(true);
-    handleModalEditarDocumento();
-  };
-
-  const handleFilesSelected = (file) => {
-    setSelectedFile(file);
-    console.log(file);
-  };
-
-  const handleFileRemoved = () => {
-    setSelectedFile(null);
   };
 
   return (
-    <Transition.Root show={modalEditarDocumento} as={Fragment}>
+    <Transition.Root show={agregarConcepto} as={Fragment}>
       <Dialog
         as="div"
         className="fixed inset-0 z-50 overflow-y-auto"
-        onClose={handleModalEditarDocumento}
+        onClose={handleAgregarConcepto}
       >
         <div className="flex min-h-screen items-end justify-center px-4 pb-20 pt-4 text-center sm:block sm:p-0">
           <ToastContainer pauseOnFocusLoss={false} />
@@ -108,7 +89,7 @@ const ModalEditarDocumento = () => {
                 <button
                   type="button"
                   className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                  onClick={handleModalEditarDocumento}
+                  onClick={handleAgregarConcepto}
                 >
                   <span className="sr-only">Cerrar</span>
                   <svg
@@ -132,37 +113,68 @@ const ModalEditarDocumento = () => {
                     as="h3"
                     className="text-xl font-bold leading-6 text-gray-900"
                   >
-                    Editar Documentacion
+                    Agregar Concepto
                   </Dialog.Title>
 
                   <form className="mx-2 my-2" onSubmit={handleSubmit}>
                     <div className="mb-1">
                       <label
                         className="text-sm font-bold uppercase text-gray-700"
-                        htmlFor="adicionales"
+                        htmlFor="titulo"
                       >
-                        Estado
+                        Titulo Concepto
                       </label>
-
-                      <select
-                        id="adicionales"
+                      <input
+                        id="titulo"
+                        type="text"
+                        placeholder="Ingrese Titulo"
                         className="mt-2 w-full rounded-md border-2 p-2 placeholder-gray-400"
-                        value={estadoDocu}
-                        onChange={(e) => setEstadoDocu(e.target.value)}
+                        value={tituloConcepto}
+                        onChange={(e) => setTituloConcepto(e.target.value)}
+                        autocomplete="off"
+                      />
+                    </div>
+
+                    <div className="mb-1">
+                      <label
+                        className="text-sm font-bold uppercase text-gray-700"
+                        htmlFor="dias"
+                      >
+                        Descripcion
+                      </label>
+                      <textarea
+                        id="dias"
+                        type="text"
+                        placeholder="Ingrese Descripcion"
+                        className="mt-2 w-full resize-none rounded-md border-2 p-2 placeholder-gray-400"
+                        rows={3}
+                        value={descripcion1}
+                        onChange={(e) => setDescripcion1(e.target.value)}
+                        autocomplete="off"
+                      />
+                    </div>
+
+                    <div className="mb-1">
+                      <label
+                        className="text-sm font-bold uppercase text-gray-700"
+                        htmlFor="domicilio"
+                      >
+                        Relacionar a Viaje?
+                      </label>
+                      <select
+                        id="cliente"
+                        className="mt-2 w-full rounded-md border-2 p-2 placeholder-gray-400"
+                        value={idViajeConcepto}
+                        onChange={(e) => setIdViajeConcepto(e.target.value)}
                       >
                         <option value="">--Seleccionar--</option>
-
-                        <option key={1} value={"No entregado"}>
-                          No entregado
-                        </option>
-                        <option key={2} value={"Solo Virtual"}>
-                          Entregado solo virtual
-                        </option>
-                        <option key={3} value={"Solo Fisico"}>
-                          Entregado solo fisico
-                        </option>
-                        <option key={4} value={"Fisico y Virtual"}>
-                          Entregado virtual y fisico
+                        {viajesServicio.map((viaje) => (
+                          <option key={viaje._id} value={viaje._id}>
+                            {viaje.numeroDeViaje}
+                          </option>
+                        ))}
+                        <option key={"xx"} value={"no"}>
+                          No relacionar a un viaje
                         </option>
                       </select>
                     </div>
@@ -170,53 +182,17 @@ const ModalEditarDocumento = () => {
                     <div className="mb-1">
                       <label
                         className="text-sm font-bold uppercase text-gray-700"
-                        htmlFor="dias"
+                        htmlFor="precio"
                       >
-                        Numero Remito
+                        Precio Bruto
                       </label>
                       <input
-                        id="dias"
+                        id="precio"
                         type="text"
-                        placeholder="Numero Remito"
+                        placeholder="Precio Bruto"
                         className="mt-2 w-full rounded-md border-2 p-2 placeholder-gray-400"
-                        value={numeroDocumento}
-                        onChange={(e) => setNumeroDocumento(e.target.value)}
-                        autocomplete="off"
-                      />
-                    </div>
-
-                    <div className="mb-1">
-                      <label
-                        className="text-sm font-bold uppercase text-gray-700"
-                        htmlFor="dias"
-                      >
-                        Link Remito
-                      </label>
-                      <input
-                        id="dias"
-                        type="text"
-                        placeholder="Link Remito"
-                        className="mt-2 w-full rounded-md border-2 p-2 placeholder-gray-400"
-                        value={linkDocumento}
-                        onChange={(e) => setLinkDocumento(e.target.value)}
-                        autocomplete="off"
-                      />
-                    </div>
-
-                    <div className="mb-1">
-                      <label
-                        className="text-sm font-bold uppercase text-gray-700"
-                        htmlFor="vacio"
-                      >
-                        Link Vacio
-                      </label>
-                      <input
-                        id="vacio"
-                        type="text"
-                        placeholder="Link Vacio"
-                        className="mt-2 w-full rounded-md border-2 p-2 placeholder-gray-400"
-                        value={linkVacio}
-                        onChange={(e) => setLinkVacio(e.target.value)}
+                        value={precioBrutoEditar}
+                        onChange={(e) => setPrecioBrutoEditar(e.target.value)}
                         autocomplete="off"
                       />
                     </div>
@@ -237,4 +213,4 @@ const ModalEditarDocumento = () => {
   );
 };
 
-export default ModalEditarDocumento;
+export default ModalAgregarConcepto;

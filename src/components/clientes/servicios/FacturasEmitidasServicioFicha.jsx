@@ -2,13 +2,12 @@ import { Card, CardBody, Typography } from "@material-tailwind/react";
 
 import React, { useEffect } from "react";
 import { projectsTableData } from "@/data";
-import { EyeIcon } from "@heroicons/react/24/solid";
+import { EyeIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import useServicios from "@/hooks/useServicios";
 
 import { ToastContainer, toast } from "react-toastify";
 
 import { formateoFechaCorto } from "@/data/helpers/formateoFechaCorto";
-import Cargando from "../deTodos/Cargando";
 
 import { useNavigate } from "react-router-dom";
 import useContable from "@/hooks/useContable";
@@ -16,22 +15,14 @@ import { formatearFecha } from "@/data/helpers/formatearFecha";
 import { formatearFechaLibroVentas } from "@/data/helpers/formatearFechaLibroVentas";
 import { obtenerNumeroMesLibroVentas } from "@/data/helpers/devolverMesLibroVentas";
 import { obtenerYear } from "@/data/helpers/devolverAnoLibroVentas";
+import Cargando from "@/components/deTodos/Cargando";
+import Swal from "sweetalert2";
 
-const LibroVentas = () => {
+const FacturasEmitidasServicioFicha = () => {
   const navigate = useNavigate();
   const { handleCargando, cargando } = useServicios();
 
-  const { facturasEmitidas, obtenerFacturasLibroDiario } = useContable();
-
-  useEffect(() => {
-    handleCargando();
-
-    const obtenerFacturas = async () => {
-      await obtenerFacturasLibroDiario();
-      handleCargando();
-    };
-    obtenerFacturas();
-  }, []);
+  const { facturasEmitidas, obtenerFacturaEmit, crearNC } = useContable();
 
   const handleOpenPdf = (e, urlPdf) => {
     e.preventDefault();
@@ -52,16 +43,41 @@ const LibroVentas = () => {
     }
   };
 
+  const notaCredito = async (e, id) => {
+    e.preventDefault();
+
+    Swal.fire({
+      title: "CONFIRMAR",
+      text: "Emitimos la Nota de credito?",
+      icon: "question",
+      showCancelButton: true,
+      cancelButtonText: "No",
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        handleCargando();
+        await crearNC(id);
+        setSeActualizaConceptos(true);
+        handleCargando();
+      } else {
+      }
+    });
+  };
+
   return (
     <>
       <div className="mt-10">
         <ToastContainer pauseOnFocusLoss={false} />
 
         <div className="mb-5 ml-3 mr-3 text-center md:text-left">
-          <Typography className="font-bold uppercase">Libro Ventas</Typography>
+          <Typography className="font-bold uppercase">
+            Facturas emitidas para este servicio
+          </Typography>
         </div>
 
-        {facturasEmitidas.length > 0 ? (
+        {obtenerFacturaEmit.length > 0 ? (
           <div className="mb-4  grid grid-cols-1 gap-6  xl:grid-cols-3">
             <Card className="overflow-hidden xl:col-span-3">
               <CardBody className=" overflow-x-scroll px-0 pb-2 pt-0">
@@ -104,7 +120,7 @@ const LibroVentas = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {facturasEmitidas // Filtrar proveedores con estado distinto a "Terminado"
+                      {obtenerFacturaEmit // Filtrar proveedores con estado distinto a "Terminado"
                         .map(
                           (
                             {
@@ -330,8 +346,14 @@ const LibroVentas = () => {
                                   <div className="flex items-center justify-center gap-4">
                                     <EyeIcon
                                       className="h-8 w-8 hover:cursor-pointer"
+                                      title="Ver"
                                       onClick={(e) => handleOpenPdf(e, urlPDF)}
                                     />
+                                    {/* <XMarkIcon
+                                      className="h-8 w-8 text-red-400 hover:cursor-pointer"
+                                      title="Anular Factura"
+                                      onClick={(e) => notaCredito(e, _id)}
+                                    /> */}
                                   </div>
                                 </td>
                               </tr>
@@ -354,4 +376,4 @@ const LibroVentas = () => {
   );
 };
 
-export default LibroVentas;
+export default FacturasEmitidasServicioFicha;

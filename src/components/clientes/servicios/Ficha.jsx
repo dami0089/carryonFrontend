@@ -1,28 +1,17 @@
 import { Button, Card, Typography } from "@material-tailwind/react";
-import { ProfileInfoCard } from "@/widgets/cards";
 import useClientes from "@/hooks/useClientes";
 import useServicios from "@/hooks/useServicios";
 import { useEffect, useState } from "react";
-import { formatearFecha } from "@/data/helpers/formatearFecha";
 import useMinutas from "@/hooks/useMinutas";
 
 import useMensajeria from "@/hooks/useMensajeria";
 import ListadoViajesProveedores from "./ListadoViajesProveedores";
-import { formateoFechaCorto } from "@/data/helpers/formateoFechaCorto";
 import Swal from "sweetalert2";
 import Cargando from "@/components/deTodos/Cargando";
 import { useNavigate } from "react-router-dom";
 
 const Ficha = () => {
-  const {
-    isActivo,
-    seleccion,
-    setSeleccion,
-    setValueProfile,
-    setSelectInicio,
-    selectInicio,
-    setCuitEditar,
-  } = useClientes();
+  const { setCuitEditar } = useClientes();
 
   const navigate = useNavigate();
 
@@ -33,11 +22,9 @@ const Ficha = () => {
   const {
     camionesObtenerServicio,
     destinoCargaObtenerServicio,
-
     nombreClienteObtenerServicio,
     origenCargaObtenerServicio,
     estadoObtenerServicio,
-
     handleModalModificarEstadoServicio,
     obtenerServicio,
     idObtenerServicio,
@@ -46,8 +33,6 @@ const Ficha = () => {
     setCoincidoEstado,
     handleCargando,
     observacionesObtenerServicio,
-    notificado,
-
     notificarViajes,
     editeViaje,
     setEditeViaje,
@@ -56,15 +41,10 @@ const Ficha = () => {
     eliminarServicio,
     tipoCargaObtenerServicio,
     agregarViajes,
-
     setSeAsignoProveedor,
     actualizarEstadoServicio,
     setActualizarEstadoServicio,
-
     clienteObtenerServicio,
-
-    paginaLogisticaSelector,
-    setPaginaLogisticaSelector,
     despachoDeAduanaObtenerServicio,
     numeroCliente,
   } = useServicios();
@@ -212,7 +192,7 @@ const Ficha = () => {
         <div>
           <div className="mb-5">
             <Card
-              className={`text-blue h-10 bg-yellow-700 pt-2 pb-2 text-center font-bold uppercase`}
+              className={`text-blue h-10 bg-yellow-700 pb-2 pt-2 text-center font-bold uppercase`}
               fullWidth
             >
               Estado: {estadoObtenerServicio}
